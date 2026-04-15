@@ -3,10 +3,6 @@ defT:-
 ;
 name: habituation
 5	
-proc: {
-          setLinkValues learningRate 0.175 -type barrierSalience
-          setLinkValues weightDecay 0 -type barrierSalience
-          }
 I:	
 (Object_Left_IN)                                                                                                                                                                    
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0

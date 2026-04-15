@@ -1877,8 +1877,8 @@ proc gsSim_sim5a {} {
 
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/sim5aExpHab.ex" 
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/sim5aActionPhase.ex"
-	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/sim5aCntrlHab.ex"
-	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/sim5aExpHabIneff.ex"	
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/sim5aActionPhaseIneff.ex"
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/sim5aCntrlHab.ex"	
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/sim5aTest.ex"
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/sim5aCntrlTest.ex"
 
@@ -2195,8 +2195,7 @@ proc gsSim_sim5c {} {
 	# training examples
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5c/pretrain.ex" -e PERMUTED
 
-	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5c/sim5cExpHab.ex" 
-	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5c/sim5cExpHabIneff.ex"
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5c/sim5cExpHab.ex"
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5c/sim5cActionPhase.ex"
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5c/sim5cCntrlHab.ex" 
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5c/sim5cTest.ex"
@@ -2881,7 +2880,7 @@ proc gsSim_sim8 {} {
 # UNCOMMENT THE CODE BELOW IF YOU WANT TO AUTOMATE THE SIMULATIONS #
 ####################################################################
 
-set modelList [list gsSim_sim5a gsSim_sim5b gsSim_sim5c gsSim_sim5d gsSim_sim7 gsSim_sim8]
+set modelList [list gsSim_sim5c gsSim_sim5d gsSim_sim7 gsSim_sim8]
 
 
 
