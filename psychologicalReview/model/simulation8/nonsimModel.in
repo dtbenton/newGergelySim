@@ -1,0 +1,122 @@
+# Simulation 1 (loosely corresponding to Gergeley 1995)
+# Author: Deon T. Benton
+
+addNet gsSim -i 8
+
+# input groups
+	addGroup Object_Left_IN 82 INPUT OUT_NOISE 
+	addGroup Object_Right_IN 82 INPUT  OUT_NOISE
+	addGroup Object_Left_Animate_Status_IN 2 INPUT OUT_NOISE 
+	addGroup Object_Right_Animate_Status_IN 2 INPUT  OUT_NOISE
+	addGroup Grid_IN 5 INPUT  OUT_NOISE
+	addGroup Grid_Position_IN 3 INPUT OUT_NOISE 
+	addGroup Jump_Height_IN 5 INPUT OUT_NOISE 
+	addGroup Motion_IN 6 INPUT OUT_NOISE
+	addGroup Motion_Type_IN 2 INPUT OUT_NOISE
+	addGroup Goal_IN 1 INPUT OUT_NOISE
+	addGroup Clearance_IN 3 INPUT OUT_NOISE
+
+	# hidden group (# there are necessarily fewer hidden units than there are input and output units)
+	addGroup context 50 ELMAN
+	addGroup hidden 50 RELU
+	
+	# noise parameters
+	noiseType Object_Left_IN -range 0.375
+	noiseType Object_Right_IN -range 0.375
+	noiseType Object_Left_Animate_Status_IN -range 0.375
+	noiseType Object_Right_Animate_Status_IN -range 0.375
+	noiseType Grid_IN -range 0.375
+	noiseType Grid_Position_IN -range 0.375
+	noiseType Jump_Height_IN -range 0.375
+	noiseType Motion_IN -range 0.375
+	noiseType Motion_Type_IN -range 0.375
+	noiseType Goal_IN -range 0.375
+	noiseType Clearance_IN -range 0.375
+		
+
+	# output group
+	addGroup Object_Left_OUT 82 OUTPUT 
+	addGroup Object_Right_OUT 82 OUTPUT 
+	addGroup Object_Left_Animate_Status_OUT 2 OUTPUT
+	addGroup Object_Right_Animate_Status_OUT 2 OUTPUT
+	addGroup Grid_OUT 5 OUTPUT 
+	addGroup Grid_Position_OUT 3 OUTPUT
+	addGroup Jump_Height_OUT 5 OUTPUT
+	addGroup Motion_OUT 6 OUTPUT
+	addGroup Motion_Type_OUT 2 OUTPUT
+	addGroup Goal_OUT 1 OUTPUT  
+	addGroup Clearance_OUT 3 OUTPUT
+	addGroup Reaching_OUT 1 OUTPUT  
+	addGroup Looking_OUT 1 OUTPUT
+
+
+# connect groups (input -> hidden -> output)
+	connectGroups {Object_Left_IN Object_Right_IN Object_Left_Animate_Status_IN Object_Right_Animate_Status_IN Grid_Position_IN Motion_IN Motion_Type_IN Goal_IN Clearance_IN context} hidden {Object_Left_OUT Object_Right_OUT Object_Left_Animate_Status_OUT Object_Right_Animate_Status_OUT Grid_Position_OUT Motion_OUT Motion_Type_OUT Goal_OUT Clearance_OUT}
+
+	connectGroups {Jump_Height_IN} hidden -type jumpSalience
+	connectGroups hidden {Jump_Height_OUT} -type jumpSalience
+
+	connectGroups {Grid_IN} hidden -type barrierSalience
+	connectGroups hidden {Grid_OUT} -type barrierSalience
+
+	elmanConnect hidden context
+
+	deleteGroups bias
+
+# training examples
+loadExamples pretrain.ex -s pretrain 
+
+loadExamples sim1aExpHab.ex 
+loadExamples sim1aCntrlHab.ex 
+loadExamples sim1aTest.ex
+
+
+# set learning and display parameters
+setObj learningRate 0.1
+setObj momentum	    0
+setObj batchSize    0
+setObj numUpdates   10
+setObj reportInterval 100
+setObj unitCellSize 12
+setObj linkCellSize 10
+setObj randRange 0.01
+setObj pseudoExampleFreq 1
+
+	
+resetPlot 
+plotRow 10 b 1 n Object_Left_OUT 10 b 4 rnext Object_Right_OUT 10
+plotRow 2 b 1 n Object_Left_Animate_Status_OUT 2 b 20 n Object_Right_Animate_Status_OUT 2
+plotRow 2 b 10 n Grid_Position_OUT 3
+plotRow 2 b 10 n Motion_Type_OUT 8 b 4 rnext Motion_OUT 6 
+plotRow 2 b 10 n Grid_OUT 6
+plotRow 2 b 10 n Jump_Height_OUT 6 b 4 rnext Clearance_OUT 3
+plotRow 7 b 8 n hidden 10 
+plotRow 7 b 10 n context 10 
+plotRow 2 b 10 n Jump_Height_IN 6 b 4 rnext Clearance_IN 3
+plotRow 2 b 10 n Grid_IN 6
+plotRow 2 b 10 n Motion_Type_IN 8 b 4 rnext Motion_IN 6 
+plotRow 2 b 10 n Grid_Position_IN 3
+plotRow 2 b 1 n Object_Left_Animate_Status_IN 2 b 20 n Object_Right_Animate_Status_IN 2
+plotRow 10 b 1 n Object_Left_IN 10 b 4 rnext Object_Right_IN 10
+drawUnits
+viewUnits
+
+
+# name units for increased model interpretability
+
+# object_left_animate_status IN and OUT
+setObj group(2).unit(0).name animate
+setObj group(2).unit(1).name inanimate
+
+setObj group(15).unit(0).name animate
+setObj group(15).unit(1).name inanimate
+
+
+# object_right_animate_status IN and OUT
+setObj group(3).unit(0).name animate
+setObj group(3).unit(1).name inanimate
+
+setObj group(18).unit(0).name animate
+setObj group(18).unit(1).name inanimate
+
+

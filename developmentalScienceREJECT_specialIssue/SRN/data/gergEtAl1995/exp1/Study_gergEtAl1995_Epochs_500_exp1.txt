@@ -1,0 +1,8 @@
+0 inconsistent1 1166.019
+1 consistent1 1166.096
+0 inconsistent1 1167.387
+1 consistent1 1165.128
+0 inconsistent1 1164.63
+1 consistent1 1164.05
+0 inconsistent1 1165.735
+1 consistent1 1164.333

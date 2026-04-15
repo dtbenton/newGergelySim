@@ -1,0 +1,143 @@
+# Simulations of Gergely et al. (1995), Liu & Spelke (2017),  Liu, Brooks, & Spelke (2019)
+# Author: Deon T. Benton
+
+#######################################################################
+#######################################################################
+#######################################################################
+##    SIMULATION OF GERGELY ET AL. (1995) & LIU AND SPELKE (2017)    ##
+#######################################################################
+#######################################################################
+#######################################################################
+proc gergLiuSim {} {
+	proc netSim {netName learningRates} {
+	# name of network
+	addNet $netName -i 8
+
+	# input groups
+	addGroup Object_Left_IN 102 INPUT OUT_NOISE
+	addGroup Object_Right_IN 102 INPUT OUT_NOISE
+	addGroup Object_Left_Animate_Status_IN 2 INPUT OUT_NOISE
+	addGroup Object_Right_Animate_Status_IN 2 INPUT OUT_NOISE
+	addGroup Grid_IN 64 INPUT OUT_NOISE
+	addGroup Motion_IN 64 INPUT OUT_NOISE
+
+	# hidden group (# there are necessarily fewer hidden units than there are input and output units)
+	# context group
+	addGroup context 50 ELMAN
+	addGroup hidden 50 RELU
+
+	# noise parameters
+	noiseType Object_Left_IN -range 0.1
+	noiseType Object_Right_IN -range 0.1
+	noiseType Object_Left_Animate_Status_IN -range 0.1
+	noiseType Object_Right_Animate_Status_IN -range 0.1
+	noiseType Grid_IN -range 0.1
+	noiseType Motion_IN -range 0.1
+
+	# output group
+	addGroup Object_Left_OUT 102 OUTPUT
+	addGroup Object_Right_OUT 102 OUTPUT
+	addGroup Object_Left_Animate_Status_OUT 2 OUTPUT
+	addGroup Object_Right_Animate_Status_OUT 2 OUTPUT
+	addGroup Grid_OUT 64 OUTPUT 
+	addGroup Motion_OUT 64 OUTPUT
+
+	# connect groups (input -> hidden -> output)
+	connectGroups {Object_Left_IN Object_Left_Animate_Status_IN Object_Right_IN Object_Right_Animate_Status_IN context} hidden {Object_Left_OUT Object_Left_Animate_Status_OUT Object_Right_OUT Object_Right_Animate_Status_OUT}
+	
+	connectGroups {Motion_IN Grid_IN} hidden {Motion_OUT Grid_OUT} -type salienceWTs
+	
+	elmanConnect hidden context
+
+	deleteGroups bias
+
+	# training examples
+	loadExamples pretrain.ex -s pretrain -e PERMUTED
+
+	# Gergeley et al. (1995) simulations 
+	loadExamples gergEtAl95Hab.ex 
+	loadExamples gergEtAl95CntrlHab.ex
+	loadExamples gergEtAl95Test.ex
+
+	# Liu & Spelke (2017) simulations	
+	loadExamples liuSpelke17Hab_exp1.ex 
+	loadExamples liuSpelke17Hab_exp2.ex 
+	loadExamples liuSpelke17Hab_exp3.ex 
+	loadExamples liuSpelke17Test_exp1.ex 
+	loadExamples liuSpelke17Test_exp2.ex
+	loadExamples liuSpelke17Test_exp3.ex 
+
+
+
+	# set learning and display parameters
+	setObj learningRate $learningRates
+	setObj momentum	    0.9
+	setObj batchSize    0
+	setObj numUpdates   10
+	setObj reportInterval 1
+	setObj unitCellSize 12
+	setObj linkCellSize 10
+	setObj randRange 0.1
+	setObj pseudoExampleFreq 1
+
+	# create a function that gets the error for each test example
+		proc saveActivations {fname} { 
+			set outfile [open $fname a] 
+			puts $outfile "[getObj currentExample.num] [getObj currentExample.name] " nonewline 
+			puts $outfile [getObj exampleError]
+			close $outfile 
+		}
+
+		proc testAllFinalActs {fname} { 
+			resetExampleSet [getObj testingSet.name] 
+			set nex [getObj testingSet.numExamples] 
+			for {set i 0} {$i < $nex} {incr i} {
+				doExample -set [getObj testingSet.name]
+				saveActivations $fname
+			}
+		}
+
+		proc testNetwork {n train trainNum train2 trainNum2 test fname} {
+			for {set i 0} {$i < $n} {incr i} {
+				resetNet
+				useTrainingSet $train
+				train $trainNum
+				useTrainingSet $train2
+				train $trainNum2
+				useTestingSet $test
+				testAllFinalActs $fname
+			}
+		}
+
+
+	# define lists for looping
+	set study [list gergEtAl1995 gergEtAl1995 liuSpelke2017 liuSpelke2017 liuSpelke2017]
+	set condition [list exp1 exp2 exp1 exp2 exp3]
+	set habEvent [list gergEtAl95Hab gergEtAl95CntrlHab liuSpelke17Hab_exp1 liuSpelke17Hab_exp2 liuSpelke17Hab_exp3]
+	set testEvent [list gergEtAl95Test gergEtAl95Test liuSpelke17Test_exp1 liuSpelke17Test_exp2 liuSpelke17Test_exp3]
+	set pretrainingEpochs [list 500 600 700 800 900 1000]
+
+
+
+	# define loop
+		foreach stud $study cond $condition hEvent $habEvent tEvent $testEvent { 
+			set workingdirectory "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/data/$stud/$cond"
+				cd $workingdirectory
+			foreach epochs $pretrainingEpochs {
+				testNetwork 20 pretrain $epochs $hEvent 10 $tEvent Study_${stud}_Epochs_${epochs}_${cond}_LR_${learningRates}.txt
+			}
+		}
+	}
+
+set lRates [list 0.4 0.1 .07 .04 .01]
+
+# define loop
+	foreach lr $lRates {
+		set netName "Net_LR_${lr}"
+		netSim $netName $lr
+	}
+	
+
+}
+
+gergLiuSim

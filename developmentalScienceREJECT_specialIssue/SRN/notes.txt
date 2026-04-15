@@ -1,0 +1,6 @@
+# Some notes #
+
+
+# model different curved trajectories (for real-world phase)
+# need at least three curved trajectories that the model hasn't experienced in the real world
+# have versions of the simulation where the net is habituated and test on same trajectories as those experienced during pretraining and a verson where the net is habituated and tested on different curved trajectors from those experienced during the pretraining phase

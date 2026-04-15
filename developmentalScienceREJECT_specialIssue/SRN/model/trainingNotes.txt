@@ -1,0 +1,4 @@
+training notes
+
+pretrain 500 epochs
+habituation 15 epochs

@@ -1,0 +1,1 @@
+# this folder differs from the "unequalLinearCurvedRatio" folder in that the ratio of linear motion to curved motion in the pretraining set is equal

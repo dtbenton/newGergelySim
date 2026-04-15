@@ -1,0 +1,120 @@
+# Simulation 2 (loosely corresponding to Csibra et al. 1999)
+# Author: Deon T. Benton
+
+proc gsSim {} {
+	addNet gsSim 
+
+	# input groups
+	addGroup Object_Left_IN 82 INPUT  
+	addGroup Object_Right_IN 82 INPUT  
+	addGroup Object_Left_Animate_Status_IN 2 INPUT  
+	addGroup Object_Right_Animate_Status_IN 2 INPUT  
+	addGroup Grid_IN 5 INPUT  
+	addGroup Grid_Position_IN 3 INPUT  
+	addGroup Jump_Height_IN 5 INPUT  
+	addGroup Motion_IN 2 INPUT  
+	addGroup Goal_IN 1 INPUT  
+
+	# hidden group (# there are necessarily fewer hidden units than there are input and output units)
+	addGroup hidden 50 RELU
+	
+	# output group
+	addGroup Object_Left_OUT 82 OUTPUT 
+	addGroup Object_Right_OUT 82 OUTPUT 
+	addGroup Object_Left_Animate_Status_OUT 2 OUTPUT
+	addGroup Object_Right_Animate_Status_OUT 2 OUTPUT
+	addGroup Grid_OUT 5 OUTPUT 
+	addGroup Grid_Position_OUT 3 OUTPUT
+	addGroup Jump_Height_OUT 5 OUTPUT
+	addGroup Motion_OUT 2 OUTPUT 
+	addGroup Goal_OUT 1 OUTPUT
+
+	# connect groups (input -> hidden -> output)
+	connectGroups {Object_Left_IN Object_Right_IN Object_Left_Animate_Status_IN Object_Right_Animate_Status_IN Grid_Position_IN Motion_IN Goal_IN} hidden {Object_Left_OUT Object_Right_OUT Object_Left_Animate_Status_OUT Object_Right_Animate_Status_OUT Grid_Position_OUT Motion_OUT Goal_OUT}
+
+	connectGroups {Jump_Height_IN} hidden -type jumpSalience
+	connectGroups hidden {Jump_Height_OUT} -type jumpSalience
+
+	connectGroups {Grid_IN} hidden -type barrierSalience
+	connectGroups hidden {Grid_OUT} -type barrierSalience
+
+	deleteGroups bias
+
+	# training examples
+	loadExamples pretrain.ex -s pretrain 
+
+	# Gergeley et al. (1995) simulations 
+	loadExamples sim2ExpHab.ex 
+	loadExamples sim2CntrlHab.ex 
+	loadExamples sim2Test.ex
+
+	# set learning and display parameters
+	setObj learningRate 0.1
+	setObj momentum	    0
+	setObj batchSize    0
+	setObj numUpdates   10
+	setObj reportInterval 1
+	setObj unitCellSize 12
+	setObj linkCellSize 10
+	setObj randRange 0.175
+	setObj pseudoExampleFreq 1
+
+	# create a function that gets the error for each test example
+	proc saveActivations {fname} { 
+		set outfile [open $fname a] 
+		puts $outfile "[getObj currentExample.num] [getObj currentExample.name] " nonewline 
+		puts $outfile [getObj exampleError]
+		close $outfile 
+	}
+
+	proc testAllFinalActs {fname} { 
+		resetExampleSet [getObj testingSet.name] 
+		set nex [getObj testingSet.numExamples] 
+		for {set i 0} {$i < $nex} {incr i} {
+			doExample -set [getObj testingSet.name]
+			saveActivations $fname
+		}
+	}
+
+	proc testNetwork {n train trainNum train2 trainNum2 test fname} {
+		for {set i 0} {$i < $n} {incr i} {
+			resetNet
+			useTrainingSet $train
+			train $trainNum
+			useTrainingSet $train2
+			train $trainNum2
+			useTestingSet $test
+			testAllFinalActs $fname
+			testAllFinalActs $fname
+			testAllFinalActs $fname
+			testAllFinalActs $fname
+			testAllFinalActs $fname
+		}
+	}
+
+
+	# define lists for looping
+	set study [list sim2 sim2]
+	set habEvent [list sim2ExpHab sim2CntrlHab]
+	set testEvent [list sim2Test sim2Test]
+	set pretrainingEpochs [list 250]
+	set trainingEpochs [list 10 15]
+
+
+	# define loop
+
+	foreach stud $study hEvent $habEvent tEvent $testEvent {
+		set workingdirectory "C:/Users/detbe/Documents/projects/NEWgergliuSims/FFNN/equalLinearCurvedRatio/data/$stud"
+		cd $workingdirectory
+		foreach tEpochs $trainingEpochs {
+			foreach epochs $pretrainingEpochs {
+				testNetwork 20 pretrain $epochs $hEvent $tEpochs $tEvent Study_${stud}_pEpochs_${epochs}_tEpochs_${tEpochs}_habEvent_${hEvent}.txt
+			}
+		}
+	}
+
+}
+
+
+gsSim
+

@@ -1,0 +1,358 @@
+###############################################################################
+# MODIFIED VAN OVERWALLE-STYLE MODEL
+# Changes:
+#   - Barrier always present
+#   - Barrier raised (R2C3)
+#   - Goal always visible
+#   - Logistic (sigmoid) activation added
+###############################################################################
+
+GRID_ROWS = 5
+GRID_COLS = 5
+
+ETA = 0.10
+N_CYCLES = 4
+
+WMIN = -0.2
+WMAX =  0.2
+
+N_HABITUATION = 10
+N_PARTICIPANTS = 20
+
+set.seed(1)
+
+
+###############################################################################
+# SIGMOID FUNCTION (NEW)
+###############################################################################
+sigmoid = function(x) {
+  1 / (1 + exp(-x))
+}
+
+
+###############################################################################
+# UNIT NAMING
+###############################################################################
+unit_name = function(r, c) paste0("R", r, "C", c)
+
+all_unit_names = function() {
+  grid = character()
+  for (r in 1:GRID_ROWS) {
+    for (c in 1:GRID_COLS) {
+      grid = c(grid, unit_name(r, c))
+    }
+  }
+  c("Agent", "Goal", grid)
+}
+
+UNITS = all_unit_names()
+N_UNITS = length(UNITS)
+
+
+###############################################################################
+# NEIGHBORS
+###############################################################################
+orth_neighbors = function(r, c) {
+  candidates = rbind(
+    c(r + 1, c),
+    c(r - 1, c),
+    c(r, c + 1),
+    c(r, c - 1)
+  )
+  
+  keep =
+    candidates[,1] >= 1 & candidates[,1] <= GRID_ROWS &
+    candidates[,2] >= 1 & candidates[,2] <= GRID_COLS
+  
+  candidates[keep,,drop=FALSE]
+}
+
+
+###############################################################################
+# WEIGHTS
+###############################################################################
+init_weights = function() {
+  W = matrix(
+    runif(N_UNITS * N_UNITS, WMIN, WMAX),
+    nrow = N_UNITS,
+    dimnames = list(UNITS, UNITS)
+  )
+  diag(W) = 0
+  W
+}
+
+
+###############################################################################
+# EXTERNAL PATTERN (MODIFIED)
+###############################################################################
+make_external_pattern = function(cell, obstacleCells = character(), isFinal = FALSE) {
+  
+  ext = setNames(rep(0, N_UNITS), UNITS)
+  
+  # Agent always visible
+  ext["Agent"] = 1
+  
+  # Goal ALWAYS visible (MODIFIED)
+  ext["Goal"] = 1
+  
+  r = cell[1]
+  c = cell[2]
+  cur = unit_name(r, c)
+  
+  ext[cur] = 1
+  
+  nbrs = orth_neighbors(r, c)
+  
+  if (nrow(nbrs) > 0) {
+    for (i in 1:nrow(nbrs)) {
+      nm = unit_name(nbrs[i,1], nbrs[i,2])
+      
+      if (!(nm %in% obstacleCells)) {
+        ext[nm] = 0.5
+      }
+    }
+  }
+  
+  # Barrier ALWAYS present (MODIFIED)
+  if (length(obstacleCells) > 0) {
+    ext[obstacleCells] = -1
+  }
+  
+  ext
+}
+
+
+###############################################################################
+# GRID DISPLAY
+###############################################################################
+grid_from_activation = function(vec) {
+  mat = matrix(0, GRID_ROWS, GRID_COLS)
+  for (r in 1:GRID_ROWS) {
+    for (c in 1:GRID_COLS) {
+      mat[r,c] = vec[unit_name(r,c)]
+    }
+  }
+  mat
+}
+
+print_grid = function(mat) {
+  print(round(mat[GRID_ROWS:1,,drop=FALSE],3))
+}
+
+
+###############################################################################
+# SETTLING WITH SIGMOID (MODIFIED CORE)
+###############################################################################
+settle_internal = function(ext, W, n_cycles = N_CYCLES) {
+  
+  int = setNames(rep(0, N_UNITS), UNITS)
+  
+  for (cycle in 1:n_cycles) {
+    
+    sender = ext + int
+    
+    # APPLY SIGMOID HERE (KEY CHANGE)
+    int = sigmoid(as.vector(sender %*% W))
+    names(int) = UNITS
+  }
+  
+  int
+}
+
+
+###############################################################################
+# TRACE VERSION (ALSO MODIFIED)
+###############################################################################
+settle_internal_trace = function(ext, W, n_cycles = N_CYCLES) {
+  
+  int = setNames(rep(0, N_UNITS), UNITS)
+  history = vector("list", n_cycles)
+  
+  for (cycle in 1:n_cycles) {
+    
+    sender = ext + int
+    
+    int = sigmoid(as.vector(sender %*% W))
+    names(int) = UNITS
+    
+    history[[cycle]] = int
+  }
+  
+  history
+}
+
+
+###############################################################################
+# DELTA RULE
+###############################################################################
+delta_update = function(W, ext, int) {
+  sender = ext + int
+  error  = ext - int
+  
+  W = W + ETA * outer(sender, error)
+  diag(W) = 0
+  W
+}
+
+
+###############################################################################
+# STEP
+###############################################################################
+run_step = function(W, cell, obstacleCells, isFinal) {
+  ext = make_external_pattern(cell, obstacleCells, isFinal)
+  int = settle_internal(ext, W)
+  W = delta_update(W, ext, int)
+  list(W=W, ext=ext, int=int)
+}
+
+
+###############################################################################
+# PATHS (MODIFIED BARRIER HEIGHT)
+###############################################################################
+straight_path = function() {
+  list(c(1,1), c(1,2), c(1,3), c(1,4), c(1,5))
+}
+
+jumping_path = function() {
+  list(
+    c(1,1), c(1,2),
+    c(2,2), c(3,2),
+    c(3,3), c(3,4),
+    c(2,4), c(1,4),
+    c(1,5)
+  )
+}
+
+# Barrier raised from R1C3 → R2C3 (MODIFIED)
+obstacle_cells_present = function() {
+  c(unit_name(1,3), unit_name(2,3))
+}
+
+obstacle_cells_absent = function() {
+  character()
+}
+
+
+###############################################################################
+# TRIAL
+###############################################################################
+run_trial = function(W, path, obstacleCells) {
+  for (k in seq_along(path)) {
+    out = run_step(W, path[[k]], obstacleCells, k == length(path))
+    W = out$W
+  }
+  W
+}
+
+
+###############################################################################
+# PREDICTION
+###############################################################################
+prediction_score = function(W, criticalCells) {
+  ext = setNames(rep(0, N_UNITS), UNITS)
+  ext["Agent"] = 1
+  ext["Goal"]  = 1   # also consistent with new assumption
+  
+  int = settle_internal(ext, W)
+  mean(int[criticalCells])
+}
+
+
+###############################################################################
+# CRITICAL CELLS
+###############################################################################
+straight_critical_cells = function() {
+  c(unit_name(1,2), unit_name(1,3), unit_name(1,4))
+}
+
+jump_critical_cells = function() {
+  c(unit_name(3,2), unit_name(3,3), unit_name(3,4))
+}
+
+
+###############################################################################
+# CONDITION
+###############################################################################
+run_condition = function(habObstaclePresent, testType) {
+  
+  W = init_weights()
+  habObs = if (habObstaclePresent) obstacle_cells_present() else character()
+  
+  for (t in 1:N_HABITUATION) {
+    W = run_trial(W, jumping_path(), habObs)
+  }
+  
+  testObs = obstacle_cells_absent()
+  
+  if (testType == "straight") {
+    W = run_trial(W, straight_path(), testObs)
+    prediction_score(W, straight_critical_cells())
+  } else {
+    W = run_trial(W, jumping_path(), testObs)
+    prediction_score(W, jump_critical_cells())
+  }
+}
+
+
+###############################################################################
+# SIMULATION
+###############################################################################
+simulate_all = function() {
+  
+  results = data.frame(
+    participant = integer(),
+    condition = character(),
+    score = numeric(),
+    stringsAsFactors = FALSE
+  )
+  
+  for (p in 1:N_PARTICIPANTS) {
+    
+    results = rbind(
+      results,
+      data.frame(
+        participant = p,
+        condition = "obstacle_straight",
+        score = run_condition(TRUE, "straight"),
+        stringsAsFactors = FALSE
+      ),
+      data.frame(
+        participant = p,
+        condition = "obstacle_jump",
+        score = run_condition(TRUE, "jump"),
+        stringsAsFactors = FALSE
+      ),
+      data.frame(
+        participant = p,
+        condition = "noObstacle_straight",
+        score = run_condition(FALSE, "straight"),
+        stringsAsFactors = FALSE
+      ),
+      data.frame(
+        participant = p,
+        condition = "noObstacle_jump",
+        score = run_condition(FALSE, "jump"),
+        stringsAsFactors = FALSE
+      )
+    )
+  }
+  
+  results
+}
+
+
+###############################################################################
+# RUN
+###############################################################################
+results = simulate_all()
+print(aggregate(score ~ condition, data = results, mean))
+
+
+# save data to text file
+write.table(results,
+            file = "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/overWalleModified/sim1a/overwalleModified_sim1a.txt",
+            sep = " ",
+            row.names = FALSE,
+            col.names = FALSE,
+            quote = FALSE
+)

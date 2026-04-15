@@ -1,0 +1,17 @@
+Rather than modeling in anyone study in particular, I model a number of key findings in the literature on infant action understanding. These include:
+
+
+1. Experimental condition leads to greater associative link between trajectory and barrier than the control condition. (Simulation 1)
+2. Doesn't seem to matter whether animate features are included (Csibra et al., 1999). (Simulation 2)
+3. Infants seem to have a continuous representation of cost (Liu & Spelke, 2017). (Simulation 3) -- skip for now, may be difficult to model
+4a. Children can infer situation constraints from actions and goals as much as they can infer best actions from constraints and goals (which the above simulations demonstrat). (This is loosely based on Csibra et al. 2003)
+4b. Children can infer goal from action and constraints
+5. Causal transformation enhances association between trajectory and barrier that enables young infants to transcend limitations on action understanding imposed by limited experience with straight and curved motion (Liu et al., 2019) (Simulation 5)
+	- perhaps because causal event is more salient than noncausal event
+	- perhaps this becasue the associative link between causes and effects are broken. model it by breaking this relationship (specifically, break critical relationship: that between grid and motion type).
+6. Infants will only look longer at curved motions if they terminate in a goal object (Phillips & Wellman, 2005).
+
+
+5. More experience with straight motion leads to expectation for this motion. A potential "prediction" that could be tested in simulating more curvilinear motion.
+
+

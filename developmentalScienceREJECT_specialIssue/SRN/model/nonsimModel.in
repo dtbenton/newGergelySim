@@ -1,0 +1,73 @@
+# Simulations of Gergely et al. (1995), Liu & Spelke (2017),  Liu, Brooks, & Spelke (2019)
+# Author: Deon T. Benton
+
+addNet gergSim -i 8
+
+# input groups
+addGroup Object_Left_IN 82 INPUT 
+addGroup Object_Right_IN 82 INPUT 
+addGroup Grid_IN 64 INPUT 
+addGroup Motion_IN 64 INPUT 
+
+# hidden group (# there are necessarily fewer hidden units than there are input and output units)
+# context group
+addGroup context 50 ELMAN
+addGroup hidden 50 RELU
+
+# output group
+addGroup Object_Left_OUT 82 OUTPUT
+addGroup Object_Right_OUT 82 OUTPUT
+addGroup Grid_OUT 64 OUTPUT 
+addGroup Motion_OUT 64 OUTPUT
+
+# connect groups (input -> hidden -> output)
+connectGroups {Object_Left_IN Object_Right_IN context} hidden {Object_Left_OUT Object_Right_OUT}
+
+connectGroups {Grid_IN Motion_IN} hidden -type occluderSalience
+connectGroups hidden {Grid_OUT Motion_OUT} -type occluderSalience
+
+
+
+elmanConnect hidden context
+
+deleteGroups bias
+
+# training examples
+# loadExamples pretrain.ex -s pretrain -e PERMUTED
+loadExamples pretrain.ex -s pretrain 
+
+# Gergeley et al. (1995) simulations 
+loadExamples gergEtAl95Hab.ex 
+loadExamples gergEtAl95CntrlHab.ex
+loadExamples gergEtAl95Test.ex
+
+# Liu & Spelke (2017) simulations	
+loadExamples liuSpelke17Hab_exp1.ex 
+loadExamples liuSpelke17Hab_exp2.ex
+loadExamples liuSpelke17Hab_exp3.ex 
+loadExamples liuSpelke17Test_exp1.ex 
+loadExamples liuSpelke17Test_exp2.ex
+loadExamples liuSpelke17Test_exp3.ex
+
+
+# set learning and display parameters
+setObj learningRate 0.09
+setObj momentum	    0
+setObj batchSize    0
+setObj numUpdates   10
+setObj reportInterval 1
+setObj unitCellSize 12
+setObj linkCellSize 10
+setObj randRange 0.1
+setObj pseudoExampleFreq 1
+
+	
+resetPlot 
+plotRow 10 b 1 n Object_Left_OUT 10 b 4 rnext Object_Right_OUT 10
+plotRow 10 b 2 n Motion_OUT 8 b 2 n Grid_OUT 8
+plotRow 7 b 6 n hidden 10 
+plotRow 7 b 8 n context 10 
+plotRow 12 b 2 n Motion_IN 8 b 2 n Grid_IN 8
+plotRow 10 b 1 n Object_Left_IN 10 b 4 rnext Object_Right_IN 10
+drawUnits
+viewUnits

@@ -1,0 +1,174 @@
+# Simulation 3 
+# Author: Deon T. Benton
+
+addNet gsSim -i 8
+
+# input groups
+addGroup Object_Left_IN 82 INPUT OUT_NOISE 
+addGroup Object_Right_IN 82 INPUT  OUT_NOISE
+addGroup Object_Left_Animate_Status_IN 2 INPUT OUT_NOISE 
+addGroup Object_Right_Animate_Status_IN 2 INPUT  OUT_NOISE
+addGroup Grid_IN 5 INPUT  OUT_NOISE
+addGroup Grid_Position_IN 3 INPUT OUT_NOISE 
+addGroup Jump_Height_IN 5 INPUT OUT_NOISE 
+addGroup Motion_IN 6 INPUT OUT_NOISE
+addGroup Motion_Type_IN 2 INPUT OUT_NOISE
+addGroup Goal_IN 1 INPUT OUT_NOISE
+addGroup Clearance_IN 3 INPUT OUT_NOISE
+
+# hidden group (# there are necessarily fewer hidden units than there are input and output units)
+addGroup context 50 ELMAN
+addGroup hidden 50 RELU
+
+# noise parameters
+noiseType Object_Left_IN -range 0.175
+noiseType Object_Right_IN -range 0.175
+noiseType Object_Left_Animate_Status_IN -range 0.175
+noiseType Object_Right_Animate_Status_IN -range 0.175
+noiseType Grid_IN -range 0.175
+noiseType Grid_Position_IN -range 0.175
+noiseType Jump_Height_IN -range 0.175
+noiseType Motion_IN -range 0.175
+noiseType Motion_Type_IN -range 0.175
+noiseType Goal_IN -range 0.175
+noiseType Clearance_IN -range 0.175
+	
+
+# output group
+addGroup Object_Left_OUT 82 OUTPUT 
+addGroup Object_Right_OUT 82 OUTPUT 
+addGroup Object_Left_Animate_Status_OUT 2 OUTPUT
+addGroup Object_Right_Animate_Status_OUT 2 OUTPUT
+addGroup Grid_OUT 5 OUTPUT 
+addGroup Grid_Position_OUT 3 OUTPUT
+addGroup Jump_Height_OUT 5 OUTPUT
+addGroup Motion_OUT 6 OUTPUT
+addGroup Motion_Type_OUT 2 OUTPUT
+addGroup Goal_OUT 1 OUTPUT  
+addGroup Clearance_OUT 3 OUTPUT
+
+
+# connect groups (input -> hidden -> output)
+connectGroups {Object_Left_IN Object_Right_IN Object_Left_Animate_Status_IN Object_Right_Animate_Status_IN Grid_Position_IN Motion_IN Motion_Type_IN Goal_IN Clearance_IN context} hidden {Object_Left_OUT Object_Right_OUT Object_Left_Animate_Status_OUT Object_Right_Animate_Status_OUT Grid_Position_OUT Motion_OUT Motion_Type_OUT Goal_OUT Clearance_OUT}
+
+connectGroups {Jump_Height_IN} hidden -type jumpSalience
+connectGroups hidden {Jump_Height_OUT} -type jumpSalience
+
+connectGroups {Grid_IN} hidden -type barrierSalience
+connectGroups hidden {Grid_OUT} -type barrierSalience
+
+elmanConnect hidden context
+
+deleteGroups bias
+
+# training examples
+loadExamples pretrain.ex -s pretrain 
+loadExamples sim4aExpHab.ex 
+loadExamples sim4aTest.ex
+
+
+# set learning and display parameters
+setObj learningRate 0.1
+setObj momentum	    0
+setObj batchSize    0
+setObj numUpdates   10
+setObj reportInterval 1
+setObj unitCellSize 12
+setObj linkCellSize 10
+setObj randRange 0.1
+setObj pseudoExampleFreq 1
+
+	
+resetPlot 
+plotRow 10 b 1 n Object_Left_OUT 10 b 4 rnext Object_Right_OUT 10
+plotRow 2 b 1 n Object_Left_Animate_Status_OUT 2 b 20 n Object_Right_Animate_Status_OUT 2
+plotRow 2 b 10 n Goal_OUT 2
+plotRow 2 b 10 n Grid_Position_OUT 3
+plotRow 2 b 10 n Motion_Type_OUT 8 b 4 rnext Motion_OUT 6 
+plotRow 2 b 10 n Grid_OUT 6
+plotRow 2 b 10 n Jump_Height_OUT 6 b 4 rnext Clearance_OUT 3
+plotRow 7 b 8 n hidden 10 
+plotRow 7 b 10 n context 10 
+plotRow 2 b 10 n Jump_Height_IN 6 b 4 rnext Clearance_IN 3
+plotRow 2 b 10 n Grid_IN 6
+plotRow 2 b 10 n Motion_Type_IN 8 b 4 rnext Motion_IN 6 
+plotRow 2 b 10 n Grid_Position_IN 3
+plotRow 2 b 10 n Goal_IN 2
+plotRow 2 b 1 n Object_Left_Animate_Status_IN 2 b 20 n Object_Right_Animate_Status_IN 2
+plotRow 10 b 1 n Object_Left_IN 10 b 4 rnext Object_Right_IN 10
+drawUnits
+viewUnits
+
+# name units for increased model interpretability
+
+# object_left_animate_status IN and OUT
+setObj group(2).unit(0).name animate
+setObj group(2).unit(1).name inanimate
+
+setObj group(15).unit(0).name animate
+setObj group(15).unit(1).name inanimate
+
+
+# object_right_animate_status IN and OUT
+setObj group(3).unit(0).name animate
+setObj group(3).unit(1).name inanimate
+
+setObj group(18).unit(0).name animate
+setObj group(18).unit(1).name inanimate
+
+# Grid IN and OUT
+setObj group(4).unit(0).name noBarrier
+setObj group(4).unit(1).name oneByTwo
+setObj group(4).unit(2).name twoByTwo
+setObj group(4).unit(3).name fourByTwo
+setObj group(4).unit(4).name sixByTwo
+
+setObj group(17).unit(0).name noBarrier
+setObj group(17).unit(1).name oneByTwo
+setObj group(17).unit(2).name twoByTwo
+setObj group(17).unit(3).name fourByTwo
+setObj group(17).unit(4).name sixByTwo
+
+
+# Grid Position IN and OUT
+setObj group(5).unit(0).name missing
+setObj group(5).unit(1).name middle
+setObj group(5).unit(2).name side
+
+setObj group(18).unit(0).name missing
+setObj group(18).unit(1).name middle
+setObj group(18).unit(2).name side
+
+# Motion Type IN and OUT
+setObj group(8).unit(0).name straight
+setObj group(8).unit(1).name curved
+
+setObj group(21).unit(0).name straight
+setObj group(21).unit(1).name curved
+
+# Jump height
+setObj group(6).unit(0).name noJump
+setObj group(6).unit(1).name oneJump
+setObj group(6).unit(2).name twoJump
+setObj group(6).unit(3).name fourJump
+setObj group(6).unit(4).name sixJump
+
+setObj group(19).unit(0).name noJump
+setObj group(19).unit(1).name oneJump
+setObj group(19).unit(2).name twoJump
+setObj group(19).unit(3).name fourJump
+setObj group(19).unit(4).name sixJump
+
+# Clearance
+setObj group(10).unit(0).name noClear
+setObj group(10).unit(1).name smallClear
+setObj group(10).unit(2).name largeClear
+
+setObj group(23).unit(0).name noClear
+setObj group(23).unit(1).name smallClear
+setObj group(23).unit(2).name largeClear
+
+
+# Goal
+setObj group(9).unit(0).name contiguous
+setObj group(22).unit(0).name contiguous

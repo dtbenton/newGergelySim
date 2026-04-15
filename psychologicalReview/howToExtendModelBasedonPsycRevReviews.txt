@@ -1,0 +1,4 @@
+New things to do about the model:
+
+- show that the results generalize to different "ratios" of straight and curved motion (like Benton 2024)
+- model skerry, carey, and spelke

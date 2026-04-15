@@ -1,0 +1,8 @@
+0 inconsistent1 1164.482
+1 consistent1 1164.48
+0 inconsistent1 1164.487
+1 consistent1 1164.487
+0 inconsistent1 1164.487
+1 consistent1 1164.487
+0 inconsistent1 1164.487
+1 consistent1 1164.487

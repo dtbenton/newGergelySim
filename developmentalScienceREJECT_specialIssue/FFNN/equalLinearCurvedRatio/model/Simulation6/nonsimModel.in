@@ -1,0 +1,146 @@
+# Simulation 1 (loosely corresponding to Gergeley 1995)
+# Author: Deon T. Benton
+
+addNet gergSim 
+
+# input groups
+addGroup Object_Left_IN 82 INPUT  
+addGroup Object_Right_IN 82 INPUT  
+addGroup Object_Left_Animate_Status_IN 2 INPUT  
+addGroup Object_Right_Animate_Status_IN 2 INPUT  
+addGroup Grid_IN 5 INPUT  
+addGroup Grid_Position_IN 3 INPUT  
+addGroup Jump_Height_IN 5 INPUT  
+addGroup Motion_IN 2 INPUT
+addGroup Goal_IN 1 INPUT   
+
+# hidden group (# there are necessarily fewer hidden units than there are input and output units)
+addGroup hidden 50 RELU
+	
+
+# output group
+addGroup Object_Left_OUT 82 OUTPUT 
+addGroup Object_Right_OUT 82 OUTPUT 
+addGroup Object_Left_Animate_Status_OUT 2 OUTPUT
+addGroup Object_Right_Animate_Status_OUT 2 OUTPUT
+addGroup Grid_OUT 5 OUTPUT 
+addGroup Grid_Position_OUT 3 OUTPUT
+addGroup Jump_Height_OUT 5 OUTPUT
+addGroup Motion_OUT 2 OUTPUT
+addGroup Goal_OUT 1 OUTPUT  
+
+# connect groups (input -> hidden -> output)
+connectGroups {Object_Left_IN Object_Right_IN Object_Left_Animate_Status_IN Object_Right_Animate_Status_IN Grid_Position_IN Motion_IN Goal_IN} hidden {Object_Left_OUT Object_Right_OUT Object_Left_Animate_Status_OUT Object_Right_Animate_Status_OUT Grid_Position_OUT Motion_OUT Goal_OUT}
+
+connectGroups {Jump_Height_IN} hidden -type jumpSalience
+connectGroups hidden {Jump_Height_OUT} -type jumpSalience
+
+connectGroups {Grid_IN} hidden -type barrierSalience
+connectGroups hidden {Grid_OUT} -type barrierSalience
+
+deleteGroups bias
+
+# training examples
+loadExamples pretrain.ex -s pretrain 
+loadExamples sim6ExpHab.ex 
+	loadExamples sim6CntrlHab_noObject.ex
+	loadExamples sim6CntrlHab_emptyObject.ex
+	loadExamples sim6Test.ex
+	loadExamples sim6CntrlTest_noObject.ex
+	loadExamples sim6CntrlTest_emptyObject.ex
+
+
+# set learning and display parameters
+setObj learningRate 0.1
+setObj momentum	    0
+setObj batchSize    0
+setObj numUpdates   10
+setObj reportInterval 1
+setObj unitCellSize 12
+setObj linkCellSize 10
+setObj randRange 0.1
+setObj pseudoExampleFreq 1
+
+	
+resetPlot 
+plotRow 10 b 1 n Object_Left_OUT 10 b 4 rnext Object_Right_OUT 10
+plotRow 2 b 1 n Object_Left_Animate_Status_OUT 2 b 20 n Object_Right_Animate_Status_OUT 2
+plotRow 2 b 10 n Goal_OUT 2
+plotRow 2 b 10 n Grid_Position_OUT 3
+plotRow 2 b 10 n Motion_OUT 8 b 15 
+plotRow 2 b 10 n Grid_OUT 6
+plotRow 2 b 10 n Jump_Height_OUT 6 
+plotRow 7 b 8 n hidden 10 
+plotRow 2 b 10 n Jump_Height_IN 6 
+plotRow 2 b 10 n Grid_IN 6
+plotRow 2 b 10 n Motion_IN 8 
+plotRow 2 b 10 n Grid_Position_IN 3
+plotRow 2 b 10 n Goal_IN 2
+plotRow 2 b 1 n Object_Left_Animate_Status_IN 2 b 20 n Object_Right_Animate_Status_IN 2
+plotRow 10 b 1 n Object_Left_IN 10 b 4 rnext Object_Right_IN 10
+drawUnits
+viewUnits
+
+# name units for increased model interpretability
+
+# object_left_animate_status IN and OUT
+setObj group(2).unit(0).name animate
+setObj group(2).unit(1).name inanimate
+
+setObj group(12).unit(0).name animate
+setObj group(12).unit(1).name inanimate
+
+
+# object_right_animate_status IN and OUT
+setObj group(3).unit(0).name animate
+setObj group(3).unit(1).name inanimate
+
+setObj group(13).unit(0).name animate
+setObj group(13).unit(1).name inanimate
+
+# Grid IN and OUT
+setObj group(4).unit(0).name noBarrier
+setObj group(4).unit(1).name oneByTwo
+setObj group(4).unit(2).name twoByTwo
+setObj group(4).unit(3).name fourByTwo
+setObj group(4).unit(4).name sixByTwo
+
+setObj group(14).unit(0).name noBarrier
+setObj group(14).unit(1).name oneByTwo
+setObj group(14).unit(2).name twoByTwo
+setObj group(14).unit(3).name fourByTwo
+setObj group(14).unit(4).name sixByTwo
+
+
+# Grid Position IN and OUT
+setObj group(5).unit(0).name missing
+setObj group(5).unit(1).name middle
+setObj group(5).unit(2).name side
+
+setObj group(15).unit(0).name missing
+setObj group(15).unit(1).name middle
+setObj group(15).unit(2).name side
+
+# Motion IN and OUT
+setObj group(7).unit(0).name straight
+setObj group(7).unit(1).name curved
+
+setObj group(17).unit(0).name straight
+setObj group(17).unit(1).name curved
+
+# Jump height
+setObj group(6).unit(0).name noJump
+setObj group(6).unit(1).name oneJump
+setObj group(6).unit(2).name twoJump
+setObj group(6).unit(3).name fourJump
+setObj group(6).unit(4).name sixJump
+
+setObj group(16).unit(0).name noJump
+setObj group(16).unit(1).name oneJump
+setObj group(16).unit(2).name twoJump
+setObj group(16).unit(3).name fourJump
+setObj group(16).unit(4).name sixJump
+
+# Goal
+setObj group(8).unit(0).name contiguous
+setObj group(18).unit(0).name contiguous

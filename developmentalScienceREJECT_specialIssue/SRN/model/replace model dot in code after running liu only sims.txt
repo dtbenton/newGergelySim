@@ -1,0 +1,177 @@
+# Simulations of Gergely et al. (1995), Liu & Spelke (2017),  Liu, Brooks, & Spelke (2019)
+# Author: Deon T. Benton
+
+#############################
+#############################
+#############################
+##    GLOBAL SIMULATION    ##
+#############################
+#############################
+#############################
+proc globalSim {} {
+seed 2025
+# name of network
+addNet globalSim -i 8
+
+# input groups
+addGroup Object_Left_IN 102 INPUT OUT_NOISE
+addGroup Object_Right_IN 102 INPUT OUT_NOISE
+addGroup Motion_IN 64 INPUT OUT_NOISE
+
+# hidden group (# there are necessarily fewer hidden units than there are input and output units)
+# context group
+addGroup context 50 ELMAN
+addGroup hidden 50 RELU
+
+# noise parameters
+noiseType Object_Left_IN -range 0.1
+noiseType Object_Right_IN -range 0.1
+noiseType Motion_IN -range 0.1
+
+
+# output group
+addGroup Object_Left_OUT 102 OUTPUT
+addGroup Object_Right_OUT 102 OUTPUT
+addGroup Motion_OUT 64 OUTPUT
+
+# connect groups (input -> hidden -> output)
+connectGroups {Object_Left_IN Object_Right_IN context} hidden {Object_Left_OUT Object_Right_OUT Motion_OUT}
+elmanConnect hidden context
+
+# training examples
+loadExamples pretrain.ex -s pretrain -e PERMUTED
+
+# Gergeley et al. (1995) simulations 
+loadExamples gergEtAl95Hab.ex 
+loadExamples gergEtAl95CntrlHab.ex
+loadExamples gergEtAl95Test.ex
+
+# Liu & Spelke (2017) simulations
+loadExamples liuSpelke17Hab.ex 
+loadExamples liuSpelke17CntrlHab.ex 
+loadExamples liuSpelke17Test.ex 
+
+
+# set learning and display parameters
+setObj learningRate 0.05
+setObj momentum	    0.9
+setObj batchSize    0
+setObj numUpdates   10
+setObj reportInterval 1
+setObj unitCellSize 12
+setObj linkCellSize 10
+setObj randRange 0.1
+setObj pseudoExampleFreq 1
+
+# create a function that gets the error for each test example
+	proc saveActivations {fname} { 
+		set outfile [open $fname a] 
+		puts $outfile "[getObj currentExample.num] [getObj currentExample.name] " nonewline 
+		puts $outfile [getObj exampleError]
+		close $outfile 
+	}
+
+	proc testAllFinalActs {fname} { 
+		resetExampleSet [getObj testingSet.name] 
+		set nex [getObj testingSet.numExamples] 
+		for {set i 0} {$i < $nex} {incr i} {
+			doExample -set [getObj testingSet.name]
+			saveActivations $fname
+		}
+	}
+
+	proc testNetwork {n train trainNum train2 trainNum2 test fname} {
+		for {set i 0} {$i < $n} {incr i} {
+			resetNet
+			useTrainingSet $train
+			train $trainNum
+			useTrainingSet $train2
+			train $trainNum2
+			useTestingSet $test
+			testAllFinalActs $fname
+		}
+	}
+
+
+# define lists for looping
+set study [list gergEtAl1995 gergEtAl1995 liuSpelke2017 liuSpelke2017]
+set condition [list experimental control experimental control]
+set habEvent [list gergEtAl95Hab gergEtAl95CntrlHab liuSpelke17Hab liuSpelke17CntrlHab]
+set testEvent [list gergEtAl95Test gergEtAl95Test liuSpelke17Test liuSpelke17Test]
+set pretrainingEpochs [list 500 1000]
+
+
+
+# define loop
+	foreach stud $study cond $condition hEvent $habEvent tEvent $testEvent { 
+		set workingdirectory "C:/Users/bentod2/Documents/projects/current/gergeley&liuSims/data/$stud"
+			cd $workingdirectory
+		foreach epochs $pretrainingEpochs {
+			testNetwork 50 pretrain $epochs $hEvent 15 $tEvent Study_${stud}_Epochs_${epochs}_${cond}.txt
+		}
+	}
+}
+
+###########################################################################
+# create a function that enables us to run the Gergely network on its own #
+###########################################################################
+
+proc ngsSim {} {
+# name of network
+addNet ngsSim -i 8
+
+# input groups
+addGroup Object_Left_IN 102 INPUT 
+addGroup Object_Right_IN 102 INPUT 
+addGroup Motion_IN 64 INPUT 
+
+# hidden group (# there are necessarily fewer hidden units than there are input and output units)
+# context group
+addGroup context 50 ELMAN
+addGroup hidden 50 RELU
+
+# output group
+addGroup Object_Left_OUT 102 OUTPUT
+addGroup Object_Right_OUT 102 OUTPUT
+addGroup Motion_OUT 64 OUTPUT
+
+# connect groups (input -> hidden -> output)
+connectGroups {Object_Left_IN Object_Right_IN context} hidden {Object_Left_OUT Object_Right_OUT Motion_OUT}
+elmanConnect hidden context
+
+# training examples
+loadExamples pretrain.ex -s pretrain -e PERMUTED
+
+# Gergeley et al. (1995) simulations 
+loadExamples gergEtAl95Hab.ex -s "gerg95 Hab" 
+loadExamples gergEtAl95CntrlHab.ex -s "gerg95 CtrlHab" 
+loadExamples gergEtAl95Test.ex -s "gerg95 test"
+
+# Liu & Spelke (2017) simulations
+loadExamples liuSpelke17Hab.ex -s "liuSpelke17 Hab"
+loadExamples liuSpelke17CntrlHab.ex -s "liuSpelke17 CtrlHab"
+loadExamples liuSpelke17Test.ex -s "liuSpelke17 Test"
+
+
+
+# set learning and display parameters
+setObj learningRate 0.05
+setObj momentum	    0.9
+setObj batchSize    0
+setObj numUpdates   10
+setObj reportInterval 1
+setObj unitCellSize 12
+setObj linkCellSize 10
+setObj randRange 0.1
+setObj pseudoExampleFreq 1
+
+resetPlot 
+plotRow 12 b 1 n Object_Left_OUT 10 b 4 n Object_Right_OUT 10
+plotRow 10 b 2 n Motion_OUT 8
+plotRow 7 b 6 n hidden 10
+plotRow 7 b 8 n context 10
+plotRow 12 b 2 n Motion_IN 8
+plotRow 12 b 1 n Object_Left_IN 10 b 4 n Object_Right_IN 10
+drawUnits
+viewUnits
+}

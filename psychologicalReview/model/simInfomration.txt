@@ -1,0 +1,22 @@
+Simulation 1a: Gergely et al. 1995 (DONE)
+Simulation 1b: Gergely et al. 1995 (DONE) -- different ratios
+Simulation 1c: Gergely et al. 1995 (DONE) -- no salience
+Simulation 2a: Csibra et al. 1999 (DONE)
+Simulation 2c: Csibra et al. 1999 (NOT DONE) -- no salience
+Simulation 3a: Csibra et al. 2003 (inferring constraints; DONE)
+Simulation 3c: Csibra et al. 2003 (NOT DONE) -- no salience
+Simulation 3d: Csibra et al. 2003 (inferring goals; DONE)
+Simulation 3f: Csibra et al. 2003 (NOT DONE) -- no salience
+Simulation 4a: Liu & Spelke 2017 (DONE)
+Simulation 4c: Liu & Spelke 2017 (NOT DONE) -- no salience
+Simulation 5a: Skerry, Carey, Spelke (NOT DONE)
+Simulation 5c: Skerry, Carey, Spelke (NOT DONE) -- no salience
+
+
+# Prediction simulations
+Simulation 6: Habituated to an event in which first object moves along a straight path towards an occluded screen and the reaches the goal object. At test, it either moves through an obstacle or jumps over it.
+Simulation 7: Causally effective curved motion experience during action phase prior to standard habituation (to make curved more familiar than straight)
+Simulation 8: This simulation is akin to an experiment in which infants are habituated to an event in which curved motion occurs under, rather than over, a barrier (which would be suspended in the air). The control condition is idenatical except that the barrier is off to the side, but still suspended in the air. (In terms of the model itself, i just added a fourth unit to Grid_Position_IN and Grid_Position_OUT, where the last unit corresponds to a grid that is suspended in the air and located in the middle of the screen
+
+
+# another prediction to run: give a young model action experience prior to habituation like Skerry et al. (2013) but then make the action events causally efficacious like Liu and Spelke (2019); should lead ot equivalent learning of straight (from direct action experience prior to habit) and curved motion (from better processing of the relation between curved motion and barriers during habituation)

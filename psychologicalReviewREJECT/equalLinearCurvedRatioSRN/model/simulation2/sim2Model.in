@@ -1,0 +1,144 @@
+# Simulation 2 
+# Author: Deon T. Benton
+
+proc gsSim {} {
+	addNet gsSim -i 8
+
+	# input groups
+	addGroup Object_Left_IN 82 INPUT OUT_NOISE 
+	addGroup Object_Right_IN 82 INPUT  OUT_NOISE
+	addGroup Object_Left_Animate_Status_IN 2 INPUT OUT_NOISE 
+	addGroup Object_Right_Animate_Status_IN 2 INPUT  OUT_NOISE
+	addGroup Grid_IN 5 INPUT  OUT_NOISE
+	addGroup Grid_Position_IN 3 INPUT OUT_NOISE 
+	addGroup Jump_Height_IN 5 INPUT OUT_NOISE 
+	addGroup Motion_IN 6 INPUT OUT_NOISE
+	addGroup Motion_Type_IN 2 INPUT OUT_NOISE
+	addGroup Goal_IN 1 INPUT OUT_NOISE
+	addGroup Clearance_IN 3 INPUT OUT_NOISE
+
+	# hidden group (# there are necessarily fewer hidden units than there are input and output units)
+	addGroup context 50 ELMAN
+	addGroup hidden 50 RELU
+	
+	# noise parameters
+	noiseType Object_Left_IN -range 0.375
+	noiseType Object_Right_IN -range 0.375
+	noiseType Object_Left_Animate_Status_IN -range 0.375
+	noiseType Object_Right_Animate_Status_IN -range 0.375
+	noiseType Grid_IN -range 0.375
+	noiseType Grid_Position_IN -range 0.375
+	noiseType Jump_Height_IN -range 0.375
+	noiseType Motion_IN -range 0.375
+	noiseType Motion_Type_IN -range 0.375
+	noiseType Goal_IN -range 0.375
+	noiseType Clearance_IN -range 0.375
+		
+
+	# output group
+	addGroup Object_Left_OUT 82 OUTPUT 
+	addGroup Object_Right_OUT 82 OUTPUT 
+	addGroup Object_Left_Animate_Status_OUT 2 OUTPUT
+	addGroup Object_Right_Animate_Status_OUT 2 OUTPUT
+	addGroup Grid_OUT 5 OUTPUT 
+	addGroup Grid_Position_OUT 3 OUTPUT
+	addGroup Jump_Height_OUT 5 OUTPUT
+	addGroup Motion_OUT 6 OUTPUT
+	addGroup Motion_Type_OUT 2 OUTPUT
+	addGroup Goal_OUT 1 OUTPUT  
+	addGroup Clearance_OUT 3 OUTPUT
+
+
+	# connect groups (input -> hidden -> output)
+	connectGroups {Object_Left_IN Object_Right_IN Object_Left_Animate_Status_IN Object_Right_Animate_Status_IN Grid_Position_IN Motion_IN Motion_Type_IN Goal_IN Clearance_IN context} hidden {Object_Left_OUT Object_Right_OUT Object_Left_Animate_Status_OUT Object_Right_Animate_Status_OUT Grid_Position_OUT Motion_OUT Motion_Type_OUT Goal_OUT Clearance_OUT}
+
+	connectGroups {Jump_Height_IN} hidden -type jumpSalience
+	connectGroups hidden {Jump_Height_OUT} -type jumpSalience
+
+	connectGroups {Grid_IN} hidden -type barrierSalience
+	connectGroups hidden {Grid_OUT} -type barrierSalience
+
+	elmanConnect hidden context
+
+	deleteGroups bias
+
+	# training examples
+	loadExamples pretrain.ex -s pretrain 
+
+	loadExamples sim2ExpHab.ex 
+	loadExamples sim2CntrlHab.ex 
+	loadExamples sim2Test.ex
+	loadExamples sim2CntrlTest.ex
+
+	# set learning and display parameters
+	setObj learningRate 0.1
+	setObj momentum	    0
+	setObj batchSize    0
+	setObj numUpdates   10
+	setObj randRange 0.375
+	setObj pseudoExampleFreq 1
+
+	# create a function that gets the error for each test example
+	proc saveActivations {fname} { 
+		set outfile [open $fname a] 
+		puts $outfile "[getObj currentExample.num] [getObj currentExample.name] " nonewline 
+		puts $outfile [getObj exampleError]
+		close $outfile 
+	}
+
+	proc testAllFinalActs {fname} { 
+		resetExampleSet [getObj testingSet.name] 
+		set nex [getObj testingSet.numExamples] 
+		for {set i 0} {$i < $nex} {incr i} {
+			doExample -set [getObj testingSet.name]
+			saveActivations $fname
+		}
+	}
+
+	proc testNetwork {n train trainNum train2 trainNum2 test fname} {
+		for {set i 0} {$i < $n} {incr i} {
+			resetNet
+			useTrainingSet $train
+			train $trainNum
+			useTrainingSet $train2
+			train $trainNum2
+			useTestingSet $test
+			testAllFinalActs $fname
+			testAllFinalActs $fname
+			testAllFinalActs $fname
+			testAllFinalActs $fname
+			testAllFinalActs $fname
+		}
+	}
+
+
+	# define lists for looping
+	set study [list sim2 sim2]
+	set condition [list hab control]
+	set habEvent [list sim2ExpHab sim2CntrlHab]
+	set testEvent [list sim2Test sim2CntrlTest]
+	set pretrainingEpochs [list 800]
+	set trainingEpochs [list 10 12]
+
+
+	# define loop
+
+	foreach stud $study cond $condition hEvent $habEvent tEvent $testEvent {
+		set workingdirectory "REPLACE THIS WITH THE PATH TO WHERE YOUR DATA IS STORED"
+		cd $workingdirectory
+		foreach tEpochs $trainingEpochs {
+			foreach epochs $pretrainingEpochs {
+				testNetwork 20 pretrain $epochs $hEvent $tEpochs $tEvent Study_${stud}_pEpochs_${epochs}_${cond}_tEpochs_${tEpochs}.txt
+			}
+		}
+	}
+
+}
+
+
+####################################################################
+# UNCOMMENT THE CODE BELOW IF YOU WANT TO AUTOMATE THE SIMULATIONS #
+####################################################################
+#gsSim
+
+

@@ -1,0 +1,3 @@
+one of the reviewers was confused about how the activations of the units were set and how that related to gaussian noise.
+
+plaut and vande velde describe exactly how this can be done beautifully, pg. 321 left column

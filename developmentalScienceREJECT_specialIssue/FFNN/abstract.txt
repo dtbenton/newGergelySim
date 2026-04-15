@@ -1,0 +1,12 @@
+Abstract
+One of the many challenges that young learners must contend with is learning how to navigate the world. learning how to distinguish inefficient from efficient actions. This knowledge not only allows them to process i Several domain-specific proposals have been offered to explain how infants achieve this. The current paper departs from these proposals by arguing that infants' ebhaviors in studies taht evaluate their action understanding can be explained by a combination of real-world experience with different kinds of actions and real-time, online domain-general associative learning. I demonstrate that when this proposal is implemented in a connectionist artifiical neural network model, the model (and by extension, the proposal that it implements) can account for a range of findings from studies that use some version of the original Gergely et al. (1995) paradigm. Based on this, I argue that 
+
+
+
+
+the current proposal also differs from existing proposals of ifnant action undertstanding in that a concrete mechanism through which infants' behavior in actio understanding studies might emerge. 
+
+To provide insight into how exactly such a process might unfold in infants' minds, I discussed how the model processed the training events. Although this discussion was limmited to the discussion how the model processed the events in the Gergely study, it was proposed that hte same basic principles explain the model's performance in the other simulations.
+
+
+Previous research found that infants looked longer at an inefficient event than an efficient one after habituating to an event where an animate-like object either jumped or reached over a barrier to approach another animate-like object.
