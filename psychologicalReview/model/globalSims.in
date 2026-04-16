@@ -2197,6 +2197,7 @@ proc gsSim_sim5c {} {
 
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5c/sim5cExpHab.ex"
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5c/sim5cActionPhase.ex"
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5c/sim5cActionPhaseIneff.ex"
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5c/sim5cCntrlHab.ex" 
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5c/sim5cTest.ex"
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5c/sim5cCntrlTest.ex"
@@ -2274,10 +2275,10 @@ proc gsSim_sim5c {} {
 	set study [list sim5c sim5c sim5c]
 	set folder [list effective effective ineffective]
 	set condition [list hab control hab]
-	set actionPhaseEvent [list sim5cActionPhase sim5cActionPhase sim5aActionPhaseIneff]
+	set actionPhaseEvent [list sim5cActionPhase sim5cActionPhase sim5cActionPhaseIneff]
 	set ifEvent [list effective effectiveControl ineffective]
 	set habEvent [list sim5cExpHab sim5cCntrlHab sim5cExpHab]
-	set testEvent [list sim5cTest sim5aTest sim5cTest]
+	set testEvent [list sim5cTest sim5cTest sim5cTest]
 	set actionPhaseEpochs [list 8 9 10 11 12]
 	set trainingEpochs [list 8 9 10 11 12]
 	set pretrainingEpochs [list 225]
@@ -2359,7 +2360,7 @@ proc gsSim_sim5d {} {
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5d/pretrain.ex" -e PERMUTED
 
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5d/sim5dExpHab.ex"
-	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5d/sim5bExpHabIneff.ex"
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5d/sim5dExpHabIneff.ex"
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5d/sim5dCntrlHab.ex" 
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5d/sim5dTest.ex"
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5d/sim5dCntrlTest.ex"
