@@ -4,7 +4,7 @@ defT:-
 name: habituation
 5	
 proc: {
-          setLinkValues learningRate 0.01 -type barrierSalience
+          setLinkValues learningRate 0.075 -type barrierSalience
           setLinkValues weightDecay 0 -type barrierSalience
           }
 I:	
