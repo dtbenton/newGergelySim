@@ -16,6 +16,9 @@ Simulation 5c: Skerry, Carey, Spelke (NOT DONE) -- no salience
 # Prediction simulations
 Simulation 6: Habituated to an event in which first object moves along a straight path towards an occluded screen and the reaches the goal object. At test, it either moves through an obstacle or jumps over it.
 Simulation 7: Causally effective curved motion experience during action phase prior to standard habituation (to make curved more familiar than straight)
+Simulation 7b: Causally effective curved motion experience during action phase prior to standard habituation (to make curved more familiar than straight); because Simulation 7 shows that simply making the action salient, doesn't, by itself, make curved motion more familiar than straight motion, it is necessary to further boost the salience of the action phase. This is akin to causing the ball or whatever is being grasped light up in addition to the action being effective. Simulation 7b thus further boosts the salience of the action phase.
+	-- note that both models make predictions; 7 predicts that all else equal, children will treat efficient and inefficient events equivalently unless the action phase's salience is further boosted, which 7b gets at
+
 Simulation 8: This simulation is akin to an experiment in which infants are habituated to an event in which curved motion occurs under, rather than over, a barrier (which would be suspended in the air). The control condition is idenatical except that the barrier is off to the side, but still suspended in the air. (In terms of the model itself, i just added a fourth unit to Grid_Position_IN and Grid_Position_OUT, where the last unit corresponds to a grid that is suspended in the air and located in the middle of the screen
 
 

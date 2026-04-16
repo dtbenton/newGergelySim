@@ -1883,7 +1883,7 @@ proc gsSim_sim5a {} {
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/sim5aCntrlTest.ex"
 
 	# set learning and display parameters
-	setObj learningRate 0.0001
+	setObj learningRate 0.0.075
 	setObj momentum	    0
 	setObj batchSize    0
 	setObj numUpdates   10
@@ -1914,7 +1914,7 @@ proc gsSim_sim5a {} {
 				resetNet
 				
 				
-				setObj learningRate 0.01
+				setObj learningRate 0.075
 				useTrainingSet $train
 				train $trainNum
 				
@@ -1923,7 +1923,7 @@ proc gsSim_sim5a {} {
 				setObj learningRate 0.175
 				useTrainingSet $train2
 				train $trainNum2
-				setObj learningRate 0.01
+				setObj learningRate 0.075
 				useTrainingSet $train3
 				train $trainNum3
 				useTestingSet $test
@@ -1934,14 +1934,14 @@ proc gsSim_sim5a {} {
 				resetNet
 				
 				
-				setObj learningRate 0.01
+				setObj learningRate 0.075
 				useTrainingSet $train
 				train $trainNum
 
-				setObj learningRate 0.01
+				setObj learningRate 0.075
 				useTrainingSet $train2
 				train $trainNum2
-				setObj learningRate 0.01
+				setObj learningRate 0.075
 				useTrainingSet $train3
 				train $trainNum3
 				useTestingSet $test
@@ -2052,7 +2052,7 @@ proc gsSim_sim5b {} {
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5b/sim5bCntrlTest.ex"
 
 	# set learning and display parameters
-	setObj learningRate 0.0001
+	setObj learningRate 0.0.075
 	setObj momentum	    0
 	setObj batchSize    0
 	setObj numUpdates   10
@@ -2081,7 +2081,7 @@ proc gsSim_sim5b {} {
 		if {$ifEvent == "causal" || $ifEvent == "causalControl"} {
 			for {set i 0} {$i < $n} {incr i} {
 				resetNet
-				setObj learningRate 0.01
+				setObj learningRate 0.075
 				useTrainingSet $train
 				train $trainNum
 				# learning rate below puts infants in an attentional state that is akin to oldest models in the reported simulations 
@@ -2094,10 +2094,10 @@ proc gsSim_sim5b {} {
 		} else {
 			for {set i 0} {$i < $n} {incr i} {
 				resetNet
-				setObj learningRate 0.01
+				setObj learningRate 0.075
 				useTrainingSet $train
 				train $trainNum
-				setObj learningRate 0.01
+				setObj learningRate 0.075
 				useTrainingSet $train2
 				train $trainNum2
 				useTestingSet $test
@@ -2203,7 +2203,7 @@ proc gsSim_sim5c {} {
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5c/sim5cCntrlTest.ex"
 
 	# set learning and display parameters
-	setObj learningRate 0.0001
+	setObj learningRate 0.0.075
 	setObj momentum	    0
 	setObj batchSize    0
 	setObj numUpdates   10
@@ -2234,7 +2234,7 @@ proc gsSim_sim5c {} {
 				resetNet
 				
 				
-				setObj learningRate 0.01
+				setObj learningRate 0.075
 				useTrainingSet $train
 				train $trainNum
 				
@@ -2242,7 +2242,7 @@ proc gsSim_sim5c {} {
 				setObj learningRate 0.175
 				useTrainingSet $train2
 				train $trainNum2
-				setObj learningRate 0.01
+				setObj learningRate 0.075
 				useTrainingSet $train3
 				train $trainNum3
 				useTestingSet $test
@@ -2253,11 +2253,11 @@ proc gsSim_sim5c {} {
 				resetNet
 				
 				
-				setObj learningRate 0.01
+				setObj learningRate 0.075
 				useTrainingSet $train
 				train $trainNum
 				
-				setObj learningRate 0.01
+				setObj learningRate 0.075
 				useTrainingSet $train2
 				train $trainNum2
 				useTrainingSet $train3
@@ -2366,7 +2366,7 @@ proc gsSim_sim5d {} {
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5d/sim5dCntrlTest.ex"
 
 	# set learning and display parameters
-	setObj learningRate 0.0001
+	setObj learningRate 0.0.075
 	setObj momentum	    0
 	setObj batchSize    0
 	setObj numUpdates   10
@@ -2395,7 +2395,7 @@ proc gsSim_sim5d {} {
 		if {$ifEvent == "causal" || $ifEvent == "causalControl"} {
 			for {set i 0} {$i < $n} {incr i} {
 				resetNet
-				setObj learningRate 0.01
+				setObj learningRate 0.075
 				useTrainingSet $train
 				train $trainNum
 				# learning rate below puts infants in an attentional state that is akin to oldest models in the reported simulations 
@@ -2408,10 +2408,10 @@ proc gsSim_sim5d {} {
 		} else {
 			for {set i 0} {$i < $n} {incr i} {
 				resetNet
-				setObj learningRate 0.01
+				setObj learningRate 0.075
 				useTrainingSet $train
 				train $trainNum
-				setObj learningRate 0.01
+				setObj learningRate 0.075
 				useTrainingSet $train2
 				train $trainNum2
 				useTestingSet $test
@@ -2682,7 +2682,7 @@ proc gsSim_sim7 {} {
 				resetNet
 				
 				
-				setObj learningRate 0.01
+				setObj learningRate 0.075
 				useTrainingSet $train
 				train $trainNum
 				
@@ -2690,7 +2690,7 @@ proc gsSim_sim7 {} {
 				setObj learningRate 0.175
 				useTrainingSet $train2
 				train $trainNum2
-				setObj learningRate 0.01
+				setObj learningRate 0.075
 				useTrainingSet $train3
 				train $trainNum3
 				useTestingSet $test
@@ -2701,11 +2701,11 @@ proc gsSim_sim7 {} {
 				resetNet
 				
 				
-				setObj learningRate 0.01
+				setObj learningRate 0.075
 				useTrainingSet $train
 				train $trainNum
 				
-				setObj learningRate 0.01
+				setObj learningRate 0.075
 				useTrainingSet $train2
 				train $trainNum2
 				useTrainingSet $train3
@@ -2745,6 +2745,7 @@ proc gsSim_sim7 {} {
 		}
 	}
 }
+
 
 
 
@@ -2881,7 +2882,7 @@ proc gsSim_sim8 {} {
 # UNCOMMENT THE CODE BELOW IF YOU WANT TO AUTOMATE THE SIMULATIONS #
 ####################################################################
 
-set modelList [list gsSim_sim5c gsSim_sim5d gsSim_sim7 gsSim_sim8]
+set modelList [list gsSim_sim7b]
 
 
 
