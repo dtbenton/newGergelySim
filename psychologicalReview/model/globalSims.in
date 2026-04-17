@@ -2878,11 +2878,140 @@ proc gsSim_sim8 {} {
 		}
 	}
 }
+
+
+# Simulation 9: Prediction sim that combines the constrained high cost test event
+# with the the barrierless Inefficient test event
+# 6 mos
+proc gsSim_sim9 {} {
+	addNet gsSim9 -i 8
+
+	# input groups
+	addGroup Object_Left_IN 82 INPUT OUT_NOISE 
+	addGroup Object_Right_IN 82 INPUT  OUT_NOISE
+	addGroup Object_Left_Animate_Status_IN 2 INPUT OUT_NOISE 
+	addGroup Object_Right_Animate_Status_IN 2 INPUT  OUT_NOISE
+	addGroup Grid_IN 5 INPUT  OUT_NOISE
+	addGroup Grid_Position_IN 3 INPUT OUT_NOISE 
+	addGroup Jump_Height_IN 5 INPUT OUT_NOISE 
+	addGroup Motion_IN 6 INPUT OUT_NOISE
+	addGroup Motion_Type_IN 2 INPUT OUT_NOISE
+	addGroup Goal_IN 1 INPUT OUT_NOISE
+	addGroup Clearance_IN 3 INPUT OUT_NOISE 
+
+	# hidden group (# there are necessarily fewer hidden units than there are input and output units)
+	addGroup context 30 ELMAN
+	addGroup hidden 30 RELU
+		
+	# noise parameters
+	noiseType Object_Left_IN -range 0.3
+	noiseType Object_Right_IN -range 0.3
+	noiseType Object_Left_Animate_Status_IN -range 0.3
+	noiseType Object_Right_Animate_Status_IN -range 0.3
+	noiseType Grid_IN -range 0.3
+	noiseType Grid_Position_IN -range 0.3
+	noiseType Jump_Height_IN -range 0.3
+	noiseType Motion_IN -range 0.3
+	noiseType Motion_Type_IN -range 0.3
+	noiseType Goal_IN -range 0.3
+	noiseType Clearance_IN -range 0.3
+
+	# output group
+	addGroup Object_Left_OUT 82 OUTPUT 
+	addGroup Object_Right_OUT 82 OUTPUT 
+	addGroup Object_Left_Animate_Status_OUT 2 OUTPUT
+	addGroup Object_Right_Animate_Status_OUT 2 OUTPUT
+	addGroup Grid_OUT 5 OUTPUT 
+	addGroup Grid_Position_OUT 3 OUTPUT
+	addGroup Jump_Height_OUT 5 OUTPUT
+	addGroup Motion_OUT 6 OUTPUT
+	addGroup Motion_Type_OUT 2 OUTPUT
+	addGroup Goal_OUT 1 OUTPUT  
+	addGroup Clearance_OUT 3 OUTPUT
+
+
+	# connect groups (input -> hidden -> output)
+	connectGroups {Object_Left_IN Object_Right_IN Object_Left_Animate_Status_IN Object_Right_Animate_Status_IN Motion_IN Goal_IN Clearance_IN  Jump_Height_IN Motion_Type_IN context} hidden {Object_Left_OUT Object_Right_OUT Object_Left_Animate_Status_OUT Object_Right_Animate_Status_OUT Motion_OUT Goal_OUT Clearance_OUT Jump_Height_OUT Motion_Type_OUT}
+
+	connectGroups {Grid_IN Grid_Position_IN} hidden -type barrierSalience
+	connectGroups hidden {Grid_OUT Grid_Position_OUT} -type barrierSalience
+
+	elmanConnect hidden context
+
+	deleteGroups bias
+
+	# training examples
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation9/pretrain.ex" -e PERMUTED
+
+	# Gergeley et al. (1995) simulations 
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation9/sim9Hab.ex" 
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation9/sim9CntrlHab.ex" 
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation9/sim9Test.ex"
+
+	# set learning and display parameters
+	setObj learningRate 0.0875
+	setObj momentum	    0
+	setObj batchSize    0
+	setObj numUpdates   10
+	setObj randRange 0.1
+	setObj reportInterval 0
+	setObj pseudoExampleFreq 1
+
+	# create a function that gets the error for each test example
+	proc saveActivations {fname} { 
+		set outfile [open $fname a] 
+		puts $outfile "[getObj currentExample.num] [getObj currentExample.name] " nonewline 
+		puts $outfile [getObj exampleError]
+		close $outfile 
+	}
+
+	proc testAllFinalActs {fname} { 
+		resetExampleSet [getObj testingSet.name] 
+		set nex [getObj testingSet.numExamples] 
+		for {set i 0} {$i < $nex} {incr i} {
+			doExample -set [getObj testingSet.name]
+			saveActivations $fname
+		}
+	}
+
+	proc testNetwork {n train trainNum train2 trainNum2 test fname} {
+		for {set i 0} {$i < $n} {incr i} {
+			resetNet
+			useTrainingSet $train
+			train $trainNum
+			useTrainingSet $train2
+			train $trainNum2
+			useTestingSet $test
+			testAllFinalActs $fname
+		}
+	}
+	
+	# define lists for looping
+	set study [list sim9 sim9]
+	set habEvent [list sim9Hab sim9CntrlHab sim9CntrlHab]
+	set testEvent [list sim9Test sim9Test sim9CntrlTest]
+	set pretrainingEpochs [list 450]
+	set trainingEpochs [list 8 9 10 11 12]
+
+
+	# define loop
+
+	foreach stud $study hEvent $habEvent tEvent $testEvent {
+		set workingdirectory "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/prediction/sim9"
+		cd $workingdirectory
+		foreach tEpochs $trainingEpochs {
+			foreach epochs $pretrainingEpochs {
+				testNetwork 20 pretrain $epochs $hEvent $tEpochs $tEvent Study_${stud}_Condition_${hEvent}_pEpochs_${epochs}_tEpochs_${tEpochs}_testEvent_${tEvent}.txt
+			}
+		}
+	}
+
+}
 ####################################################################
 # UNCOMMENT THE CODE BELOW IF YOU WANT TO AUTOMATE THE SIMULATIONS #
 ####################################################################
 
-set modelList [list gsSim_sim7b]
+set modelList [list gsSim_sim9]
 
 
 
