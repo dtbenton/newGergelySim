@@ -28,37 +28,28 @@ library(Hmisc)
 
 
 
-# set working directory
-setwd("C:/Users/detbe/Documents/projects/NEWgergliuSims/psychologicalReview/data/ALIAS/sim1b")
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/sim1b")
 
-# find all matching txt files inside subfolders
-files = list.files(
-  recursive = TRUE,
-  full.names = TRUE,
-  pattern = "^.*Study_pretrain[0-9]+_pEpochs_[0-9]+_(control|exp)_tEpochs_[0-9]+\\.txt$"
-)
+files = list.files(recursive = TRUE, full.names = TRUE)
+files = files[
+  !grepl("\\.Rhistory$|\\.gitkeep$", files) &
+    grepl("^pEpochs_[0-9]+_tEpochs_[0-9]+_condition_pretrain[0-9]+_testEvent_.*_habEvent_.*", basename(files))
+]
 
-files
 stopifnot(length(files) > 0)
 
 data_list = lapply(files, function(f) {
-  
-  # read file contents
   df = read.table(f, header = FALSE, stringsAsFactors = FALSE)
-  
-  # name the three columns from the file itself
   names(df) = c("response", "trial_type", "value")
   
-  # get filename only
   fname = basename(f)
   
-  # extract info from filename
-  df$pretrain  = as.numeric(sub("^Study_pretrain([0-9]+)_.*$", "\\1", fname))
-  df$pEpochs   = as.numeric(sub("^Study_pretrain[0-9]+_pEpochs_([0-9]+)_.*$", "\\1", fname))
-  df$condition = sub("^Study_pretrain[0-9]+_pEpochs_[0-9]+_(control|exp)_tEpochs_[0-9]+\\.txt$", "\\1", fname)
-  df$tEpochs   = as.numeric(sub("^.*_tEpochs_([0-9]+)\\.txt$", "\\1", fname))
+  df$pretrain = as.numeric(sub("^pretrain([0-9]+)$", "\\1", basename(dirname(f))))
+  df$pEpochs  = as.numeric(sub("^pEpochs_([0-9]+)_.*$", "\\1", fname))
+  df$tEpochs  = as.numeric(sub("^.*_tEpochs_([0-9]+)_condition_.*$", "\\1", fname))
+  df$condition = ifelse(grepl("CntrlHab(\\.txt)?$", fname), "control",
+                        ifelse(grepl("ExpHab(\\.txt)?$", fname), "exp", NA))
   
-  # keep source info
   df$source_file   = fname
   df$source_folder = basename(dirname(f))
   df$source_path   = f
@@ -72,7 +63,7 @@ D = do.call(rbind, data_list)
 D$ID = rep(1:1200, each = 2)
 
 # condition
-D$condition = rep(c("Control", "Experimental"), each = 200, times = 6)
+D$condition = rep(c("Control", "Experimental"), each = 120, times = 10)
 D$condition = as.factor(D$condition)
 
 # trial type
@@ -124,33 +115,8 @@ is.data.frame(D)
 ## OMNIBUS FIGURE ##
 ####################
 
-D.8 = subset(D, ! epochs %in% c("9 epochs",
-                                 "10 epochs",
-                                 "11 epochs",
-                                "12 epochs")) 
-
-D.9 = subset(D, ! epochs %in% c("8 epochs",
-                                 "10 epochs",
-                                 "11 epochs",
-                                "12 epochs"))
-
-D.10 = subset(D, ! epochs %in% c("8 epochs",
-                                 "9 epochs",
-                                 "11 epochs",
-                                "12 epochs"))
-
-D.11 = subset(D, ! epochs %in% c("8 epochs",
-                                 "9 epochs",
-                                 "10 epochs",
-                                 "12 epochs"))
-
-D.12 = subset(D, ! epochs %in% c("8 epochs",
-                                 "9 epochs",
-                                 "10 epochs",
-                                 "11 epochs"))
-
 # figure
-condition_barplot = ggplot(D.12, aes(condition, lookingTime, fill=trialType)) # create the bar graph with test.trial.2 on the x-axis and measure on the y-axis
+condition_barplot = ggplot(D, aes(condition, lookingTime, fill=trialType)) # create the bar graph with test.trial.2 on the x-axis and measure on the y-axis
 condition_barplot + stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
   stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
   ylab("Network error") + # change the label of the y-axis
