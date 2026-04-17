@@ -2941,12 +2941,12 @@ proc gsSim_sim9 {} {
 	deleteGroups bias
 
 	# training examples
-	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation9/pretrain.ex" -e PERMUTED
+	loadExamples "C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/model/simulation9/pretrain.ex" -e PERMUTED
 
 	# Gergeley et al. (1995) simulations 
-	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation9/sim9Hab.ex" 
-	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation9/sim9CntrlHab.ex" 
-	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation9/sim9Test.ex"
+	loadExamples "C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/model/simulation9/sim9Hab.ex" 
+	loadExamples "C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/model/simulation9/sim9CntrlHab.ex" 
+	loadExamples "C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/model/simulation9/sim9Test.ex"
 
 	# set learning and display parameters
 	setObj learningRate 0.0875
@@ -2997,7 +2997,7 @@ proc gsSim_sim9 {} {
 	# define loop
 
 	foreach stud $study hEvent $habEvent tEvent $testEvent {
-		set workingdirectory "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/prediction/sim9"
+		set workingdirectory "C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/data/ALIAS/prediction/sim9"
 		cd $workingdirectory
 		foreach tEpochs $trainingEpochs {
 			foreach epochs $pretrainingEpochs {
