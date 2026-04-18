@@ -24,3 +24,17 @@
 1 consistent 66.87195
 0 inconsistent 47.39299
 1 consistent 60.11591
+0 inconsistent 46.83537
+1 consistent 64.42139
+0 inconsistent 48.70647
+1 consistent 61.76079
+0 inconsistent 47.6642
+1 consistent 66.712
+0 inconsistent 49.93604
+1 consistent 59.12338
+0 inconsistent 49.7856
+1 consistent 63.79496
+0 inconsistent 48.92944
+1 consistent 72.57018
+0 inconsistent 50.48938
+1 consistent 66.26604
