@@ -28,7 +28,7 @@ library(Hmisc)
 
 
 
-setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/data/ALIAS/sim1b")
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/sim1b")
 
 files = list.files(recursive = TRUE, full.names = TRUE)
 files = files[
