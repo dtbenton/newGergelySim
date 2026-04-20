@@ -462,3 +462,14 @@ print(summarize_results(results))
 
 # To inspect the full participant-level data:
 # fix(results)
+
+# set working directory to move data below to the right folder
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/data/OverwalleOriginal/sim3a")
+# save data to text file
+write.table(results,
+            file = "C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/data/OverwalleOriginal/sim3a/overwalleOriginal_sim3a.txt",
+            sep = " ",
+            row.names = FALSE,
+            col.names = FALSE,
+            quote = FALSE
+)
