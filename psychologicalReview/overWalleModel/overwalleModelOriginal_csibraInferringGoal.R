@@ -1,11 +1,28 @@
 ###############################################################################
-# VAN OVERWALLE-STYLE SIMULATION OF THE GERGELY ET AL. (1995) OBSTACLE PARADIGM
-# MODIFIED SO THAT:
-#   - GOAL INFORMATION IS ABSENT DURING HABITUATION
-#   - AT TEST, BOTH EVENTS USE THE SAME CENTER OBSTACLE
-#   - THE ONLY DIFFERENCE AT TEST IS WHEN THE GOAL UNIT TURNS ON:
-#       * CONSISTENT   = final step
-#       * INCONSISTENT = one step before final
+# VAN OVERWALLE-STYLE SIMULATION OF THE INFERRING GOALS CONDITION
+# RECAST IN A GERGELY-STYLE OBSTACLE SETUP
+#
+# WHAT THIS SCRIPT DOES
+# ---------------------
+# Habituation:
+#   - The agent follows a jumping path over a center obstacle.
+#   - The obstacle is present.
+#   - NO goal information is provided during habituation.
+#
+# Test:
+#   - The agent follows a straight path in BOTH test events.
+#   - The obstacle is ABSENT at test, allowing a straight approach.
+#   - The only difference between test events is goal presence:
+#       * CONSISTENT   = goal present at the final step
+#       * INCONSISTENT = goal absent throughout the test event
+#
+# IMPORTANT:
+#   This is an adaptation of the Overwalle (2010) architecture to capture
+#   the logic of the Inferring Goals condition in Csibra et al. (2003),
+#   but within a Gergely-style obstacle framework.
+#
+#   In this version, the habituation jump path overshoots the obstacle,
+#   consistent with the original Overwalle-style implementation.
 ###############################################################################
 
 
@@ -25,12 +42,9 @@ WMAX =  0.2
 N_HABITUATION = 10
 N_PARTICIPANTS = 20
 
-#set.seed(1)
-
-# captures the seed before the simulation is run
+# Capture and print the random seed used
 seed_used = sample.int(.Machine$integer.max, 1)
 set.seed(seed_used)
-
 print(seed_used)
 
 
@@ -104,13 +118,14 @@ init_weights = function() {
 ###############################################################################
 # SECTION 5 — EXTERNAL PATTERN ENCODING
 ###############################################################################
-# Goal activation is now controlled by a separate logical argument:
-#   goalOnThisStep = TRUE/FALSE
+# Goal activation is controlled by goalOnThisStep.
 #
-# This lets us turn the goal on:
-#   - never during habituation
-#   - at the final step for the consistent test event
-#   - one step before the final step for the inconsistent test event
+# Rules:
+#   - Agent = +1 on every step
+#   - current location = +1
+#   - orthogonal neighbors = +0.5
+#   - obstacle neighbors = -1
+#   - Goal = +1 only when goalOnThisStep = TRUE
 ###############################################################################
 
 make_external_pattern = function(cell,
@@ -211,6 +226,13 @@ run_step = function(W, cell, obstacleCells, goalOnThisStep) {
 ###############################################################################
 # SECTION 9 — TRAJECTORY DEFINITIONS
 ###############################################################################
+# straight_path():
+#   used at test in both conditions
+#
+# jumping_path():
+#   used during habituation
+#   overshoots the obstacle in the original Overwalle-style manner
+###############################################################################
 
 straight_path = function() {
   list(
@@ -236,7 +258,12 @@ jumping_path = function() {
   )
 }
 
-# Center obstacle present in habituation and test
+
+###############################################################################
+# SECTION 10 — ENVIRONMENT DEFINITIONS
+###############################################################################
+
+# Center obstacle used during habituation
 obstacle_cells_present = function() {
   c(unit_name(1, 3))
 }
@@ -247,12 +274,11 @@ obstacle_cells_absent = function() {
 
 
 ###############################################################################
-# SECTION 10 — RUN A WHOLE TRIAL
+# SECTION 11 — RUN A WHOLE TRIAL
 ###############################################################################
 # goalStep:
-#   - NA               -> goal never appears
-#   - length(path)     -> goal appears on final step
-#   - length(path) - 1 -> goal appears one step before final
+#   - NA           -> goal never appears
+#   - length(path) -> goal appears on final step
 ###############################################################################
 
 run_trial = function(W, path, obstacleCells, goalStep = NA) {
@@ -276,7 +302,10 @@ run_trial = function(W, path, obstacleCells, goalStep = NA) {
 
 
 ###############################################################################
-# SECTION 11 — PREDICTION / EXPECTATION PROBE
+# SECTION 12 — PREDICTION / EXPECTATION PROBE
+###############################################################################
+# The probe turns on Agent and a weak Goal signal and reads activation
+# in critical cells.
 ###############################################################################
 
 prediction_score = function(W, criticalCells) {
@@ -292,43 +321,36 @@ prediction_score = function(W, criticalCells) {
 
 
 ###############################################################################
-# SECTION 12 — CRITICAL CELLS
+# SECTION 13 — CRITICAL CELLS
+###############################################################################
+# Because the test events use a straight path, score the straight-path cells.
 ###############################################################################
 
 straight_critical_cells = function() {
   c(unit_name(1, 2), unit_name(1, 3), unit_name(1, 4))
 }
 
-jump_critical_cells = function() {
-  c(unit_name(3, 2), unit_name(3, 3), unit_name(3, 4))
-}
-
 
 ###############################################################################
-# SECTION 13 — RUN ONE EXPERIMENTAL CONDITION
+# SECTION 14 — RUN ONE EXPERIMENTAL CONDITION
 ###############################################################################
 # testType:
-#   "consistent"   -> goal turns on at final step
-#   "inconsistent" -> goal turns on one step before final
+#   "consistent"   -> straight test path, no obstacle, goal present at end
+#   "inconsistent" -> straight test path, no obstacle, goal absent throughout
 #
 # Habituation:
 #   - jump path
 #   - center obstacle present
 #   - NO goal information
-#
-# Test:
-#   - jump path
-#   - center obstacle present
-#   - only difference is timing of Goal activation
 ###############################################################################
 
 run_condition = function(testType) {
   
   W = init_weights()
   
+  # Habituation: jumping path, obstacle present, no goal information
   habObs = obstacle_cells_present()
   
-  # Habituation: same jump event, but NO goal information.
   for (t in 1:N_HABITUATION) {
     W = run_trial(
       W = W,
@@ -338,13 +360,24 @@ run_condition = function(testType) {
     )
   }
   
-  testObs = obstacle_cells_present()
-  path = jumping_path()
+  # Test: straight path, no obstacle
+  testObs = obstacle_cells_absent()
   
   if (testType == "consistent") {
+    
+    # Full path: reaches goal
+    path = straight_path()
     goalStep = length(path)
+    
   } else if (testType == "inconsistent") {
-    goalStep = length(path) - 1
+    
+    # Shorter path: stops before goal
+    full_path = straight_path()
+    path = full_path[1:(length(full_path) - 1)]
+    
+    # Goal appears AFTER agent stops (i.e., final step of shortened path)
+    goalStep = length(path)
+    
   } else {
     stop("testType must be 'consistent' or 'inconsistent'")
   }
@@ -356,14 +389,14 @@ run_condition = function(testType) {
     goalStep = goalStep
   )
   
-  score = prediction_score(W, jump_critical_cells())
+  score = prediction_score(W, straight_critical_cells())
   
   score
 }
 
 
 ###############################################################################
-# SECTION 14 — RUN THE FULL SIMULATION ACROSS PARTICIPANTS
+# SECTION 15 — RUN THE FULL SIMULATION ACROSS PARTICIPANTS
 ###############################################################################
 
 simulate_all = function() {
@@ -403,7 +436,7 @@ simulate_all = function() {
 
 
 ###############################################################################
-# SECTION 15 — SUMMARIZE RESULTS
+# SECTION 16 — SUMMARIZE RESULTS
 ###############################################################################
 
 summarize_results = function(results) {
@@ -412,11 +445,23 @@ summarize_results = function(results) {
 
 
 ###############################################################################
-# SECTION 16 — RUN THE MODEL
+# SECTION 17 — RUN THE MODEL
 ###############################################################################
 
 results = simulate_all()
 cat("Condition means:\n")
 print(summarize_results(results))
 
+# To inspect participant-level results:
 # fix(results)
+
+# Set working directory to move data below to the right folder
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/OverwalleOriginal/sim3d")
+
+# Save data to text file
+write.table(results,
+            file = "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/OverwalleOriginal/sim3d/overwalleOriginal_sim3d.txt",
+            sep = " ",
+            row.names = FALSE,
+            col.names = FALSE,
+            quote = FALSE)
