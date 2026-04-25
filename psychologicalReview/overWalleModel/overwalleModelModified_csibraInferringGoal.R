@@ -457,10 +457,10 @@ print(summarize_results(results))
 # fix(results)
 
 # set working directory to move data below to the right folder
-setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/OverwalleModified/sim3d")
+#setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/OverwalleModified/sim3d")
 # save data to text file
 write.table(results,
-            file = "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/OverwalleModified/sim3d/overwalleModifed_sim3d.txt",
+            file = "C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/data/OverwalleModified/sim3d/overwalleModifed_sim3d.txt",
             sep = " ",
             row.names = FALSE,
             col.names = FALSE,

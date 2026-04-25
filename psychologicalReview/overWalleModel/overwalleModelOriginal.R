@@ -580,10 +580,10 @@ print(summarize_results(results))
 # get current working directory
 getwd()
 # set working directory to move data below to the right folder
-setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/overWalleOriginal")
+#setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/overWalleOriginal")
 # save data to text file
 write.table(results,
-            file = "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/overWalleOriginal/sim1a/overwalleOriginal_sim1a.txt",
+            file = "C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/data/OverwalleOriginal/sim1a/overwalleOriginal_sim1a.txt",
             sep = " ",
             row.names = FALSE,
             col.names = FALSE,

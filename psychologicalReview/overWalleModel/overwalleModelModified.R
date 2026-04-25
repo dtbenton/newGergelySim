@@ -228,6 +228,10 @@ obstacle_cells_present = function() {
   c(unit_name(1,3), unit_name(2,3))
 }
 
+obstacle_cells_present_control = function() {
+  c(unit_name(1,1), unit_name(2,1))
+}
+
 obstacle_cells_absent = function() {
   character()
 }
@@ -270,13 +274,15 @@ jump_critical_cells = function() {
 }
 
 
+
+
 ###############################################################################
 # CONDITION
 ###############################################################################
 run_condition = function(habObstaclePresent, testType) {
   
   W = init_weights()
-  habObs = if (habObstaclePresent) obstacle_cells_present() else character()
+  habObs = if (habObstaclePresent) obstacle_cells_present() else obstacle_cells_present_control() 
   
   for (t in 1:N_HABITUATION) {
     W = run_trial(W, jumping_path(), habObs)
@@ -350,7 +356,7 @@ print(aggregate(score ~ condition, data = results, mean))
 
 # save data to text file
 write.table(results,
-            file = "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/overWalleModified/sim1a/overwalleModified_sim1a.txt",
+            file = "C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/data/OverwalleModified/sim1a/overwalleModified_sim1a.txt",
             sep = " ",
             row.names = FALSE,
             col.names = FALSE,

@@ -388,9 +388,20 @@ habituation_exp_obstacle_cells = function() {
   c(unit_name(1, 3), unit_name(2, 3), unit_name(3, 3), unit_name(4, 3))
 }
 
+
+habituation_exp_obstacle_cells_control = function() {
+  c(unit_name(1, 1), unit_name(2, 1), unit_name(3, 1), unit_name(4, 1))
+}
+
 # experimental condition test barrier height
 test_exp_obstacle_cells_present = function() {
   c(unit_name(1, 3))
+}
+
+
+# control condition test barrier height
+test_exp_obstacle_cells_present_control = function() {
+  c(unit_name(1, 1))
 }
 
 # control condition -- no barrier (as per original Overwalle)
@@ -524,7 +535,7 @@ run_condition_cntrl = function(habObstaclePresent, testType) {
   W = init_weights()
   
   if (habObstaclePresent) {
-    habObs = habituation_exp_obstacle_cells()
+    habObs = habituation_exp_obstacle_cells_control()
   } else {
     habObs = obstacle_cells_absent()
   }
@@ -537,7 +548,7 @@ run_condition_cntrl = function(habObstaclePresent, testType) {
   }
   
   # In the control condition, the test occurs with obstacle removed.
-  testObs = obstacle_cells_absent()
+  testObs = test_exp_obstacle_cells_present_control()
   
   if (testType == "lowEfficient") {
     W = run_trial(W, lowEfficient_path(), testObs)
@@ -636,10 +647,10 @@ print(summarize_results(results))
 # get current working directory
 getwd()
 # set working directory to move data below to the right folder
-setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/OverwalleModified")
+#setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/OverwalleModified")
 # save data to text file
 write.table(results,
-            file = "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/OverwalleModified/sim4a/overwalleOriginal_sim4a.txt",
+            file = "C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/data/OverwalleModified/sim4a/overwalleModified_sim4a.txt",
             sep = " ",
             row.names = FALSE,
             col.names = FALSE,

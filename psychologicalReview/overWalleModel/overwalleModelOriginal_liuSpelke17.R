@@ -356,7 +356,9 @@ lowEfficient_path = function() {
     c(1, 1),
     c(1, 2),
     c(2, 2),
-    c(2, 3),
+    c(3, 2),
+    c(3, 3),
+    c(3, 4),
     c(2, 4),
     c(1, 4),
     c(1, 5)
@@ -635,10 +637,10 @@ print(summarize_results(results))
 # get current working directory
 getwd()
 # set working directory to move data below to the right folder
-setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/overWalleOriginal")
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/data/OverwalleOriginal")
 # save data to text file
 write.table(results,
-            file = "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/overWalleOriginal/sim4a/overwalleOriginal_sim4a.txt",
+            file = "C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/data/OverwalleOriginal/sim4a/overwalleOriginal_sim4a.txt",
             sep = " ",
             row.names = FALSE,
             col.names = FALSE,
