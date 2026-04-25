@@ -60,17 +60,15 @@ addNet gsSim -i 8
 	deleteGroups bias
 
 # training examples
-	loadExamples pretrain.ex -s pretrain -e PERMUTED 
-	loadExamples sim5aActionPhase.ex
-	loadExamples sim5aExpHab.ex 
-	loadExamples sim5aCntrlHab.ex 
-	loadExamples sim5aTest.ex
-	loadExamples sim5aCntrlTest.ex
+	loadExamples pretrain.ex -e PERMUTED
+	loadExamples sim5bExpHab.ex 
+	loadExamples sim5bCntrlHab.ex 
+	loadExamples sim5bTest.ex
+	loadExamples sim5bCntrlTest.ex
 
 
 # set learning and display parameters
-setObj learningRate 0.0001
-setObj weightDecay 0.375
+setObj learningRate 0.01
 setObj momentum	    0
 setObj batchSize    0
 setObj numUpdates   100
