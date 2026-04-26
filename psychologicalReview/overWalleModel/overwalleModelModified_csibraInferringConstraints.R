@@ -57,6 +57,13 @@ N_PARTICIPANTS = 20
 
 set.seed(1)
 
+###############################################################################
+# SIGMOID FUNCTION (NEW)
+###############################################################################
+sigmoid = function(x) {
+  1 / (1 + exp(-x))
+}
+
 
 ###############################################################################
 # SECTION 2 — UNIT NAMING
@@ -174,12 +181,19 @@ make_external_pattern = function(cell,
         next
       }
       
-      if (nm %in% obstacleCells) {
-        ext[nm] = -1
-      } else {
+      # Ordinary non-occluded neighboring cells get weak activation.
+      if (!(nm %in% obstacleCells)) {
         ext[nm] = 0.5
       }
     }
+  }
+  
+  # NEW: obstacle/barrier cells are always visible when present,
+  # unless they are occluded.
+  visibleObstacleCells = setdiff(obstacleCells, occludedCells)
+  
+  if (length(visibleObstacleCells) > 0) {
+    ext[visibleObstacleCells] = -1
   }
   
   if (isFinal) {
@@ -200,7 +214,7 @@ settle_internal = function(ext, W, n_cycles = N_CYCLES) {
   
   for (cycle in 1:n_cycles) {
     sender = ext + int
-    int = as.vector(sender %*% W)
+    int = sigmoid(as.vector(sender %*% W))
     names(int) = UNITS
   }
   

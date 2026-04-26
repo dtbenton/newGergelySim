@@ -50,6 +50,15 @@ print(seed_used)
 
 
 ###############################################################################
+# SIGMOID FUNCTION (NEW)
+###############################################################################
+sigmoid = function(x) {
+  1 / (1 + exp(-x))
+}
+
+
+
+###############################################################################
 # SECTION 2 — UNIT NAMING
 ###############################################################################
 
@@ -152,12 +161,17 @@ make_external_pattern = function(cell,
       cc = nbrs[i, 2]
       nm = unit_name(rr, cc)
       
-      if (nm %in% obstacleCells) {
-        ext[nm] = -1
-      } else {
+      # Ordinary neighboring cells get weak activation,
+      # unless they are obstacle cells.
+      if (!(nm %in% obstacleCells)) {
         ext[nm] = 0.5
       }
     }
+  }
+  
+  # Barrier is always visible whenever present.
+  if (length(obstacleCells) > 0) {
+    ext[obstacleCells] = -1
   }
   
   if (goalOnThisStep) {
@@ -178,7 +192,7 @@ settle_internal = function(ext, W, n_cycles = N_CYCLES) {
   
   for (cycle in 1:n_cycles) {
     sender = ext + int
-    int = as.vector(sender %*% W)
+    int = sigmoid(as.vector(sender %*% W))
     names(int) = UNITS
   }
   
@@ -266,7 +280,7 @@ jumping_path = function() {
 
 # Center obstacle used during habituation
 obstacle_cells_present = function() {
-  c(unit_name(1, 3), unit_name(1, 3))
+  c(unit_name(1, 3), unit_name(2, 3))
 }
 
 obstacle_cells_absent = function() {

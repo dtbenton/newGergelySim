@@ -195,44 +195,39 @@ make_external_pattern = function(cell,
                                  obstacleCells = character(),
                                  isFinal = FALSE) {
   
-  # Start with all external activations set to 0.
   ext = setNames(rep(0, N_UNITS), UNITS)
   
-  # Agent unit is active whenever the agent is moving.
   ext["Agent"] = 1
   
-  # Identify the current location.
   r = cell[1]
   c = cell[2]
   cur = unit_name(r, c)
   
-  # Current location gets strong positive activation.
   ext[cur] = 1
   
-  # Get nearby orthogonal neighbors.
   nbrs = orth_neighbors(r, c)
   
   if (nrow(nbrs) > 0) {
     
-    # LOOP PURPOSE:
-    # Visit each neighboring grid cell so we can assign it either:
-    #   +0.5 if it is ordinary nearby context
-    #   -1   if it is an obstacle cell
     for (i in 1:nrow(nbrs)) {
       
       rr = nbrs[i, 1]
       cc = nbrs[i, 2]
       nm = unit_name(rr, cc)
       
-      if (nm %in% obstacleCells) {
-        ext[nm] = -1
-      } else {
+      # Ordinary neighboring cells get weak activation,
+      # unless they are obstacle cells.
+      if (!(nm %in% obstacleCells)) {
         ext[nm] = 0.5
       }
     }
   }
   
-  # Goal becomes externally active only at the final step of the path.
+  # Obstacles are always visible whenever present.
+  if (length(obstacleCells) > 0) {
+    ext[obstacleCells] = -1
+  }
+  
   if (isFinal) {
     ext["Goal"] = 1
   }
