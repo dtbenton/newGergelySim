@@ -519,7 +519,7 @@ run_condition_exp = function(habObstaclePresent, testType) {
   score
 }
 
-
+# THIS FUNCTION CORRESPONDS TO EXPERIMENT 2 IN
 run_condition_cntrl = function(habObstaclePresent, testType) {
   
   W = init_weights()
