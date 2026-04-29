@@ -244,3 +244,91 @@ setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalR
 ggsave("fig15_04282026_OM10_main.png", 
        plot = p, 
        width = 6.5, height = 5.2, dpi = 300)
+
+
+
+
+####################################
+####################################
+##                                ##
+## SIMULATION 4 ANALYSIS: OM10-2  ##
+##                                ##
+####################################
+####################################
+
+# SIMULATION 4 ANALYSIS #
+# based on Liu and Spelke (2017)
+
+
+# set working directory
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/OverwalleModified/sim4a")
+data = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
+
+
+# combine dataframes into a single 'D' data frame
+D = rbind(data)
+
+# get dimensionality of D
+dim(D)
+
+# create an ID column
+D$ID = rep(1:40, each = 2)
+
+# create condition column
+D$condition = rep(c("Experimental condition", "Control condition"), 
+                  each = 2, times = 20)
+D$condition = as.factor(D$condition)
+
+
+# Liu experiment conditions
+D$exp = rep(c("Exp. 1", 
+              "Exps. 2,3"), each = 2, times = 20)
+
+D$exp = as.factor(D$exp)
+
+# create trial type column
+D$trialType = rep(c("Low", "High"), each = 1, times = 40)
+D$trialType = as.factor(D$trialType)
+
+
+D$trialType = factor(D$trialType, 
+                     levels = c("High", "Low"))
+
+# create a 'looking time' column
+D$lookingTime = 1-D$V3
+
+# remove columns
+D = D[,-c(1:3)]
+
+# reorder columns
+names(D)
+dim(D)
+
+D = D[,c(1,3,4,5)]
+names(D)
+
+####################
+## OMNIBUS FIGURE ##
+####################
+# figure
+p = ggplot(D, aes(exp, lookingTime, fill=trialType)) + # create the bar graph with test.trial.2 on the x-axis and measure on the y-axis
+  stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
+  stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
+  ylab("Activation of Critical Units") + # change the label of the y-axis
+  scale_y_continuous(expand = c(0, 0)) +
+  coord_cartesian(ylim=c(0, .9)) +
+  scale_fill_manual(values = c("black", "azure3")) +
+  labs(fill='Test Trial')  +
+  theme(axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 12), 
+        legend.text=element_text(size = 12),
+        legend.title = element_text(size = 12),
+        axis.title=element_text(size = 12),
+        strip.text = element_text(
+          size = 12), 
+        axis.title.x = element_blank())
+
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
+ggsave("fig15_04282026_OM10-2_main.png", 
+       plot = p, 
+       width = 6.5, height = 5.2, dpi = 300)
