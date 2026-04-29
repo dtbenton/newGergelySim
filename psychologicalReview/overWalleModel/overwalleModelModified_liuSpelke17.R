@@ -493,6 +493,7 @@ jump_critical_cells_highInefficient = function() {
 #   4. probe the expected route
 ###############################################################################
 
+# this corresponds to Experiment 1 in Liu & Spelke (2017)
 run_condition_exp = function(habObstaclePresent, testType) {
   
   W = init_weights()
@@ -525,7 +526,8 @@ run_condition_exp = function(habObstaclePresent, testType) {
 }
 
 
-run_condition_cntrl = function(habObstaclePresent, testType) {
+# this corresponds to Experiment 2 in Liu & Spelke (2017)
+run_condition_cntrl_exp2 = function(habObstaclePresent, testType) {
   
   W = init_weights()
   
@@ -544,6 +546,38 @@ run_condition_cntrl = function(habObstaclePresent, testType) {
   
   # In the control condition, the test occurs with obstacle removed.
   testObs = test_exp_obstacle_cells_present_control()
+  
+  if (testType == "lowEfficient") {
+    W = run_trial(W, lowEfficient_path(), testObs)
+    score = prediction_score(W, jump_critical_cells_lowEfficient())
+  } else {
+    W = run_trial(W, habituation_highInefficient_path(), testObs)
+    score = prediction_score(W, jump_critical_cells_highInefficient())
+  }
+  
+  score
+}
+
+# this corresponds to Experiment 3 in Liu & Spelke (2017)
+run_condition_cntrl_exp3 = function(habObstaclePresent, testType) {
+  
+  W = init_weights()
+  
+  if (habObstaclePresent) {
+    habObs = habituation_exp_obstacle_cells_control()
+  } else {
+    habObs = obstacle_cells_absent()
+  }
+  
+  # LOOP PURPOSE:
+  # Simulate repeated habituation exposures. Each iteration is one complete
+  # habituation trial through the jump path.
+  for (t in 1:N_HABITUATION) {
+    W = run_trial(W, habituation_highInefficient_path(), habObs)
+  }
+  
+  # In the control condition, the test occurs with obstacle removed.
+  testObs = test_exp_obstacle_cells_present()
   
   if (testType == "lowEfficient") {
     W = run_trial(W, lowEfficient_path(), testObs)
@@ -601,8 +635,8 @@ simulate_all = function() {
       results,
       data.frame(
         participant = p,
-        condition = "cntrl_low_efficient",
-        score = run_condition_cntrl(FALSE, "lowEfficient"),
+        condition = "cntrl_low_efficient_exp2",
+        score = run_condition_cntrl_exp2(FALSE, "lowEfficient"),
         stringsAsFactors = FALSE
       )
     )
@@ -611,8 +645,29 @@ simulate_all = function() {
       results,
       data.frame(
         participant = p,
-        condition = "cntrl_high_inefficient",
-        score = run_condition_cntrl(FALSE, "highInefficient"),
+        condition = "cntrl_high_inefficient_exp2",
+        score = run_condition_cntrl_exp2(FALSE, "highInefficient"),
+        stringsAsFactors = FALSE
+      )
+    )
+    
+    
+    results = rbind(
+      results,
+      data.frame(
+        participant = p,
+        condition = "cntrl_low_efficient_exp3",
+        score = run_condition_cntrl_exp3(FALSE, "lowEfficient"),
+        stringsAsFactors = FALSE
+      )
+    )
+    
+    results = rbind(
+      results,
+      data.frame(
+        participant = p,
+        condition = "cntrl_high_inefficient_exp3",
+        score = run_condition_cntrl_exp3(FALSE, "highInefficient"),
         stringsAsFactors = FALSE
       )
     )
@@ -645,7 +700,7 @@ getwd()
 #setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/OverwalleModified")
 # save data to text file
 write.table(results,
-            file = "C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/data/OverwalleModified/sim4a/overwalleModified_sim4a.txt",
+            file = "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/OverwalleModified/sim4a/overwalleModified_sim4a.txt",
             sep = " ",
             row.names = FALSE,
             col.names = FALSE,
