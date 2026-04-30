@@ -28,7 +28,7 @@ library(Hmisc)
 
 
 
-setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/sim1b")
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/data/ALIAS/sim1b")
 
 files = list.files(recursive = TRUE, full.names = TRUE)
 files = files[
@@ -122,7 +122,7 @@ is.data.frame(D)
 # figure
 p = ggplot(D, aes(condition, lookingTime, fill=trialType)) + stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
   stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
-  ylab("Network error") + # change the label of the y-axis
+  ylab("Network Error") + # change the label of the y-axis
   scale_y_continuous(expand = expansion(mult = c(0, 0.02))) +
   coord_cartesian(ylim=c(0, 205)) +
   facet_wrap(~ratio, ncol=3, labeller = label_wrap_gen(width = 25)) +
@@ -140,6 +140,6 @@ p = ggplot(D, aes(condition, lookingTime, fill=trialType)) + stat_summary(fun = 
   theme(legend.position = "bottom")
 
 setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
-ggsave("fig7_04172026_main.png", 
+ggsave("fig7_04292026_main.png", 
        plot = p, 
        width = 8.5, height = 5.2, dpi = 300)

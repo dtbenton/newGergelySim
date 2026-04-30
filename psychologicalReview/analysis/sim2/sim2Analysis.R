@@ -90,7 +90,7 @@ is.data.frame(D)
 # robustness check figure
 p = ggplot(D, aes(condition, lookingTime, fill=trialType)) + stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
   stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
-  ylab("Network error") + # change the label of the y-axis
+  ylab("Network Error") + # change the label of the y-axis
   scale_y_continuous(expand = expansion(mult = c(0, 0.02))) +
   coord_cartesian(ylim=c(0, 205)) +
   scale_fill_manual(values = c("black", "azure3")) +
@@ -108,7 +108,7 @@ p = ggplot(D, aes(condition, lookingTime, fill=trialType)) + stat_summary(fun = 
   theme(legend.position = "bottom")
 
 setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
-ggsave("fig8_04192026_ALIAS_main.png", 
+ggsave("fig8_04292026_ALIAS_main.png", 
        plot = p, 
        width = 8.5, height = 5.2, dpi = 300)
 
@@ -117,7 +117,7 @@ ggsave("fig8_04192026_ALIAS_main.png",
 # combined results figure
 p = ggplot(D, aes(condition, lookingTime, fill=trialType)) + stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
   stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
-  ylab("Network error") + # change the label of the y-axis
+  ylab("Network Error") + # change the label of the y-axis
   scale_y_continuous(expand = expansion(mult = c(0, 0.02))) +
   coord_cartesian(ylim=c(0, 205)) +
   scale_fill_manual(values = c("black", "azure3")) +
@@ -134,7 +134,7 @@ p = ggplot(D, aes(condition, lookingTime, fill=trialType)) + stat_summary(fun = 
   theme(legend.position = "bottom")
 
 setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
-ggsave("fig8b_04192026_ALIAS_main.png", 
+ggsave("fig8b_04292026_ALIAS_main.png", 
        plot = p, 
        width = 6.5, height = 4, dpi = 300)
 
@@ -211,7 +211,7 @@ is.data.frame(D)
 # robustness check figure
 p = ggplot(D, aes(condition, lookingTime, fill=trialType)) + stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
   stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
-  ylab("Network error") + # change the label of the y-axis
+  ylab("Network Error") + # change the label of the y-axis
   scale_y_continuous(expand = expansion(mult = c(0, 0.02))) +
   coord_cartesian(ylim=c(0, 205)) +
   scale_fill_manual(values = c("black", "azure3")) +
@@ -229,7 +229,7 @@ p = ggplot(D, aes(condition, lookingTime, fill=trialType)) + stat_summary(fun = 
   theme(legend.position = "bottom")
 
 setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
-ggsave("fig8_04192026_ALIASnoSalience_main.png", 
+ggsave("fig9a_04292026_ALIASnoSalience_main.png", 
        plot = p, 
        width = 8.5, height = 5.2, dpi = 300)
 
@@ -238,7 +238,7 @@ ggsave("fig8_04192026_ALIASnoSalience_main.png",
 # combined results figure
 p = ggplot(D, aes(condition, lookingTime, fill=trialType)) + stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
   stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
-  ylab("Network error") + # change the label of the y-axis
+  ylab("Network Error") + # change the label of the y-axis
   scale_y_continuous(expand = expansion(mult = c(0, 0.02))) +
   coord_cartesian(ylim=c(0, 205)) +
   scale_fill_manual(values = c("black", "azure3")) +
@@ -255,6 +255,6 @@ p = ggplot(D, aes(condition, lookingTime, fill=trialType)) + stat_summary(fun = 
   theme(legend.position = "bottom")
 
 setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
-ggsave("fig8b_04192026_ALIAS_noSalience_main.png", 
+ggsave("fig9b_04292026_ALIAS_noSalience_main.png", 
        plot = p, 
        width = 6.5, height = 4, dpi = 300)

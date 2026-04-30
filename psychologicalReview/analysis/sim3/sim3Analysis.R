@@ -32,7 +32,7 @@ library(Hmisc)
 # CONSTRAINTS #
 
 # set working directory
-setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/sim3a")
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/data/ALIAS/sim3a")
 exp.8 = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
 exp.9 = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
 exp.10 = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)

@@ -29,7 +29,7 @@ library(Hmisc)
 
 
 # set working directory
-setwd("C:/Users/detbe/Documents/projects/NEWgergliuSims/psychologicalReview/data/ALIAS/sim1a")
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/data/ALIAS/sim1a")
 
 files = list.files(
   pattern = "^Study_sim1a_.*_(control|hab)_tEpochs_[0-9]+(\\.[A-Za-z0-9]+)?$"
@@ -90,7 +90,7 @@ is.data.frame(D)
 # robustness check figure
 p = ggplot(D, aes(condition, lookingTime, fill=trialType)) + stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
   stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
-  ylab("Network error") + # change the label of the y-axis
+  ylab("Network Error") + # change the label of the y-axis
   scale_y_continuous(expand = expansion(mult = c(0, 0.02))) +
   coord_cartesian(ylim=c(0, 205)) +
   scale_fill_manual(values = c("black", "azure3")) +
@@ -107,8 +107,8 @@ p = ggplot(D, aes(condition, lookingTime, fill=trialType)) + stat_summary(fun = 
         plot.margin = margin(3, 3, 3, 3)) +
   theme(legend.position = "bottom")
 
-setwd("C:/Users/detbe/Documents/projects/NEWgergliuSims/psychologicalReview/figures")
-ggsave("fig3a_04022026_ALIAS_main.png", 
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+ggsave("fig3a_04292026_ALIAS_main.png", 
        plot = p, 
        width = 8.5, height = 5.2, dpi = 300)
 
@@ -117,7 +117,7 @@ ggsave("fig3a_04022026_ALIAS_main.png",
 # combined results figure
 p = ggplot(D, aes(condition, lookingTime, fill=trialType)) + stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
   stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
-  ylab("Network error") + # change the label of the y-axis
+  ylab("Network Error") + # change the label of the y-axis
   scale_y_continuous(expand = expansion(mult = c(0, 0.02))) +
   coord_cartesian(ylim=c(0, 205)) +
   scale_fill_manual(values = c("black", "azure3")) +
@@ -133,8 +133,8 @@ p = ggplot(D, aes(condition, lookingTime, fill=trialType)) + stat_summary(fun = 
         plot.margin = margin(3, 3, 3, 3)) +
   theme(legend.position = "bottom")
 
-setwd("C:/Users/detbe/Documents/projects/NEWgergliuSims/psychologicalReview/figures")
-ggsave("fig3b_04022026_ALIAS_main.png", 
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+ggsave("fig3b_04292026_ALIAS_main.png", 
        plot = p, 
        width = 6.5, height = 4, dpi = 300)
 
@@ -149,7 +149,7 @@ ggsave("fig3b_04022026_ALIAS_main.png",
 ###################################
 
 # set wd 
-setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/OverwalleOriginal/sim1a")
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/data/OverwalleOriginal/sim1a")
 
 # load data
 D = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
@@ -191,7 +191,7 @@ is.data.frame(D)
 # main paper figure
 p = ggplot(D, aes(condition, lookingTime, fill=trialType)) + stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
   stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
-  ylab("Network error") + # change the label of the y-axis
+  ylab("Activation of Critical Units") + # change the label of the y-axis
   scale_y_continuous(expand = expansion(mult = c(0, 0.02))) +
   coord_cartesian(ylim=c(0, 0.9)) +
   scale_fill_manual(values = c("black", "azure3")) +
@@ -207,8 +207,8 @@ p = ggplot(D, aes(condition, lookingTime, fill=trialType)) + stat_summary(fun = 
         plot.margin = margin(3, 3, 3, 3)) +
   theme(legend.position = "bottom")
 
-setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
-ggsave("fig3_03252026_overwalle_sim1a.png", 
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+ggsave("fig4_04292026_overwalle_sim1a.png", 
        plot = p, 
        width = 6.5, height = 4, dpi = 300)
 
@@ -224,7 +224,7 @@ ggsave("fig3_03252026_overwalle_sim1a.png",
 
 # set wd 
 #setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/OverwalleOriginal/sim1a")
-setwd("C:/Users/detbe/Documents/projects/NEWgergliuSims/psychologicalReview/data/OverwalleModified/sim1a")
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/data/OverwalleModified/sim1a")
 
 # load data
 D = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
@@ -266,7 +266,7 @@ is.data.frame(D)
 # main paper figure
 p = ggplot(D, aes(condition, lookingTime, fill=trialType)) + stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
   stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
-  ylab("Network error") + # change the label of the y-axis
+  ylab("Activation of Critical Units") + # change the label of the y-axis
   scale_y_continuous(expand = expansion(mult = c(0, 0.02))) +
   coord_cartesian(ylim=c(0, 0.9)) +
   scale_fill_manual(values = c("black", "azure3")) +
@@ -283,8 +283,8 @@ p = ggplot(D, aes(condition, lookingTime, fill=trialType)) + stat_summary(fun = 
   theme(legend.position = "bottom")
 
 #setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
-setwd("")
-ggsave("fig3_03252026_modifiedOverwalle_sim1a.png", 
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+ggsave("fig3_04292026_modifiedOverwalle_sim1a.png", 
        plot = p, 
        width = 6.5, height = 4, dpi = 300)
 
@@ -301,7 +301,7 @@ ggsave("fig3_03252026_modifiedOverwalle_sim1a.png",
 # set working directory
 #setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIASnoSalience/sim1c")
 
-setwd("C:/Users/detbe/Documents/projects/NEWgergliuSims/psychologicalReview/data/ALIASnoSalience/sim1c")
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/data/ALIASnoSalience/sim1c")
 files = list.files(
   pattern = "^Study_sim1c_.*_(control|hab)_tEpochs_[0-9]+(\\.[A-Za-z0-9]+)?$"
 )
@@ -347,7 +347,7 @@ D$epochs = revalue(x = as.factor(D$epochs),
                      "12" = "12 epochs"))
 
 D$epochs = factor(D$epochs, levels = c("8 epochs", "9 epochs", 
-                                       "10 epochs", "11 epochs", "11 epochs"))
+                                       "10 epochs", "11 epochs", "12 epochs"))
 
 # create a 'looking time' column
 D$lookingTime = D$V3
@@ -363,7 +363,7 @@ is.data.frame(D)
 ####################
 p = ggplot(D, aes(condition, lookingTime, fill=trialType)) + stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
   stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
-  ylab("Network error") + # change the label of the y-axis
+  ylab("Network Error") + # change the label of the y-axis
   scale_y_continuous(expand = expansion(mult = c(0, 0.02))) +
   coord_cartesian(ylim=c(0, 205)) +
   scale_fill_manual(values = c("black", "azure3")) +
@@ -379,7 +379,7 @@ p = ggplot(D, aes(condition, lookingTime, fill=trialType)) + stat_summary(fun = 
         plot.margin = margin(3, 3, 3, 3)) +
   theme(legend.position = "bottom")
 
-setwd("C:/Users/detbe/Documents/projects/NEWgergliuSims/psychologicalReview/figures")
-ggsave("fig3a_04102026_ALIAS-2_main.png", 
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+ggsave("fig3a_04292026_ALIAS-2_main.png", 
        plot = p, 
        width = 8.5, height = 5.2, dpi = 300)
