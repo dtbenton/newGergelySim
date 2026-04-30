@@ -32,7 +32,7 @@ library(Hmisc)
 # CONSTRAINTS #
 
 # set working directory
-setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/data/ALIAS/sim3a")
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/sim3a")
 exp.8 = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
 exp.9 = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
 exp.10 = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
@@ -76,54 +76,54 @@ D = D[,-c(1:3)]
 # robustness check figure
 p = ggplot(D, aes(trialType, lookingTime, fill=trialType)) + stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
   stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
-  ylab("Network error") + # change the label of the y-axis
+  ylab("Network Error") + # change the label of the y-axis
   scale_y_continuous(expand = expansion(mult = c(0, 0.02))) +
   coord_cartesian(ylim=c(0, 145)) +
   scale_fill_manual(values = c("black", "azure3")) +
   labs(fill='Test Trial')  +
   facet_wrap(~epochs) +
-  theme(axis.text.x = element_text(size = 12),
-        axis.text.y = element_text(size = 12), 
-        legend.text=element_text(size=12),
-        legend.title = element_text(size=12),
-        axis.title=element_text(size=12),
+  theme(axis.text.x = element_text(size = 15),
+        axis.text.y = element_text(size = 15), 
+        legend.text=element_text(size=15),
+        legend.title = element_text(size=15),
+        axis.title=element_text(size=15),
         strip.text = element_text(
-          size = 12), 
+          size = 15), 
         axis.title.x = element_blank(),
         plot.margin = margin(3, 3, 3, 3),
-        plot.caption = element_text(size = 18, hjust = 0.5)) +
+        plot.caption = element_text(size = 15, hjust = 0.5)) +
   theme(legend.position = "none") +
   labs(caption = "Inferring Goals condition") 
 
 setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
-ggsave("fig10a_04212026_ALIAS_main.png", 
+ggsave("fig10a_04302026_ALIAS_main.png", 
        plot = p, 
-       width = 6.5, height = 5.2, dpi = 300)
+       width = 8.5, height = 5.2, dpi = 300)
 
 
 # overall figure
 p = ggplot(D, aes(trialType, lookingTime, fill=trialType)) + stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
   stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
-  ylab("Network error") + # change the label of the y-axis
+  ylab("Network Error") + # change the label of the y-axis
   scale_y_continuous(expand = expansion(mult = c(0, 0.02))) +
   coord_cartesian(ylim=c(0, 140)) +
   scale_fill_manual(values = c("black", "azure3")) +
   labs(fill='Test Trial')  +
-  theme(axis.text.x = element_text(size = 12),
-        axis.text.y = element_text(size = 12), 
-        legend.text=element_text(size=12),
-        legend.title = element_text(size=12),
-        axis.title=element_text(size=12),
+  theme(axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 20), 
+        legend.text=element_text(size=20),
+        legend.title = element_text(size=20),
+        axis.title=element_text(size=20),
         strip.text = element_text(
-          size = 12), 
+          size = 20), 
         axis.title.x = element_blank(),
         plot.margin = margin(3, 3, 3, 3),
-        plot.caption = element_text(size = 18, hjust = 0.5)) +
+        plot.caption = element_text(size = 20, hjust = 0.5)) +
   theme(legend.position = "none") +
   labs(caption = "Inferring Goals condition")
 
 setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
-ggsave("fig11_04212026_goals_overall_ALIAS_main.png", 
+ggsave("fig11_04302026_goals_overall_ALIAS_main.png", 
        plot = p, 
        width = 8.5, height = 5.2, dpi = 300)
 
@@ -176,56 +176,56 @@ D = D[,-c(1:3)]
 # figure
 p = ggplot(D, aes(trialType, lookingTime, fill=trialType)) + stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
   stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
-  ylab("Network error") + # change the label of the y-axis
+  ylab("Network Error") + # change the label of the y-axis
   scale_y_continuous(expand = expansion(mult = c(0, 0.02))) +
   coord_cartesian(ylim=c(0, 75)) +
   scale_fill_manual(values = c("black", "azure3")) +
   labs(fill='Test Trial')  +
   facet_wrap(~epochs) +
-  theme(axis.text.x = element_text(size = 12),
-        axis.text.y = element_text(size = 12), 
-        legend.text=element_text(size=12),
-        legend.title = element_text(size=12),
-        axis.title=element_text(size=12),
+  theme(axis.text.x = element_text(size = 15),
+        axis.text.y = element_text(size = 15), 
+        legend.text=element_text(size=15),
+        legend.title = element_text(size=15),
+        axis.title=element_text(size=15),
         strip.text = element_text(
-          size = 12), 
+          size = 15), 
         axis.title.x = element_blank(),
         plot.margin = margin(3, 3, 3, 3),
-        plot.caption = element_text(size = 18, hjust = 0.5)) +
+        plot.caption = element_text(size = 15, hjust = 0.5)) +
   theme(legend.position = "none") +
   labs(caption = "Inferring Constraints condition") 
 
 setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
-ggsave("fig10b_04212026_ALIAS_main.png", 
+ggsave("fig10b_04302026_ALIAS_main_constraints.png", 
        plot = p, 
-       width = 6.5, height = 5.2, dpi = 300)
+       width = 8.5, height = 5.2, dpi = 300)
 
 
 # overall figure
 p = ggplot(D, aes(trialType, lookingTime, fill=trialType)) + stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
   stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
-  ylab("Network error") + # change the label of the y-axis
+  ylab("Network Error") + # change the label of the y-axis
   scale_y_continuous(expand = expansion(mult = c(0, 0.02))) +
   coord_cartesian(ylim=c(0, 75)) +
   scale_fill_manual(values = c("black", "azure3")) +
   labs(fill='Test Trial')  +
-  theme(axis.text.x = element_text(size = 12),
-        axis.text.y = element_text(size = 12), 
-        legend.text=element_text(size=12),
-        legend.title = element_text(size=12),
-        axis.title=element_text(size=12),
+  theme(axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 20), 
+        legend.text=element_text(size=20),
+        legend.title = element_text(size=20),
+        axis.title=element_text(size=20),
         strip.text = element_text(
-          size = 12), 
+          size = 20), 
         axis.title.x = element_blank(),
         plot.margin = margin(3, 3, 3, 3),
-        plot.caption = element_text(size = 18, hjust = 0.5)) +
+        plot.caption = element_text(size = 20, hjust = 0.5)) +
   theme(legend.position = "none") +
   labs(caption = "Inferring Constraints condition")
 
 setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
-ggsave("fig11_04212026_constraints_overall_ALIAS_main.png", 
+ggsave("fig11_04302026_constraints_overall_ALIAS_main_constraints.png", 
        plot = p, 
-       width = 6.5, height = 5.2, dpi = 300)
+       width = 8.5, height = 5.2, dpi = 300)
 
 
 ###################################
@@ -296,7 +296,7 @@ p = ggplot(D, aes(trialType, lookingTime, fill=trialType)) + stat_summary(fun = 
   labs(caption = "Inferring Constraints condition") 
 
 setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
-ggsave("fig12_04212026_OM10_overall_constraints_main.png", 
+ggsave("fig12_04302026_OM10_overall_constraints_main.png", 
        plot = p, 
        width = 6.5, height = 5.2, dpi = 300)
 
@@ -565,21 +565,21 @@ D = D[,-c(1:3)]
 # overall figure
 p = ggplot(D, aes(trialType, lookingTime, fill=trialType)) + stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
   stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
-  ylab("Network error") + # change the label of the y-axis
+  ylab("Network Error") + # change the label of the y-axis
   scale_y_continuous(expand = expansion(mult = c(0, 0.02))) +
   coord_cartesian(ylim=c(0, 140)) +
   scale_fill_manual(values = c("black", "azure3")) +
   labs(fill='Test Trial')  +
-  theme(axis.text.x = element_text(size = 12),
-        axis.text.y = element_text(size = 12), 
-        legend.text=element_text(size=12),
-        legend.title = element_text(size=12),
-        axis.title=element_text(size=12),
+  theme(axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 20), 
+        legend.text=element_text(size=20),
+        legend.title = element_text(size=20),
+        axis.title=element_text(size=20),
         strip.text = element_text(
-          size = 12), 
+          size = 20), 
         axis.title.x = element_blank(),
         plot.margin = margin(3, 3, 3, 3),
-        plot.caption = element_text(size = 18, hjust = 0.5)) +
+        plot.caption = element_text(size = 20, hjust = 0.5)) +
   theme(legend.position = "none") +
   labs(caption = "Inferring Goals condition")
 
@@ -637,25 +637,25 @@ D = D[,-c(1:3)]
 # overall figure
 p = ggplot(D, aes(trialType, lookingTime, fill=trialType)) + stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
   stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
-  ylab("Network error") + # change the label of the y-axis
+  ylab("Network Error") + # change the label of the y-axis
   scale_y_continuous(expand = expansion(mult = c(0, 0.02))) +
   coord_cartesian(ylim=c(0, 75)) +
   scale_fill_manual(values = c("black", "azure3")) +
   labs(fill='Test Trial')  +
-  theme(axis.text.x = element_text(size = 12),
-        axis.text.y = element_text(size = 12), 
-        legend.text=element_text(size=12),
-        legend.title = element_text(size=12),
-        axis.title=element_text(size=12),
+  theme(axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 20), 
+        legend.text=element_text(size=20),
+        legend.title = element_text(size=20),
+        axis.title=element_text(size=20),
         strip.text = element_text(
-          size = 12), 
+          size = 20), 
         axis.title.x = element_blank(),
         plot.margin = margin(3, 3, 3, 3),
-        plot.caption = element_text(size = 18, hjust = 0.5)) +
+        plot.caption = element_text(size = 20, hjust = 0.5)) +
   theme(legend.position = "none") +
   labs(caption = "Inferring Constraints condition")
 
 setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
-ggsave("fig13a_04222026_ALIAS-2__constraints_main.png", 
+ggsave("fig13a_04302026_ALIAS-2__constraints_main.png", 
        plot = p, 
        width = 6.5, height = 5.2, dpi = 300)
