@@ -27,7 +27,6 @@ library(BayesFactor)
 library(foreign)
 library(dplyr)
 library(lattice)
-library(openxlsx)
 library(Hmisc)
 
 # CONSTRAINTS #
@@ -105,153 +104,125 @@ D$effectiveness = rep(c("Effective", "Ineffective"),
                       times = c(400,200))
 
 D$effectiveness = factor(D$effectiveness, 
-                     levels = c("Effective", "Ineffective"))
+                         levels = c("Effective", "Ineffective"))
 
 # epochs
-D$epochs = rep(c("2 Epochs", "4 Epochs", "6 Epochs", "8 Epochs", "10 Epochs", "12 Epochs"), 
-               each = 200)
+D$epochs = D$tEpochs
 D$epochs = as.factor(D$epochs)
 
-D$epochs = factor(D$epochs, levels = c("2 Epochs", "4 Epochs", 
-                                       "6 Epochs", "8 Epochs", "10 Epochs", "12 Epochs"))
+D$epochs = revalue(x = D$epochs, 
+                           c("8" = "8 Epochs", "9"="9 Epochs", "10"="10 Epochs",
+                             "11"="11 Epochs", "12"="12 Epochs"))
 
 # create a 'looking time' column
 D$lookingTime = D$value
 
+
 # remove columns
-D = D[,-c(1:3)]
-
-# main analysis 
-lme.fit = lme(lookingTime~trialType, 
-              random=~1|ID, data = D)
-anova.lme(lme.fit)
-
-# follow up tests 
-# experimental condition
-expTest = t.test(D$lookingTime[D$trialType=="Incongruent"],
-                 D$lookingTime[D$trialType=="Congruent"],
-                 paired = TRUE)
-expTest
-expInefficientMean = mean(D$lookingTime[D$trialType=="Incongruent"])
-expInefficientSD = sd(D$lookingTime[D$trialType=="Incongruent"])
-expInefficientMean
-expInefficientSD
-
-expEfficientMean = mean(D$lookingTime[D$trialType=="Congruent"])
-expEfficientSD = sd(D$lookingTime[D$trialType=="Congruent"])
-expEfficientMean
-expEfficientSD
+D = D[,c("ID", "effectiveness", "condition", "epochs", 
+         "trialType", "lookingTime")]
 
 
 # figure
-condition_barplot = ggplot(D, aes(condition, lookingTime, fill=trialType)) # create the bar graph with test.trial.2 on the x-axis and measure on the y-axis
-condition_barplot + stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
+
+# by habituation epochs
+D.effective.exp = subset(D, ! effectiveness %in% c("Ineffective"))
+D.effective.exp = subset(D.effective.exp, ! condition %in% c("Control"))
+
+condition_barplot = ggplot(D.effective.exp, aes(condition, lookingTime, fill=trialType)) +# create the bar graph with test.trial.2 on the x-axis and measure on the y-axis
+stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
   stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
-  ylab("Looking Time") + # change the label of the y-axis
-  facet_wrap(~effectiveness, ncol=3) +
+  ylab("Network Error") + # change the label of the y-axis
   scale_y_continuous(expand = c(0, 0)) +
-  coord_cartesian(ylim=c(0, 500)) +
+  facet_wrap(~epochs, ncol=3) +
+  coord_cartesian(ylim=c(0, 200)) +
   scale_fill_manual(values = c("black", "azure3")) +
   labs(fill='Test Trial')  +
-  theme(axis.text.x = element_text(size = 22),
-        axis.text.y = element_text(size = 12), 
-        legend.text=element_text(size=22),
-        legend.title = element_text(size=22),
-        axis.title=element_text(size=22),
-        strip.text = element_text(
-          size = 22), 
-        axis.title.x = element_blank()) +
-  theme(plot.caption = element_text(hjust = 0.5, vjust = 0.5, size = 12))
+  theme(axis.text.y = element_text(size = 18), 
+        legend.text = element_text(size = 18),
+        legend.title = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        strip.text = element_text(size = 18), 
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.text.x = element_blank()) 
 
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
+ggsave("fig18a_05042026_ALIAS_exp_byHab.png", 
+       plot = condition_barplot, 
+       width = 8.5, height = 5.2, dpi = 300)
 
-###################
-### CONSTRAINTS ###
-###################
-# set working directory
-setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/cognition/data/sim4b")
-setwd("C:/Users/Deon T. Benton/Documents/projects/NEWgergliuSims/cognition/data/sim4b")
-exp.2 = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
-exp.4 = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
-exp.6 = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
-exp.8 = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
-exp.10 = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
-exp.12 = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
-
-# combine dataframes into a single 'D' data frame
-D = rbind(exp.2, exp.4, exp.6, exp.8, exp.10, exp.12)
-
-# get dimensionality of D
-dim(D)
-
-# get dimensionality of D
-dim(D)
-
-# create an ID column
-D$ID = rep(1:120, each = 10)
-
-# create trial type column
-D$trialType = rep(c("No-Obstacle", "Obstacle"), each = 1, times = 600)
-D$trialType = as.factor(D$trialType)
-
-D$trialType = factor(D$trialType, 
-                     levels = c("Obstacle", 
-                                "No-Obstacle"))
-
-# epochs
-D$epochs = rep(c("2 Epochs", "4 Epochs", "6 Epochs", "8 Epochs", "10 Epochs",
-                 "12 Epochs"), 
-               each = 200)
-D$epochs = as.factor(D$epochs)
-
-D$epochs = factor(D$epochs, levels = c("2 Epochs", "4 Epochs", 
-                                       "6 Epochs", "8 Epochs", "10 Epochs",
-                                       "12 Epochs"))
-
-# create a 'looking time' column
-D$lookingTime = D$V3
-
-# remove columns
-D = D[,-c(1:3)]
-
-# main analysis 
-lme.fit = lme(lookingTime~trialType, 
-              random=~1|ID, data = D)
-anova.lme(lme.fit)
-
-# follow up tests 
-# experimental condition
-expTest = t.test(D$lookingTime[D$trialType=="No-Obstacle"],
-                 D$lookingTime[D$trialType=="Obstacle"],
-                 paired = TRUE)
-expTest
-expInefficientMean = mean(D$lookingTime[D$trialType=="No-Obstacle"])
-expInefficientSD = sd(D$lookingTime[D$trialType=="No-Obstacle"])
-expInefficientMean
-expInefficientSD
-
-expEfficientMean = mean(D$lookingTime[D$trialType=="Obstacle"])
-expEfficientSD = sd(D$lookingTime[D$trialType=="Obstacle"])
-expEfficientMean
-expEfficientSD
-
-
-# figure
-condition_barplot = ggplot(D, aes(trialType, lookingTime, fill=trialType)) # create the bar graph with test.trial.2 on the x-axis and measure on the y-axis
-condition_barplot + stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
+# overall
+condition_barplot = ggplot(D.effective.exp, aes(condition, lookingTime, fill=trialType)) +# create the bar graph with test.trial.2 on the x-axis and measure on the y-axis
+  stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
   stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
-  ylab("Looking Time") + # change the label of the y-axis
-  facet_wrap(~epochs, ncol=3) +
+  ylab("Network Error") + # change the label of the y-axis
   scale_y_continuous(expand = c(0, 0)) +
   coord_cartesian(ylim=c(0, 200)) +
   scale_fill_manual(values = c("black", "azure3")) +
   labs(fill='Test Trial')  +
-  theme(axis.text.x = element_text(size = 10),
-        axis.text.y = element_text(size = 10), 
-        legend.text=element_text(size=10),
-        legend.title = element_text(size=10),
-        axis.title=element_text(size=10),
-        strip.text = element_text(
-          size = 10), 
-        axis.title.x = element_blank()) +
-  labs(caption = "Inferring Constraints Scenario") +
-  theme(plot.caption = element_text(hjust = 0.5, vjust = 0.5, size = 12))
+  theme(axis.text.y = element_text(size = 18), 
+        legend.text = element_text(size = 18),
+        legend.title = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        strip.text = element_text(size = 18), 
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.text.x = element_blank(),
+        legend.position = "none") 
+
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
+ggsave("fig18b_05042026_ALIAS_exp_overall.png", 
+       plot = condition_barplot, 
+       width = 6.5, height = 5.2, dpi = 300)
+
+# by habituation epoch
+D.ineffective.exp = subset(D, ! effectiveness %in% c("Effective"))
+
+condition_barplot = ggplot(D.ineffective.exp, aes(condition, lookingTime, fill=trialType)) + # create the bar graph with test.trial.2 on the x-axis and measure on the y-axis
+  stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
+  stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
+  ylab("Network Error") + # change the label of the y-axis
+  facet_wrap(~epochs, ncol=3) +
+  scale_y_continuous(expand = c(0, 0)) +
+  coord_cartesian(ylim=c(0, 350)) +
+  scale_fill_manual(values = c("black", "azure3")) +
+  labs(fill='Test Trial')  +
+  theme(axis.text.y = element_text(size = 18), 
+        legend.text = element_text(size = 18),
+        legend.title = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        strip.text = element_text(size = 18), 
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.text.x = element_blank()) 
+
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
+ggsave("fig18c_05042026_ALIAS_exp_byHab.png", 
+       plot = condition_barplot, 
+       width = 8.5, height = 5.2, dpi = 300)
+
+
+# overall
+condition_barplot = ggplot(D.ineffective.exp, aes(condition, lookingTime, fill=trialType)) + # create the bar graph with test.trial.2 on the x-axis and measure on the y-axis
+  stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
+  stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
+  ylab("Network Error") + # change the label of the y-axis
+  scale_y_continuous(expand = c(0, 0)) +
+  coord_cartesian(ylim=c(0, 350)) +
+  scale_fill_manual(values = c("black", "azure3")) +
+  labs(fill='Test Trial')  +
+  theme(axis.text.y = element_text(size = 18), 
+        legend.text = element_text(size = 18),
+        legend.title = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        strip.text = element_text(size = 18), 
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.text.x = element_blank(),
+        legend.position = "none") 
+
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
+ggsave("fig18d_05042026_ALIAS_exp_overall.png", 
+       plot = condition_barplot, 
+       width = 6.5, height = 5.2, dpi = 300)
