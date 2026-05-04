@@ -2150,7 +2150,7 @@ proc gsSim_sim5a {} {
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/sim5aCntrlTest.ex"
 
 	# set learning and display parameters
-	setObj learningRate 0.0.075
+	setObj learningRate 0.01
 	setObj momentum	    0
 	setObj batchSize    0
 	setObj numUpdates   10
@@ -2181,7 +2181,7 @@ proc gsSim_sim5a {} {
 				resetNet
 				
 				
-				setObj learningRate 0.075
+				setObj learningRate 0.01
 				useTrainingSet $train
 				train $trainNum
 				
@@ -2190,7 +2190,7 @@ proc gsSim_sim5a {} {
 				setObj learningRate 0.175
 				useTrainingSet $train2
 				train $trainNum2
-				setObj learningRate 0.075
+				setObj learningRate 0.01
 				useTrainingSet $train3
 				train $trainNum3
 				useTestingSet $test
@@ -2201,14 +2201,14 @@ proc gsSim_sim5a {} {
 				resetNet
 				
 				
-				setObj learningRate 0.075
+				setObj learningRate 0.01
 				useTrainingSet $train
 				train $trainNum
 
-				setObj learningRate 0.075
+				setObj learningRate 0.01
 				useTrainingSet $train2
 				train $trainNum2
-				setObj learningRate 0.075
+				setObj learningRate 0.01
 				useTrainingSet $train3
 				train $trainNum3
 				useTestingSet $test
@@ -2319,7 +2319,7 @@ proc gsSim_sim5b {} {
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5b/sim5bCntrlTest.ex"
 
 	# set learning and display parameters
-	setObj learningRate 0.0.075
+	setObj learningRate 0.01
 	setObj momentum	    0
 	setObj batchSize    0
 	setObj numUpdates   10
@@ -2348,7 +2348,7 @@ proc gsSim_sim5b {} {
 		if {$ifEvent == "causal" || $ifEvent == "causalControl"} {
 			for {set i 0} {$i < $n} {incr i} {
 				resetNet
-				setObj learningRate 0.075
+				setObj learningRate 0.01
 				useTrainingSet $train
 				train $trainNum
 				# learning rate below puts infants in an attentional state that is akin to oldest models in the reported simulations 
@@ -2361,10 +2361,10 @@ proc gsSim_sim5b {} {
 		} else {
 			for {set i 0} {$i < $n} {incr i} {
 				resetNet
-				setObj learningRate 0.075
+				setObj learningRate 0.01
 				useTrainingSet $train
 				train $trainNum
-				setObj learningRate 0.075
+				setObj learningRate 0.01
 				useTrainingSet $train2
 				train $trainNum2
 				useTestingSet $test
@@ -2470,7 +2470,7 @@ proc gsSim_sim5c {} {
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5c/sim5cCntrlTest.ex"
 
 	# set learning and display parameters
-	setObj learningRate 0.0.075
+	setObj learningRate 0.0.01
 	setObj momentum	    0
 	setObj batchSize    0
 	setObj numUpdates   10
@@ -2501,7 +2501,7 @@ proc gsSim_sim5c {} {
 				resetNet
 				
 				
-				setObj learningRate 0.075
+				setObj learningRate 0.01
 				useTrainingSet $train
 				train $trainNum
 				
@@ -2509,7 +2509,7 @@ proc gsSim_sim5c {} {
 				setObj learningRate 0.175
 				useTrainingSet $train2
 				train $trainNum2
-				setObj learningRate 0.075
+				setObj learningRate 0.01
 				useTrainingSet $train3
 				train $trainNum3
 				useTestingSet $test
@@ -2520,11 +2520,11 @@ proc gsSim_sim5c {} {
 				resetNet
 				
 				
-				setObj learningRate 0.075
+				setObj learningRate 0.01
 				useTrainingSet $train
 				train $trainNum
 				
-				setObj learningRate 0.075
+				setObj learningRate 0.01
 				useTrainingSet $train2
 				train $trainNum2
 				useTrainingSet $train3
@@ -2633,7 +2633,7 @@ proc gsSim_sim5d {} {
 	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5d/sim5dCntrlTest.ex"
 
 	# set learning and display parameters
-	setObj learningRate 0.0.075
+	setObj learningRate 0.01
 	setObj momentum	    0
 	setObj batchSize    0
 	setObj numUpdates   10
@@ -2662,7 +2662,7 @@ proc gsSim_sim5d {} {
 		if {$ifEvent == "causal" || $ifEvent == "causalControl"} {
 			for {set i 0} {$i < $n} {incr i} {
 				resetNet
-				setObj learningRate 0.075
+				setObj learningRate 0.01
 				useTrainingSet $train
 				train $trainNum
 				# learning rate below puts infants in an attentional state that is akin to oldest models in the reported simulations 
@@ -2675,10 +2675,10 @@ proc gsSim_sim5d {} {
 		} else {
 			for {set i 0} {$i < $n} {incr i} {
 				resetNet
-				setObj learningRate 0.075
+				setObj learningRate 0.01
 				useTrainingSet $train
 				train $trainNum
-				setObj learningRate 0.075
+				setObj learningRate 0.01
 				useTrainingSet $train2
 				train $trainNum2
 				useTestingSet $test
@@ -2778,17 +2778,18 @@ proc gsSim_sim5e {} {
 	deleteGroups bias
 
 	# training examples
-	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation5a/pretrain.ex" -e PERMUTED
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/pretrain.ex" -e PERMUTED
 
-	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation5a/sim5aExpHab.ex" 
-	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation5a/sim5aActionPhase.ex"
-	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation5a/sim5aActionPhaseIneff.ex"
-	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation5a/sim5aCntrlHab.ex"	
-	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation5a/sim5aTest.ex"
-	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation5a/sim5aCntrlTest.ex"
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/sim5aExpHab.ex" 
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/sim5aExpHabExtendedBoost.ex" 
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/sim5aActionPhase.ex"
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/sim5aActionPhaseIneff.ex"
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/sim5aCntrlHab.ex"	
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/sim5aTest.ex"
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/sim5aCntrlTest.ex"
 
 	# set learning and display parameters
-	setObj learningRate 0.0.075
+	setObj learningRate 0.01
 	setObj momentum	    0
 	setObj batchSize    0
 	setObj numUpdates   10
@@ -2819,7 +2820,7 @@ proc gsSim_sim5e {} {
 				resetNet
 				
 				
-				setObj learningRate 0.075
+				setObj learningRate 0.01
 				useTrainingSet $train
 				train $trainNum
 				
@@ -2839,14 +2840,14 @@ proc gsSim_sim5e {} {
 				resetNet
 				
 				
-				setObj learningRate 0.075
+				setObj learningRate 0.01
 				useTrainingSet $train
 				train $trainNum
 
-				setObj learningRate 0.075
+				setObj learningRate 0.01
 				useTrainingSet $train2
 				train $trainNum2
-				setObj learningRate 0.075
+				setObj learningRate 0.01
 				useTrainingSet $train3
 				train $trainNum3
 				useTestingSet $test
@@ -2859,13 +2860,13 @@ proc gsSim_sim5e {} {
 
 
 	# define lists for looping
-	set study [list sim5a sim5a sim5a]
-	set folder [list effective effective ineffective]
-	set condition [list hab control hab]
-	set actionPhaseEvent [list sim5aActionPhase sim5aActionPhase sim5aActionPhaseIneff]
-	set ifEvent [list effective effectiveControl ineffective]
-	set habEvent [list sim5aExpHab sim5aCntrlHab sim5aExpHab]
-	set testEvent [list sim5aTest sim5aTest sim5aTest]
+	set study [list sim5a]
+	set folder [list effective]
+	set condition [list hab]
+	set actionPhaseEvent [list sim5aActionPhase]
+	set ifEvent [list effective]
+	set habEvent [list sim5aExpHabExtendedBoost]
+	set testEvent [list sim5aTest]
 	set actionPhaseEpochs [list 8 9 10 11 12]
 	set trainingEpochs [list 8 9 10 11 12]
 	set pretrainingEpochs [list 225]
@@ -2875,7 +2876,7 @@ proc gsSim_sim5e {} {
 	# define loop
 
 	foreach stud $study cond $condition hEvent $habEvent tEvent $testEvent aEvent $actionPhaseEvent iEvent $ifEvent fldr $folder {
-		set workingdirectory "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/data/ALIAS/sim5e/$fldr"
+		set workingdirectory "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/sim5e/$fldr"
 		cd $workingdirectory
 			foreach apEpochs $actionPhaseEpochs tEpochs $trainingEpochs {
 				foreach epochs $pretrainingEpochs {
@@ -2887,6 +2888,166 @@ proc gsSim_sim5e {} {
 
 
 
+
+# Simulation 5f loosely based on Skerry, Carey, & Spelke [2013]: Exp1 Exp2 Exp5: No training
+# 3 mos
+
+proc gsSim_sim5f {} {
+	addNet gsSim_5f -i 8
+
+	# input groups
+	addGroup Object_Left_IN 82 INPUT OUT_NOISE 
+	addGroup Object_Right_IN 82 INPUT  OUT_NOISE
+	addGroup Object_Left_Animate_Status_IN 2 INPUT OUT_NOISE 
+	addGroup Object_Right_Animate_Status_IN 2 INPUT  OUT_NOISE
+	addGroup Grid_IN 5 INPUT  OUT_NOISE
+	addGroup Grid_Position_IN 3 INPUT OUT_NOISE 
+	addGroup Jump_Height_IN 5 INPUT OUT_NOISE 
+	addGroup Motion_IN 6 INPUT OUT_NOISE
+	addGroup Motion_Type_IN 2 INPUT OUT_NOISE
+	addGroup Goal_IN 1 INPUT OUT_NOISE
+	addGroup Clearance_IN 3 INPUT OUT_NOISE
+	
+	
+	# hidden group (# there are necessarily fewer hidden units than there are input and output units)
+	addGroup context 10 ELMAN
+	addGroup hidden 10 RELU
+	
+	# noise parameters
+	noiseType Object_Left_IN -range 0.3
+	noiseType Object_Right_IN -range 0.3
+	noiseType Object_Left_Animate_Status_IN -range 0.3
+	noiseType Object_Right_Animate_Status_IN -range 0.3
+	noiseType Grid_IN -range 0.3
+	noiseType Grid_Position_IN -range 0.3
+	noiseType Jump_Height_IN -range 0.3
+	noiseType Motion_IN -range 0.3
+	noiseType Motion_Type_IN -range 0.3
+	noiseType Goal_IN -range 0.3
+	noiseType Clearance_IN -range 0.3
+		
+	# output group
+	addGroup Object_Left_OUT 82 OUTPUT 
+	addGroup Object_Right_OUT 82 OUTPUT 
+	addGroup Object_Left_Animate_Status_OUT 2 OUTPUT 
+	addGroup Object_Right_Animate_Status_OUT 2 OUTPUT 
+	addGroup Grid_OUT 5 OUTPUT 
+	addGroup Grid_Position_OUT 3 OUTPUT 
+	addGroup Jump_Height_OUT 5 OUTPUT 
+	addGroup Motion_OUT 6 OUTPUT 
+	addGroup Motion_Type_OUT 2 OUTPUT 
+	addGroup Goal_OUT 1 OUTPUT 
+	addGroup Clearance_OUT 3 OUTPUT
+
+
+	# connect groups (input -> hidden -> output)
+	connectGroups {Object_Left_IN Object_Right_IN Object_Left_Animate_Status_IN Object_Right_Animate_Status_IN Motion_IN Goal_IN Clearance_IN  Jump_Height_IN Motion_Type_IN context} hidden {Object_Left_OUT Object_Right_OUT Object_Left_Animate_Status_OUT Object_Right_Animate_Status_OUT Motion_OUT Goal_OUT Clearance_OUT Jump_Height_OUT Motion_Type_OUT}
+
+	connectGroups {Grid_IN Grid_Position_IN} hidden -type barrierSalience
+	connectGroups hidden {Grid_OUT Grid_Position_OUT} -type barrierSalience
+
+	elmanConnect hidden context
+
+	deleteGroups bias
+
+	# training examples
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/pretrain.ex" -e PERMUTED
+
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/sim5aExpHab.ex" 
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/sim5aActionPhase.ex"
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/sim5aActionPhaseIneff.ex"
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/sim5aCntrlHab.ex"	
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/sim5aTest.ex"
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation5a/sim5aCntrlTest.ex"
+
+	# set learning and display parameters
+	setObj learningRate 0.01
+	setObj momentum	    0
+	setObj batchSize    0
+	setObj numUpdates   10
+	setObj randRange 0.1
+	setObj reportInterval 0
+	setObj pseudoExampleFreq 1
+
+	# create a function that gets the error for each test example
+	proc saveActivations {fname} { 
+		set outfile [open $fname a] 
+		puts $outfile "[getObj currentExample.num] [getObj currentExample.name] " nonewline 
+		puts $outfile [getObj exampleError]
+		close $outfile 
+	}
+
+	proc testAllFinalActs {fname} { 
+		resetExampleSet [getObj testingSet.name] 
+		set nex [getObj testingSet.numExamples] 
+		for {set i 0} {$i < $nex} {incr i} {
+			doExample -set [getObj testingSet.name]
+			saveActivations $fname
+		}
+	}
+
+	proc testNetwork {n train trainNum train3 trainNum3 test fname ifEvent} {
+		if {$ifEvent == "effective"} {
+			for {set i 0} {$i < $n} {incr i} {
+				resetNet
+				
+				
+				setObj learningRate 0.01
+				useTrainingSet $train
+				train $trainNum
+				
+				setObj learningRate 0.01
+				useTrainingSet $train3
+				train $trainNum3
+				useTestingSet $test
+				testAllFinalActs $fname
+			}
+		} else {
+			for {set i 0} {$i < $n} {incr i} {
+				resetNet
+				
+				
+				setObj learningRate 0.01
+				useTrainingSet $train
+				train $trainNum
+				
+				setObj learningRate 0.01
+				useTrainingSet $train3
+				train $trainNum3
+				useTestingSet $test
+				testAllFinalActs $fname
+			}
+		}
+	}
+
+
+
+
+	# define lists for looping
+	set study [list sim5a sim5a]
+	set folder [list effective effective]
+	set condition [list hab control]
+	set ifEvent [list effective effectiveControl]
+	set habEvent [list sim5aExpHab sim5aCntrlHab]
+	set testEvent [list sim5aTest sim5aTest]
+	set actionPhaseEpochs [list 8 9 10 11 12]
+	set trainingEpochs [list 8 9 10 11 12]
+	set pretrainingEpochs [list 225]
+	
+
+
+	# define loop
+
+	foreach stud $study cond $condition hEvent $habEvent tEvent $testEvent iEvent $ifEvent  {
+		set workingdirectory "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/sim5f"
+		cd $workingdirectory
+			foreach tEpochs $trainingEpochs {
+				foreach epochs $pretrainingEpochs {
+					testNetwork 20 pretrain $epochs $hEvent $tEpochs $tEvent Study_${stud}_pEpochs_${epochs}_${cond}_habEvent_${hEvent}_tEpochs_${tEpochs}.txt $iEvent
+			} 
+		}
+	}
+}
 
 # Simulation 6: Predictions simulation (see R file in "simulation 6" for deets)
 # 12 mos
@@ -3119,7 +3280,7 @@ proc gsSim_sim7 {} {
 				resetNet
 				
 				
-				setObj learningRate 0.075
+				setObj learningRate 0.01
 				useTrainingSet $train
 				train $trainNum
 				
@@ -3127,7 +3288,7 @@ proc gsSim_sim7 {} {
 				setObj learningRate 0.175
 				useTrainingSet $train2
 				train $trainNum2
-				setObj learningRate 0.075
+				setObj learningRate 0.01
 				useTrainingSet $train3
 				train $trainNum3
 				useTestingSet $test
@@ -3138,11 +3299,11 @@ proc gsSim_sim7 {} {
 				resetNet
 				
 				
-				setObj learningRate 0.075
+				setObj learningRate 0.01
 				useTrainingSet $train
 				train $trainNum
 				
-				setObj learningRate 0.075
+				setObj learningRate 0.01
 				useTrainingSet $train2
 				train $trainNum2
 				useTrainingSet $train3
@@ -3448,7 +3609,7 @@ proc gsSim_sim9 {} {
 # UNCOMMENT THE CODE BELOW IF YOU WANT TO AUTOMATE THE SIMULATIONS #
 ####################################################################
 
-set modelList [list gsSim_sim5e] 
+set modelList [list gsSim_sim5a] 
 
 
 
