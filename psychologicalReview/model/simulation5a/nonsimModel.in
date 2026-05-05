@@ -62,6 +62,7 @@ addNet gsSim -i 8
 # training examples
 	loadExamples pretrain.ex -s pretrain -e PERMUTED 
 	loadExamples sim5aActionPhase.ex
+	loadExamples sim5aActionPhaseIneff.ex
 	loadExamples sim5aExpHab.ex 
 	loadExamples sim5aCntrlHab.ex 
 	loadExamples sim5aTest.ex
@@ -69,7 +70,7 @@ addNet gsSim -i 8
 
 
 # set learning and display parameters
-setObj learningRate 0.0001
+setObj learningRate 0.01
 setObj momentum	    0
 setObj batchSize    0
 setObj numUpdates   100
