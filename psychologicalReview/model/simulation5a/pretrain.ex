@@ -1,5 +1,3 @@
-set learningRateSalient [list 0.05 0.075 0.1];
-
 defI:-
 defT:-
 ;

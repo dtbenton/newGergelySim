@@ -228,7 +228,113 @@ ggsave("fig18d_05042026_ALIAS_exp_overall.png",
        plot = condition_barplot, 
        width = 6.5, height = 5.2, dpi = 300)
 
+################################################
+# SIMULATION 5 ANALYSIS                        #
+# Effective only: extended attentional boost   #
+################################################
 
+# set working directory to sim5a
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/sim5e/effective")
+
+# load data
+# load data
+D.exp.8 = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
+D.exp.9 = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
+D.exp.10 = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
+D.exp.11 = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
+D.exp.12 = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
+
+
+D.cntrl.8 = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
+D.cntrl.9 = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
+D.cntrl.10 = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
+D.cntrl.11 = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
+D.cntrl.12 = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
+
+
+# combine dataframe
+D = rbind(D.exp.8, D.exp.9, D.exp.10, D.exp.11, D.exp.12,
+          D.cntrl.8, D.cntrl.9, D.cntrl.10, D.cntrl.11, D.cntrl.12)
+
+# get dimensionality of D
+dim(D)
+
+# create an ID column
+D$ID = rep(1:200, each = 2)
+
+# create trial type column
+D$trialType = rep(c("Inefficient", "Efficient"), each = 1, times = 200)
+D$trialType = as.factor(D$trialType)
+
+# condition
+D$condition = rep(c("Experimental", "Control"), 
+                  each = 200)
+
+D$condition = factor(D$condition, 
+                     levels = c("Experimental", "Control"))
+
+# epochs
+D$epochs = rep(c("8" = "8 Epochs", "9"="9 Epochs", "10"="10 Epochs",
+                 "11"="11 Epochs", "12"="12 Epochs"), each = 40, times = 2)
+D$epochs = as.factor(D$epochs)
+
+# create a 'looking time' column
+D$lookingTime = D$V3
+
+
+# remove columns
+D = D[,-c(1:3)]
+
+
+# figure
+D.exp = subset(D, ! condition %in% c("Control"))
+D.cntrl = subset(D, ! condition %in% c("Experimental"))
+
+condition_barplot = ggplot(D.exp, aes(condition, lookingTime, fill=trialType)) +# create the bar graph with test.trial.2 on the x-axis and measure on the y-axis
+  stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
+  stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
+  ylab("Network Error") + # change the label of the y-axis
+  scale_y_continuous(expand = c(0, 0)) +
+  coord_cartesian(ylim=c(0, 430)) +
+  scale_fill_manual(values = c("black", "azure3")) +
+  labs(fill='Test Trial')  +
+  theme(axis.text.y = element_text(size = 18), 
+        legend.text = element_text(size = 18),
+        legend.title = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        strip.text = element_text(size = 18), 
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.text.x = element_blank(),
+        legend.position = "none") 
+
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
+ggsave("fig21a_05072026_ALIAS_exp.png", 
+       plot = condition_barplot, 
+       width = 6.5, height = 5.2, dpi = 300)
+
+# overall
+condition_barplot = ggplot(D.cntrl, aes(condition, lookingTime, fill=trialType)) +# create the bar graph with test.trial.2 on the x-axis and measure on the y-axis
+  stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
+  stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
+  ylab("Network Error") + # change the label of the y-axis
+  scale_y_continuous(expand = c(0, 0)) +
+  coord_cartesian(ylim=c(0, 170)) +
+  scale_fill_manual(values = c("black", "azure3")) +
+  labs(fill='Test Trial')  +
+  theme(axis.text.y = element_text(size = 18), 
+        legend.text = element_text(size = 18),
+        legend.title = element_text(size = 18),
+        axis.title = element_text(size = 18),
+        strip.text = element_text(size = 18), 
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.text.x = element_blank()) 
+
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
+ggsave("fig21b_05072026_ALIAS_exp.png", 
+       plot = condition_barplot, 
+       width = 6.5, height = 5.2, dpi = 300)
 
 
 ###########################################

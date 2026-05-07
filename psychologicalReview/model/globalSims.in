@@ -2865,7 +2865,7 @@ proc gsSim_sim5e {} {
 	set condition [list hab]
 	set actionPhaseEvent [list sim5aActionPhase]
 	set ifEvent [list effective]
-	set habEvent [list sim5aExpHabExtendedBoost]
+	set habEvent [list sim5aCntrlHab]
 	set testEvent [list sim5aTest]
 	set actionPhaseEpochs [list 8 9 10 11 12]
 	set trainingEpochs [list 8 9 10 11 12]
@@ -3765,7 +3765,7 @@ proc gsSim_sim9 {} {
 # UNCOMMENT THE CODE BELOW IF YOU WANT TO AUTOMATE THE SIMULATIONS #
 ####################################################################
 
-set modelList [list gsSim_sim5g] 
+set modelList [list gsSim_sim5e] 
 
 
 
