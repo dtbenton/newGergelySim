@@ -295,7 +295,7 @@ names(jump_height) = NULL
 #################
 ## PRETRAINING ##
 #################
-setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/model/simulation9")
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation9")
 
 n = nrow(objects_left_straight)
 n1 = nrow(objects_left_curved)
@@ -855,11 +855,11 @@ sink()
 
 
 
-sink('sim9Test.ex')
+sink('sim9InefficientTest.ex')
 cat(paste("defI:-", "\n", sep=""))
 cat(paste("defT:-", "\n", sep=""))
 cat(paste(";", "\n", sep=""))
-cat(paste("name: constrainedCostly", "\n", sep=""))
+cat(paste("name: inefficientHighCost", "\n", sep=""))
 cat(paste("5", "\n", sep="\t"))
 for(k in 1:5){
   # INPUT
@@ -964,7 +964,7 @@ cat("\n")
 
 
 
-cat(paste("name: barrierlessInefficient", "\n", sep=""))
+cat(paste("name: inefficientNoBarrier", "\n", sep=""))
 cat(paste("5", "\n", sep="\t"))
 for(k in 1:5){
   # INPUT
@@ -1043,7 +1043,7 @@ for(k in 1:5){
   
   # Grid 
   cat(paste("(Grid_OUT)", sep="\t"))
-  print(barrier[2,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  print(barrier[1,1], sep = "\t", quote = FALSE, row.names = FALSE)
   
   # barrier position
   cat(paste("(Grid_Position_OUT)", sep="\t"))
@@ -1068,6 +1068,215 @@ cat("\n")
 sink()
 
 
+sink('sim9EfficientTest.ex')
+cat(paste("defI:-", "\n", sep=""))
+cat(paste("defT:-", "\n", sep=""))
+cat(paste(";", "\n", sep=""))
+# consistent event
+cat(paste("name: efficientStraight","\n", sep=""))
+cat(paste("5", "\n", sep="\t"))
+for(k in 1:5){
+  # INPUT
+  cat(paste("I:", "\n", sep="\t"))
+  
+  # Feature A
+  cat(paste("(Object_Left_IN)", sep="\t"))
+  print(objects_left_hab_test[1,], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Animate status
+  cat(paste("(Object_Left_Animate_Status_IN)", sep="\t"))
+  print(animacy[2,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Feature B
+  cat(paste("(Object_Right_IN)", sep="\t"))
+  print(objects_right_hab_test[1,], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Animate status
+  cat(paste("(Object_Right_Animate_Status_IN)", sep="\t"))
+  print(animacy[2,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Motion 
+  cat(paste("(Motion_IN)", sep="\t"))
+  print(motionPath[[k]], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Motion 
+  cat(paste("(Motion_Type_IN)", sep="\t"))
+  print(trajectory[1,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Grid 
+  cat(paste("(Grid_IN)", sep="\t"))
+  print(barrier[1,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # barrier position
+  cat(paste("(Grid_Position_IN)", sep="\t"))
+  print(barrier_position[1,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # jump height
+  cat(paste("(Jump_Height_IN)", sep="\t"))
+  print(jump_height[1,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # goal
+  cat(paste("(Goal_IN)", sep="\t"))
+  print(goal[2,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # clearance
+  cat(paste("(Clearance_IN)", sep="\t"))
+  print(clearance[1,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # OUTPUT
+  cat(paste("T:", "\n", sep="\t"))
+  
+  # Feature A
+  cat(paste("(Object_Left_OUT)", sep="\t"))
+  print(objects_left_hab_test[1,], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Animate status
+  cat(paste("(Object_Left_Animate_Status_OUT)", sep="\t"))
+  print(animacy[2,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Feature B
+  cat(paste("(Object_Right_OUT)", sep="\t"))
+  print(objects_right_hab_test[1,], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Animate status
+  cat(paste("(Object_Right_Animate_Status_OUT)", sep="\t"))
+  print(animacy[2,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Motion 
+  cat(paste("(Motion_OUT)", sep="\t"))
+  print(motionPath[[k+1]], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Motion 
+  cat(paste("(Motion_Type_OUT)", sep="\t"))
+  print(trajectory[1,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Grid 
+  cat(paste("(Grid_OUT)", sep="\t"))
+  print(barrier[1,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # barrier position
+  cat(paste("(Grid_Position_OUT)", sep="\t"))
+  print(barrier_position[1,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # jump height
+  cat(paste("(Jump_Height_OUT)", sep="\t"))
+  print(jump_height[1,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # goal
+  cat(paste("(Goal_OUT)", sep="\t"))
+  print(goal[2,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # clearance
+  cat(paste("(Clearance_OUT)", sep="\t"))
+  print(clearance[1,1], sep = "\t", quote = FALSE, row.names = FALSE)
+}
+cat(paste(";", sep="\t"))
+cat("\n")
+
+
+
+cat(paste("name: consistentLowEfficient", "\n", sep=""))
+cat(paste("5", "\n", sep="\t"))
+for(k in 1:5){
+  # INPUT
+  cat(paste("I:", "\n", sep="\t"))
+  
+  # Feature A
+  cat(paste("(Object_Left_IN)", sep="\t"))
+  print(objects_left_hab_test[1,], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Animate status
+  cat(paste("(Object_Left_Animate_Status_IN)", sep="\t"))
+  print(animacy[2,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Feature B
+  cat(paste("(Object_Right_IN)", sep="\t"))
+  print(objects_right_hab_test[1,], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Animate status
+  cat(paste("(Object_Right_Animate_Status_IN)", sep="\t"))
+  print(animacy[2,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Motion 
+  cat(paste("(Motion_IN)", sep="\t"))
+  print(motionPath[[k]], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Motion 
+  cat(paste("(Motion_Type_IN)", sep="\t"))
+  print(trajectory[2,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Grid 
+  cat(paste("(Grid_IN)", sep="\t"))
+  print(barrier[2,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # barrier position
+  cat(paste("(Grid_Position_IN)", sep="\t"))
+  print(barrier_position[2,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # jump height
+  cat(paste("(Jump_Height_IN)", sep="\t"))
+  print(jump_height[2,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # goal
+  cat(paste("(Goal_IN)", sep="\t"))
+  print(goal[2,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # clearance
+  cat(paste("(Clearance_IN)", sep="\t"))
+  print(clearance[2,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # OUTPUT
+  cat(paste("T:", "\n", sep="\t"))
+  
+  # Feature A
+  cat(paste("(Object_Left_OUT)", sep="\t"))
+  print(objects_left_hab_test[1,], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Animate status
+  cat(paste("(Object_Left_Animate_Status_OUT)", sep="\t"))
+  print(animacy[2,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Feature B
+  cat(paste("(Object_Right_OUT)", sep="\t"))
+  print(objects_right_hab_test[1,], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Animate status
+  cat(paste("(Object_Right_Animate_Status_OUT)", sep="\t"))
+  print(animacy[2,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Motion 
+  cat(paste("(Motion_OUT)", sep="\t"))
+  print(motionPath[[k+1]], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Motion 
+  cat(paste("(Motion_Type_OUT)", sep="\t"))
+  print(trajectory[2,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # Grid 
+  cat(paste("(Grid_OUT)", sep="\t"))
+  print(barrier[2,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # barrier position
+  cat(paste("(Grid_Position_OUT)", sep="\t"))
+  print(barrier_position[2,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # jump height
+  cat(paste("(Jump_Height_OUT)", sep="\t"))
+  print(jump_height[2,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  # goal
+  cat(paste("(Goal_OUT)", sep="\t"))
+  print(goal[2,1], sep = "\t", quote = FALSE, row.names = FALSE)
+  
+  
+  # clearance
+  cat(paste("(Clearance_OUT)", sep="\t"))
+  print(clearance[2,1], sep = "\t", quote = FALSE, row.names = FALSE)
+}
+
+cat(paste(";", sep="\t"))
+cat("\n")
+sink()
 
 
 
