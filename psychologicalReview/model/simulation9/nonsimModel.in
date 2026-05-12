@@ -1,4 +1,4 @@
-# Simulation 2 (loosely corresponding to Gergeley 1995)
+# Simulation 9 (corresponds to prediction where nets tested either on two inefficient events or two efficient ones
 # Author: Deon T. Benton
 
 addNet gsSim -i 8
@@ -23,19 +23,19 @@ addNet gsSim -i 8
 	addGroup hidden 30 RELU
 	
 	# noise parameters
-	noiseType Object_Left_IN -range 0.375
-	noiseType Object_Right_IN -range 0.375
-	noiseType Object_Left_Animate_Status_IN -range 0.375
-	noiseType Object_Right_Animate_Status_IN -range 0.375
-	noiseType Grid_IN -range 0.375
-	noiseType Grid_Position_IN -range 0.375
-	noiseType Jump_Height_IN -range 0.375
-	noiseType Motion_IN -range 0.375
-	noiseType Motion_Type_IN -range 0.375
-	noiseType Goal_IN -range 0.375
-	noiseType Clearance_IN -range 0.375
-	noiseType Reaching_IN -range 0.375
-	noiseType Looking_IN -range 0.375
+	noiseType Object_Left_IN -range 0.3
+	noiseType Object_Right_IN -range 0.3
+	noiseType Object_Left_Animate_Status_IN -range 0.3
+	noiseType Object_Right_Animate_Status_IN -range 0.3
+	noiseType Grid_IN -range 0.3
+	noiseType Grid_Position_IN -range 0.3
+	noiseType Jump_Height_IN -range 0.3
+	noiseType Motion_IN -range 0.3
+	noiseType Motion_Type_IN -range 0.3
+	noiseType Goal_IN -range 0.3
+	noiseType Clearance_IN -range 0.3
+	noiseType Reaching_IN -range 0.3
+	noiseType Looking_IN -range 0.3
 		
 
 	# output group
@@ -73,23 +73,21 @@ addNet gsSim -i 8
 
 	deleteGroups bias
 
-# training examples
-	loadExamples pretrain.ex -e PERMUTED
+	# training examples
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation9/pretrain.ex" -e PERMUTED
 
 	# Gergeley et al. (1995) simulations 
-	loadExamples sim4aHab.ex 
-	loadExamples sim4aCntrlHab.ex 
-	loadExamples sim4aTest.ex
-	loadExamples sim4aCntrlTest.ex
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation9/sim9Hab.ex" 
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation9/sim9EfficientTest.ex" 
+	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation9/sim9InefficientTest.ex"
 
 	# set learning and display parameters
 	setObj learningRate 0.0875
 	setObj momentum	    0
 	setObj batchSize    0
 	setObj numUpdates   10
-	setObj randRange 0.375
+	setObj randRange 0.3
 	setObj pseudoExampleFreq 1
-	setObj weightDecay 0.005
 
 	
 resetPlot 
