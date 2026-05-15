@@ -3565,12 +3565,12 @@ proc gsSim_sim8 {} {
 	deleteGroups bias
 
 	# training examples
-	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation8/pretrain.ex" -e PERMUTED
+	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation8/pretrain.ex" -e PERMUTED
 
-	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation8/sim8ExpHab.ex" 
-	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation8/sim8CntrlHab.ex" 
-	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation8/sim8Test.ex"
-	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation8/sim8CntrlTest.ex"
+	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation8/sim8ExpHab.ex" 
+	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation8/sim8CntrlHab.ex" 
+	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation8/sim8Test.ex"
+	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation8/sim8CntrlTest.ex"
 
 	# set learning and display parameters
 	setObj learningRate 0.1
@@ -3617,13 +3617,13 @@ proc gsSim_sim8 {} {
 	set habEvent [list sim8ExpHab sim8CntrlHab]
 	set testEvent [list sim8Test sim8Test]
 	set pretrainingEpochs [list 900]
-	set trainingEpochs [list 8 9 10 11 12]
+	set trainingEpochs [list 8]
 
 
 	# define loop
 
 	foreach stud $study cond $condition hEvent $habEvent tEvent $testEvent {
-		set workingdirectory "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/prediction/sim8"
+		set workingdirectory "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/data/ALIAS/prediction/sim8"
 		cd $workingdirectory
 		foreach tEpochs $trainingEpochs {
 			foreach epochs $pretrainingEpochs {
@@ -3641,22 +3641,23 @@ proc gsSim_sim9 {} {
 	addNet gsSim9 -i 8
 
 	# input groups
-	addGroup Object_Left_IN 82 INPUT OUT_NOISE 
+	addGroup Object_Left_IN 82 INPUT OUT_NOISE
 	addGroup Object_Right_IN 82 INPUT  OUT_NOISE
 	addGroup Object_Left_Animate_Status_IN 2 INPUT OUT_NOISE 
 	addGroup Object_Right_Animate_Status_IN 2 INPUT  OUT_NOISE
 	addGroup Grid_IN 5 INPUT  OUT_NOISE
 	addGroup Grid_Position_IN 3 INPUT OUT_NOISE 
+	addGroup Grid_Vertical_Position_IN 2 INPUT OUT_NOISE
 	addGroup Jump_Height_IN 5 INPUT OUT_NOISE 
 	addGroup Motion_IN 6 INPUT OUT_NOISE
 	addGroup Motion_Type_IN 2 INPUT OUT_NOISE
 	addGroup Goal_IN 1 INPUT OUT_NOISE
-	addGroup Clearance_IN 3 INPUT OUT_NOISE 
+	addGroup Clearance_IN 3 INPUT OUT_NOISE
 
 	# hidden group (# there are necessarily fewer hidden units than there are input and output units)
-	addGroup context 30 ELMAN
-	addGroup hidden 30 RELU
-		
+	addGroup context 50 ELMAN
+	addGroup hidden 50 RELU
+	
 	# noise parameters
 	noiseType Object_Left_IN -range 0.3
 	noiseType Object_Right_IN -range 0.3
@@ -3664,6 +3665,7 @@ proc gsSim_sim9 {} {
 	noiseType Object_Right_Animate_Status_IN -range 0.3
 	noiseType Grid_IN -range 0.3
 	noiseType Grid_Position_IN -range 0.3
+	noiseType Grid_Vertical_Position_IN -range 0.3
 	noiseType Jump_Height_IN -range 0.3
 	noiseType Motion_IN -range 0.3
 	noiseType Motion_Type_IN -range 0.3
@@ -3695,12 +3697,12 @@ proc gsSim_sim9 {} {
 	deleteGroups bias
 
 	# training examples
-	loadExamples "C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/model/simulation9/pretrain.ex" -e PERMUTED
+	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation9/pretrain.ex" -e PERMUTED
 
 	# Gergeley et al. (1995) simulations 
-	loadExamples "C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/model/simulation9/sim9Hab.ex" 
-	loadExamples "C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/model/simulation9/sim9EfficientTest.ex" 
-	loadExamples "C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/model/simulation9/sim9InefficientTest.ex"
+	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation9/sim9Hab.ex" 
+	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation9/sim9EfficientTest.ex" 
+	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation9/sim9InefficientTest.ex"
 
 	# set learning and display parameters
 	setObj learningRate 0.0875
@@ -3742,16 +3744,17 @@ proc gsSim_sim9 {} {
 	
 	# define lists for looping
 	set study [list sim9 sim9]
-	set habEvent [list sim9Hab sim9CntrlHab sim9CntrlHab]
-	set testEvent [list sim9Test sim9Test sim9CntrlTest]
+	set folder [list inefficientTests efficientTests]
+	set habEvent [list sim9Hab sim9Hab]
+	set testEvent [list sim9InefficientTest sim9EfficientTest]
 	set pretrainingEpochs [list 450]
-	set trainingEpochs [list 8 9 10 11 12]
+	set trainingEpochs [list 8]
 
 
 	# define loop
 
-	foreach stud $study hEvent $habEvent tEvent $testEvent {
-		set workingdirectory "C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/data/ALIAS/prediction/sim9"
+	foreach stud $study hEvent $habEvent tEvent $testEvent fldr $folder {
+		set workingdirectory "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/data/ALIAS/prediction/sim9/$fldr"
 		cd $workingdirectory
 		foreach tEpochs $trainingEpochs {
 			foreach epochs $pretrainingEpochs {
@@ -3765,7 +3768,7 @@ proc gsSim_sim9 {} {
 # UNCOMMENT THE CODE BELOW IF YOU WANT TO AUTOMATE THE SIMULATIONS #
 ####################################################################
 
-set modelList [list gsSim_sim8] 
+set modelList [list gsSim_sim8 gsSim_sim9] 
 
 
 
