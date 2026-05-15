@@ -65,7 +65,7 @@ p = ggplot(D, aes(trialType, lookingTime, fill=trialType)) + stat_summary(fun = 
   stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
   ylab("Network Error") + # change the label of the y-axis
   scale_y_continuous(expand = expansion(mult = c(0, 0.02))) +
-  coord_cartesian(ylim=c(0, 220)) +
+  coord_cartesian(ylim=c(0, 160)) +
   scale_fill_manual(values = c("black", "azure3")) +
   theme(axis.text.x = element_text(size = 18),
         axis.text.y = element_text(size = 18), 
@@ -128,7 +128,7 @@ p = ggplot(D, aes(trialType, lookingTime, fill=trialType)) + stat_summary(fun = 
   stat_summary(fun.data=mean_cl_boot, geom = "errorbar", position = position_dodge(width=0.90), width = 0.2) + # add errors bars
   ylab("Network Error") + # change the label of the y-axis
   scale_y_continuous(expand = expansion(mult = c(0, 0.02))) +
-  coord_cartesian(ylim=c(0, 62)) +
+  coord_cartesian(ylim=c(0, 52)) +
   scale_fill_manual(values = c("black", "azure3")) +
   theme(axis.text.x = element_text(size = 18),
         axis.text.y = element_text(size = 18), 
