@@ -31,7 +31,8 @@ library(Hmisc)
 #######################################
 
 # set working directory
-setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/prediction/sim9")
+#setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/prediction/sim9")
+setwd("C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/data/ALIAS/prediction/sim9/inefficientTests")
 
 # load data
 D = read.table(file.choose(), header = FALSE, stringsAsFactors = FALSE)
@@ -80,9 +81,9 @@ p = ggplot(D, aes(trialType, lookingTime, fill=trialType)) + stat_summary(fun = 
         ),
         plot.margin = margin(3, 3, 3, 3)) +
   theme(legend.position = "none") +
-  labs(x = "Inefficient Test Events condition")
+  theme(axis.title.x = element_blank())
 
-setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
+setwd("C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/figures")
 ggsave("fig24a_05122026_ALIAS_inefficient_cond_main.png", 
        plot = p, 
        width = 6.5, height = 5.2, dpi = 300)
