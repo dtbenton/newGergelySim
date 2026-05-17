@@ -1,0 +1,27 @@
+restate open question of cognitive science
+ (understand how infants process actions)
+- restate briefly "the prominent view"
+- restate alternative account and how goal was to test whether it could capture 5 target findings in this field 
+- restate results but in terms of each finding (e.g., simulation 1 captured the finding that...; simulation 2 captured the finding that
+- state how the model made several testable predictions (in addition to capturing these findings, the model made a number of testable predictions
+
+
+- relate this theory back out to broader debate (" the current finding challenge the prominent view that..."
+---- be clear that the simulations merely provide a proof of concept that associative learning can explain infants behavior and what is ultimately decide between these accounts are experiments that test the competing predictions of these account
+
+- restate what the model is and is not ("this is not a model of how action understanding itself emerges. instead, model here is a model of the mechanstic basis infants looking behavior in action understanding studies..."
+
+
+- discuss potential criticisms 
+---- one potential criticisms is that the current studies only focused on studies that employed Gergely paradigm.  
+---- restate why this was the case: paradigm has been used most extensively to understand infants ability to discriminate efficient and inefficient actions. Also by using same paradigm any differences between sims can't be due to differences in architecture 
+----- this means that studies that do not use this method -- despite looking at inefficient and efficient perception -- can't be modeled
+---- ultimately it will be important to examine whether an extended version of ALIAS -- whose architecture permits modeling studies that don't use the Gergely paradigm -- but still embodies the core principles of ALIAS can capture data in other studies 
+
+
+
+
+Table 1 summarizes the target findings that each model was and was not able to capture. As the table makes clear, ALIAS possessed the greatest explanatory scope
+
+
+Unlike the previous simulations, OM10 could not be applied to the current target finding. The reason for this is that the model cannot meaningfully represent the critical manipulation in Liu and Spelke’s (2017) experiments. This manipulation relates to the fact that differently sized barriers were present during both the habituation and test phases of the experiments reported in that paper. In contrast, barriers are absent during the prediction (i.e., test) phase in OM10 irrespective of the condition to which networks are assigned. This feature of the model—which here is treated as a theoretical commitment—means that OM10 can neither simulate Liu and Spelke’s (2017) experiments nor represent graded differences in infants’ putative sensitivity to action efficiency. Although it would be possible to modify OM10 such that obstacle information remained present during the test phase, doing so would constitute a substantial departure from how the model was originally conceived by Overwalle (2010) and from how it was implemented in the previous simulations. In other words, such a modification would transform OM10 into a fundamentally different model.
