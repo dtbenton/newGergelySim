@@ -33,7 +33,8 @@ library(Hmisc)
 ###########################################
 
 # set working directory to sim5a
-setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/sim5a")
+# setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/sim5a")
+setwd("C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/data/ALIAS/sim5a")
 
 # get all txt files from both folders
 files = list.files(
@@ -198,8 +199,8 @@ condition_barplot = ggplot(D.ineffective.exp, aes(condition, lookingTime, fill=t
         axis.ticks.x = element_blank(),
         axis.text.x = element_blank()) 
 
-setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
-ggsave("fig18c_05042026_ALIAS_exp_byHab.png", 
+setwd("C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/figures")
+ggsave("fig19b_05262026_ALIAS_exp_byHab.png", 
        plot = condition_barplot, 
        width = 8.5, height = 5.2, dpi = 300)
 
@@ -223,8 +224,8 @@ condition_barplot = ggplot(D.ineffective.exp, aes(condition, lookingTime, fill=t
         axis.text.x = element_blank(),
         legend.position = "none") 
 
-setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
-ggsave("fig18d_05042026_ALIAS_exp_overall.png", 
+#setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
+ggsave("fig19a_05042026_ALIAS_exp_overall.png", 
        plot = condition_barplot, 
        width = 6.5, height = 5.2, dpi = 300)
 
