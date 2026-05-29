@@ -55,11 +55,11 @@ D$lookingTime = D$V3
 D = D[,-c(1:3)]
 
 
+
 ####################
 ## OMNIBUS FIGURE ##
 ####################
 # figure
-
 
 # experimental data
 p = ggplot(D, aes(trialType, lookingTime, fill=trialType)) + stat_summary(fun = mean, geom = "bar", position = "dodge") + # add the bars, which represent the means and the place them side-by-side with 'dodge'
