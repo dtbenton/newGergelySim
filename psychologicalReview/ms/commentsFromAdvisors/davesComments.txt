@@ -1,0 +1,39 @@
+Deon-
+
+I've read the manuscript. I started with a number of line-by-line comments, but then figured that a broader approach might be better for you as you continue revising before submission. I tried to read the manuscript as if I were a reviewer. I think there are some clear strengths, as you're presenting an alternative to nativist views (without saying so, more on that in a bit) in a way that convinces the reader that there is an alternative account. However, for publication in Psych Review or a similar journal, you have to make a broader impact, I think there are four things you want to do.
+
+1) Start simpler. You are assuming that the reader is familiar with all of the paradigms you are describing, and the basic principle. Figures that indicate the different paradigms you are using would be helpful to ground the reader. But more generally, remember that 95% of your readership will not know what the Gergely paradigm is, will not understand "action efficiency understanding", and will not know its importance. This is a moment where you have to step back and teach. Show why this topic is important. That is, you have to show why this is interesting to the broader readership of the journal. I'm struggling with that - and I understand the topic and material. But that's because of the level of the writing. You are writing for someone like Julien Jara-Ettinger (or more precisely, a small group of developmental cognitive scientists with expertise in infancy and modeling). You're writing for your potential reviewers and not the broader audience. You have to write for the latter, otherwise, this will just get triaged by editors.
+
+How to revise: I think you need to take a step back and really think about the order in which you introduce information. There's a lot in this manuscript, and much of it seems out of order to me. You introduce models without discussing them. There are 5 different action efficiency understanding paradigms, but only one of them is introduced, and none are visualized. ALIAS is your model. But you're contrasting it with ALIAS-2, which is REALLY hard to understand and kind of comes out of the blue without much justification. OM10 is mentioned before it's defined. There is a lot of information to keep track of, and I'm not sure a general readership is going to keep up. This isn't to say that the work isn't important, it's just A LOT.   
+
+2) Be succinct. You write like you talk. I love you, but you always use 80 words when 20 will suffice. The introduction is too long, and contains a lot of dead phrases (go back and reread each sentence carefully - it's possible to eliminate verbiage from almost every sentence in the intro). You also try to anticipate every possible reviewer comment ahead of time. That's why the simulations are so long. Much of this can do in supplemental materials or in footnotes.
+
+How to revise: Start with the intro and the discussion. You can cut ~1000 words from the introduction alone without changing the meaning of a single sentence. It's hard to do, and it means that you have to put this in a drawer for 2-3 weeks and write something else, but then come back to it, and you'll start to see that so many dead phrases can be cut. 
+
+Hints: 
+a) Any time you use the word "very", rewrite the entire sentence. The word "very" should never appear in written English. NO EXCEPTIONS.
+b) Look at paragraphs and notice how often you have sentences with two clauses (pretty much every time you use a conjunction). These kind of sentences should be rare, not common.
+c) Any time you use the word "or", actually think to yourself if you need this disjunctive statement. 
+d) Adverbs and adjectives should be rare, not common. Deleting adverbs in particular often makes sentences easier to understand.
+
+Those are explicit places where you can rewrite, but there are a number of others. Again, step away from this, and then come back to it. Note. This is the piece to do last.
+
+That said, the simulations are so detailed that you often lose the reader. What information could be cut from the simulations and placed in supplemental materials? Particularly if you have to add figures and verbiage to explain each phenomena you are modeling, what could and should be cut? Again, you're writing for your reviewers, not the general audience. What does the general audience need to know vs. what will a modeling nerd need to have in the SM? 
+
+3) Broaden the argument Having read the manuscript, there's a point that you have to address, which is that I'm not really sure what to do with what you have presented. So, here are a few thoughts.
+
+A) Does your model make a novel prediction for new experiments that are not posited by other models? If so, what is it. Be as explicit as possible. Remember, neural nets are usually thought to be retrodictive, not predictive. The strength is that you know what the results are. But that's also a huge weakness, as they don't tell us anything new. Break the wheel!
+
+B) How do you incorporate the literature in developmental cognitive neuroscience on action understanding and action-efficiency understanding. Citations here you might want to consider are Brass et al. (2007, Current Biology); Vander Wyk et al. (2009, Psych Science), Baker et al. (2009, Cognition - note, I hate this paper, but it's out there),    
+
+C) What about work on older children's understanding of action efficiency (Gonul & Paulus, 2023; Schuwerk & Paulus, 2016)? How do you feel about work that might agree with your take, but on slightly different paradigms (Beissert et al. 2012; Hunnius & Bekkering, 2014)? Does your modeling say anything about overimitation? Can you generalize the results of the simulations to make a broader statement? 
+
+4) Consider how nativists would respond. I think the main point of the "proof of concept" argument is that the existing data (e.g., SKerry et al., 2013) does not have to be interpreted from a nativist perspective. I think you want to make bolder claims here. It might cause more controversy - but as far as the broader implications, you could go out to say that the main way these data have been interpreted (and how infancy work is interpreted in general by the broader psychological science audience) is not correct. Some of this appears in the beginning, but is lost - this is such an important point that it does more towards the end.
+
+To conclude, there's a lot of great work here, but I do think you need to step outside of your head and write for a more general audience - don't try to write smart - try to write it clearly. It's good, but I think it can get better and could ultimately be published in a top-tier review journal if made clearer
+
+-Dave
+
+ps. Psych Bull is more appropriate than Psych Rev given the emphasis you're making on the modeling.
+
+pps. A broader BBS article summarizing the entire oeuvre of your research program  is what you might want to write next. That is, don't go into the details of any one model in the way that you do, but rather broaden the entire argument out to illustrate the importance of the proof of concept.
