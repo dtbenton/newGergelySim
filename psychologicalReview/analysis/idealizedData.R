@@ -21,6 +21,10 @@ library(dplyr)
 library(lattice)
 library(Hmisc)
 
+####################
+# TARGET FINDING 1 #
+####################
+
 set.seed(123)
 
 N = 20
@@ -49,18 +53,164 @@ D$lookingTime[D$condition == "Unconstrained Action" &
 
 D$lookingTime[D$condition == "Unconstrained Action" &
                 D$trialType == "Inefficient"] =
-  rnorm(N, 9, 1.5)
+  D$lookingTime[D$condition == "Unconstrained Action" &
+                  D$trialType == "Efficient"]
 
 
 ####################
 ## OMNIBUS FIGURE ##
 ####################
 
-D.effective.exp = subset(D, ! effectiveness %in% c("Ineffective"))
-D.effective.exp = subset(D.effective.exp, ! condition %in% c("Control"))
+D.exp = subset(D, ! condition %in% c("Unconstrained Action"))
+D.cntrl = subset(D, ! condition %in% c("Constrained Action"))
 
 # figure
-condition_barplot = ggplot(D, aes(trialType, lookingTime, fill=trialType)) +
+condition_barplot = ggplot(D.exp, aes(trialType, lookingTime, fill=trialType)) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  ylab("Looking Time") +
+  scale_y_continuous(expand = c(0, 0)) +
+  facet_wrap(~condition, scales = "free_y") +
+  coord_cartesian(ylim=c(0, 13)) +
+  scale_fill_manual(values = c("black", "azure3")) +
+  labs(fill = "Test Trial") +
+  theme(
+    axis.text.x = element_text(size = 30),
+    axis.text.y = element_text(size = 30),
+    legend.text = element_text(size = 30),
+    legend.title = element_text(size = 30),
+    axis.title = element_text(size = 30),
+    strip.text = element_text(size = 30),
+    axis.title.x = element_blank()
+  ) + 
+  theme(legend.position = "none")
+
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+ggsave(
+  "idealizedDataTargetFinding1Exp.png",
+  plot = condition_barplot,
+  width = 10,
+  height = 10,
+  dpi = 300
+)
+
+
+# figure
+condition_barplot = ggplot(D.cntrl, aes(trialType, lookingTime, fill=trialType)) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  ylab("Looking Time") +
+  scale_y_continuous(expand = c(0, 0)) +
+  facet_wrap(~condition, scales = "free_y") +
+  coord_cartesian(ylim=c(0, 13)) +
+  scale_fill_manual(values = c("black", "azure3")) +
+  labs(fill = "Test Trial") +
+  theme(
+    axis.text.x = element_text(size = 30),
+    axis.text.y = element_text(size = 30),
+    legend.text = element_text(size = 30),
+    legend.title = element_text(size = 30),
+    axis.title = element_text(size = 30),
+    strip.text = element_text(size = 30),
+    axis.title.x = element_blank()
+  ) + 
+  theme(legend.position = "none")
+
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+ggsave(
+  "idealizedDataTargetFinding1Cntrl.png",
+  plot = condition_barplot,
+  width = 10,
+  height = 10,
+  dpi = 300
+)
+
+
+####################
+# TARGET FINDING 3 #
+####################
+
+# INFERRING CONSTRAINTS 
+set.seed(123)
+
+N = 20
+
+D.constraints = expand.grid(
+  id = 1:N,
+  condition = c("Inferring Constraints"),
+  trialType = c("Obstacle", "No Obstacle")
+)
+
+D.constraints$lookingTime = NA
+
+# Constrained Action condition
+D.constraints$lookingTime[D.constraints$condition == "Inferring Constraints" &
+                D.constraints$trialType == "Obstacle"] =
+  rnorm(N, 8, 1.5)
+
+D.constraints$lookingTime[D.constraints$condition == "Inferring Constraints" &
+                D.constraints$trialType == "No Obstacle"] =
+  rnorm(N, 12, 1.5)
+
+
+####################
+## OMNIBUS FIGURE ##
+####################
+
+
+# figure
+condition_barplot = ggplot(D.constraints, aes(trialType, lookingTime, fill=trialType)) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  ylab("Looking Time") +
+  scale_y_continuous(expand = c(0, 0)) +
+  facet_wrap(~condition, scales = "free_y") +
+  coord_cartesian(ylim=c(0, 13)) +
+  scale_fill_manual(values = c("black", "azure3")) +
+  labs(fill = "Test Trial") +
+  theme(
+    axis.text.x = element_text(size = 30),
+    axis.text.y = element_text(size = 30),
+    legend.text = element_text(size = 30),
+    legend.title = element_text(size = 30),
+    axis.title = element_text(size = 30),
+    strip.text = element_text(size = 30),
+    axis.title.x = element_blank()
+  ) + 
+  theme(legend.position = "none")
+
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+ggsave(
+  "idealizedDataTargetFinding3Constraints.png",
+  plot = condition_barplot,
+  width = 10,
+  height = 10,
+  dpi = 300
+)
+
+# Inferring Goals 
+set.seed(123)
+
+N = 20
+
+D.goals = expand.grid(
+  id = 1:N,
+  condition = c("Inferring Goals"),
+  trialType = c("Congruent", "Incongruent")
+)
+
+D.goals$lookingTime = NA
+
+# Constrained Action condition
+D.goals$lookingTime[D.goals$condition == "Inferring Goals" &
+                            D.goals$trialType == "Congruent"] =
+  rnorm(N, 8, 1.5)
+
+D.goals$lookingTime[D.goals$condition == "Inferring Goals" &
+                            D.goals$trialType == "Incongruent"] =
+  rnorm(N, 12, 1.5)
+
+
+
+# figure
+condition_barplot = ggplot(D.goals, aes(trialType, lookingTime, fill=trialType)) +
   stat_summary(fun = mean, geom = "bar", position = "dodge") +
   ylab("Looking Time") +
   scale_y_continuous(expand = c(0, 0)) +
@@ -83,9 +233,318 @@ condition_barplot = ggplot(D, aes(trialType, lookingTime, fill=trialType)) +
 
 setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
 ggsave(
-  "idealizedDataTargetFinding1.png",
+  "idealizedDataTargetFinding3Goals.png",
   plot = condition_barplot,
-  width = 20,
+  width = 10,
+  height = 10,
+  dpi = 300
+)
+
+
+####################
+# TARGET FINDING 4 #
+####################
+
+set.seed(123)
+
+N = 20
+
+D = expand.grid(
+  id = 1:N,
+  condition = c("Constrained Action (Exp. 1)", 
+                "Unconstrained Action (Exp. 2)",
+                "Unconstrained Action (Exp. 3)"),
+  trialType = c("Efficient", "Inefficient")
+)
+
+D$lookingTime = NA
+
+# Constrained Action condition (Experiment 1)
+D$lookingTime[D$condition == "Constrained Action (Exp. 1)" &
+                D$trialType == "Efficient"] =
+  rnorm(N, 8, 1.5)
+
+D$lookingTime[D$condition == "Constrained Action (Exp. 1)" &
+                D$trialType == "Inefficient"] =
+  rnorm(N, 12, 1.5)
+
+# Unconstrained Action condition (Experiment 2)
+D$lookingTime[D$condition == "Unconstrained Action (Exp. 2)" &
+                D$trialType == "Efficient"] =
+  D$lookingTime[D$condition == "Constrained Action (Exp. 1)" &
+                  D$trialType == "Efficient"]
+
+D$lookingTime[D$condition == "Unconstrained Action (Exp. 2)" &
+                D$trialType == "Inefficient"] =
+  D$lookingTime[D$condition == "Constrained Action (Exp. 1)" &
+                  D$trialType == "Efficient"]
+
+
+# Unconstrained Action condition (Experiment 3)
+D$lookingTime[D$condition == "Unconstrained Action (Exp. 3)" &
+                D$trialType == "Efficient"] =
+  D$lookingTime[D$condition == "Constrained Action (Exp. 1)" &
+                  D$trialType == "Efficient"]
+
+D$lookingTime[D$condition == "Unconstrained Action (Exp. 3)" &
+                D$trialType == "Inefficient"] =
+  D$lookingTime[D$condition == "Constrained Action (Exp. 1)" &
+                  D$trialType == "Inefficient"]
+
+
+####################
+## OMNIBUS FIGURE ##
+####################
+
+D.exp1 = subset(D, ! condition %in% c("Unconstrained Action (Exp. 2)",
+                                      "Unconstrained Action (Exp. 3)"))
+D.exp2 = subset(D, ! condition %in% c("Constrained Action (Exp. 1)",
+                                      "Unconstrained Action (Exp. 3)"))
+D.exp3 = subset(D, ! condition %in% c("Constrained Action (Exp. 1)",
+                                      "Unconstrained Action (Exp. 2)"))
+# figure
+
+# figure
+
+# exp 1
+condition_barplot = ggplot(D.exp1, aes(trialType, lookingTime, fill=trialType)) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  ylab("Looking Time") +
+  scale_y_continuous(expand = c(0, 0)) +
+  facet_wrap(~condition, scales = "free_y") +
+  coord_cartesian(ylim=c(0, 13)) +
+  scale_fill_manual(values = c("black", "azure3")) +
+  labs(fill = "Test Trial") +
+  theme(
+    axis.text.x = element_text(size = 30),
+    axis.text.y = element_text(size = 30),
+    legend.text = element_text(size = 30),
+    legend.title = element_text(size = 30),
+    axis.title = element_text(size = 30),
+    strip.text = element_text(size = 30),
+    axis.title.x = element_blank()
+  ) + 
+  theme(legend.position = "none")
+
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+ggsave(
+  "idealizedDataTargetFinding4exp1.png",
+  plot = condition_barplot,
+  width = 10,
+  height = 10,
+  dpi = 300
+)
+
+# exp 2
+condition_barplot = ggplot(D.exp2, aes(trialType, lookingTime, fill=trialType)) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  ylab("Looking Time") +
+  scale_y_continuous(expand = c(0, 0)) +
+  facet_wrap(~condition, scales = "free_y") +
+  coord_cartesian(ylim=c(0, 13)) +
+  scale_fill_manual(values = c("black", "azure3")) +
+  labs(fill = "Test Trial") +
+  theme(
+    axis.text.x = element_text(size = 30),
+    axis.text.y = element_text(size = 30),
+    legend.text = element_text(size = 30),
+    legend.title = element_text(size = 30),
+    axis.title = element_text(size = 30),
+    strip.text = element_text(size = 30),
+    axis.title.x = element_blank()
+  ) + 
+  theme(legend.position = "none")
+
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+ggsave(
+  "idealizedDataTargetFinding4exp2.png",
+  plot = condition_barplot,
+  width = 10,
+  height = 10,
+  dpi = 300
+)
+
+
+# exp 2
+condition_barplot = ggplot(D.exp3, aes(trialType, lookingTime, fill=trialType)) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  ylab("Looking Time") +
+  scale_y_continuous(expand = c(0, 0)) +
+  facet_wrap(~condition, scales = "free_y") +
+  coord_cartesian(ylim=c(0, 13)) +
+  scale_fill_manual(values = c("black", "azure3")) +
+  labs(fill = "Test Trial") +
+  theme(
+    axis.text.x = element_text(size = 30),
+    axis.text.y = element_text(size = 30),
+    legend.text = element_text(size = 30),
+    legend.title = element_text(size = 30),
+    axis.title = element_text(size = 30),
+    strip.text = element_text(size = 30),
+    axis.title.x = element_blank()
+  ) + 
+  theme(legend.position = "none")
+
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+ggsave(
+  "idealizedDataTargetFinding4exp3.png",
+  plot = condition_barplot,
+  width = 10,
+  height = 10,
+  dpi = 300
+)
+
+
+
+####################
+# TARGET FINDING 5 #
+####################
+
+set.seed(123)
+
+N = 20
+
+D = expand.grid(
+  id = 1:N,
+  condition = c("Constrained Action (Effective Action)", 
+                "Constrained Action (Ineffective Action)",
+                "Unconstrained Action (Effective Action)"),
+  trialType = c("Efficient", "Inefficient")
+)
+
+D$lookingTime = NA
+
+# Constrained Action condition (Experiment 1)
+D$lookingTime[D$condition == "Constrained Action (Effective Action)" &
+                D$trialType == "Efficient"] =
+  rnorm(N, 8, 1.5)
+
+D$lookingTime[D$condition == "Constrained Action (Effective Action)" &
+                D$trialType == "Inefficient"] =
+  rnorm(N, 12, 1.5)
+
+# Unconstrained Action condition (Experiment 2)
+D$lookingTime[D$condition == "Constrained Action (Ineffective Action)" &
+                D$trialType == "Efficient"] =
+  D$lookingTime[D$condition == "Constrained Action (Effective Action)" &
+                  D$trialType == "Efficient"]
+
+D$lookingTime[D$condition == "Constrained Action (Ineffective Action)" &
+                D$trialType == "Inefficient"] =
+  D$lookingTime[D$condition == "Constrained Action (Effective Action)" &
+                  D$trialType == "Efficient"]
+
+
+# Unconstrained Action condition (Experiment 3)
+D$lookingTime[D$condition == "Unconstrained Action (Effective Action)" &
+                D$trialType == "Efficient"] =
+  D$lookingTime[D$condition == "Constrained Action (Effective Action)" &
+                  D$trialType == "Efficient"]
+
+D$lookingTime[D$condition == "Unconstrained Action (Effective Action)" &
+                D$trialType == "Inefficient"] =
+  D$lookingTime[D$condition == "Constrained Action (Effective Action)" &
+                  D$trialType == "Efficient"]
+
+
+####################
+## OMNIBUS FIGURE ##
+####################
+
+D.exp1 = subset(D, ! condition %in% c("Constrained Action (Ineffective Action)",
+                                      "Unconstrained Action (Effective Action)"))
+D.exp2 = subset(D, ! condition %in% c("Constrained Action (Effective Action)",
+                                      "Unconstrained Action (Effective Action)"))
+D.exp3 = subset(D, ! condition %in% c("Constrained Action (Effective Action)",
+                                      "Constrained Action (Ineffective Action)"))
+# figure
+
+# figure
+
+# exp 1
+condition_barplot = ggplot(D.exp1, aes(trialType, lookingTime, fill=trialType)) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  ylab("Looking Time") +
+  scale_y_continuous(expand = c(0, 0)) +
+  facet_wrap(~condition, scales = "free_y") +
+  coord_cartesian(ylim=c(0, 13)) +
+  scale_fill_manual(values = c("black", "azure3")) +
+  labs(fill = "Test Trial") +
+  theme(
+    axis.text.x = element_text(size = 30),
+    axis.text.y = element_text(size = 30),
+    legend.text = element_text(size = 30),
+    legend.title = element_text(size = 30),
+    axis.title = element_text(size = 30),
+    strip.text = element_text(size = 30),
+    axis.title.x = element_blank()
+  ) + 
+  theme(legend.position = "none")
+
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+ggsave(
+  "idealizedDataTargetFinding5exp1.png",
+  plot = condition_barplot,
+  width = 10,
+  height = 10,
+  dpi = 300
+)
+
+# exp 2
+condition_barplot = ggplot(D.exp2, aes(trialType, lookingTime, fill=trialType)) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  ylab("Looking Time") +
+  scale_y_continuous(expand = c(0, 0)) +
+  facet_wrap(~condition, scales = "free_y") +
+  coord_cartesian(ylim=c(0, 13)) +
+  scale_fill_manual(values = c("black", "azure3")) +
+  labs(fill = "Test Trial") +
+  theme(
+    axis.text.x = element_text(size = 30),
+    axis.text.y = element_text(size = 30),
+    legend.text = element_text(size = 30),
+    legend.title = element_text(size = 30),
+    axis.title = element_text(size = 30),
+    strip.text = element_text(size = 30),
+    axis.title.x = element_blank()
+  ) + 
+  theme(legend.position = "none")
+
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+ggsave(
+  "idealizedDataTargetFinding5exp2.png",
+  plot = condition_barplot,
+  width = 10,
+  height = 10,
+  dpi = 300
+)
+
+
+# exp 2
+condition_barplot = ggplot(D.exp3, aes(trialType, lookingTime, fill=trialType)) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  ylab("Looking Time") +
+  scale_y_continuous(expand = c(0, 0)) +
+  facet_wrap(~condition, scales = "free_y") +
+  coord_cartesian(ylim=c(0, 13)) +
+  scale_fill_manual(values = c("black", "azure3")) +
+  labs(fill = "Test Trial") +
+  theme(
+    axis.text.x = element_text(size = 30),
+    axis.text.y = element_text(size = 30),
+    legend.text = element_text(size = 30),
+    legend.title = element_text(size = 30),
+    axis.title = element_text(size = 30),
+    strip.text = element_text(size = 30),
+    axis.title.x = element_blank()
+  ) + 
+  theme(legend.position = "none")
+
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+ggsave(
+  "idealizedDataTargetFinding5exp3.png",
+  plot = condition_barplot,
+  width = 10,
   height = 10,
   dpi = 300
 )
