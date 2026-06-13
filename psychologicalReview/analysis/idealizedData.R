@@ -74,21 +74,21 @@ condition_barplot = ggplot(D.exp, aes(trialType, lookingTime, fill=trialType)) +
   scale_fill_manual(values = c("black", "azure3")) +
   labs(fill = "Test Trial") +
   theme(
-    axis.text.x = element_text(size = 30),
-    axis.text.y = element_text(size = 30),
-    legend.text = element_text(size = 30),
-    legend.title = element_text(size = 30),
-    axis.title = element_text(size = 30),
-    strip.text = element_text(size = 30),
+    axis.text.x = element_text(size = 50),
+    axis.text.y = element_text(size = 50),
+    legend.text = element_text(size = 50),
+    legend.title = element_text(size = 50),
+    axis.title = element_text(size = 50),
+    strip.text = element_text(size = 50),
     axis.title.x = element_blank()
   ) + 
   theme(legend.position = "none")
 
-setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
 ggsave(
   "idealizedDataTargetFinding1Exp.png",
   plot = condition_barplot,
-  width = 10,
+  width = 14,
   height = 10,
   dpi = 300
 )
@@ -104,21 +104,21 @@ condition_barplot = ggplot(D.cntrl, aes(trialType, lookingTime, fill=trialType))
   scale_fill_manual(values = c("black", "azure3")) +
   labs(fill = "Test Trial") +
   theme(
-    axis.text.x = element_text(size = 30),
-    axis.text.y = element_text(size = 30),
-    legend.text = element_text(size = 30),
-    legend.title = element_text(size = 30),
-    axis.title = element_text(size = 30),
-    strip.text = element_text(size = 30),
+    axis.text.x = element_text(size = 50),
+    axis.text.y = element_text(size = 50),
+    legend.text = element_text(size = 50),
+    legend.title = element_text(size = 50),
+    axis.title = element_text(size = 50),
+    strip.text = element_text(size = 50),
     axis.title.x = element_blank()
   ) + 
   theme(legend.position = "none")
 
-setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
 ggsave(
   "idealizedDataTargetFinding1Cntrl.png",
   plot = condition_barplot,
-  width = 10,
+  width = 14,
   height = 10,
   dpi = 300
 )
@@ -166,21 +166,21 @@ condition_barplot = ggplot(D.constraints, aes(trialType, lookingTime, fill=trial
   scale_fill_manual(values = c("black", "azure3")) +
   labs(fill = "Test Trial") +
   theme(
-    axis.text.x = element_text(size = 30),
-    axis.text.y = element_text(size = 30),
-    legend.text = element_text(size = 30),
-    legend.title = element_text(size = 30),
-    axis.title = element_text(size = 30),
-    strip.text = element_text(size = 30),
+    axis.text.x = element_text(size = 50),
+    axis.text.y = element_text(size = 50),
+    legend.text = element_text(size = 50),
+    legend.title = element_text(size = 50),
+    axis.title = element_text(size = 50),
+    strip.text = element_text(size = 50),
     axis.title.x = element_blank()
   ) + 
   theme(legend.position = "none")
 
-setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
 ggsave(
   "idealizedDataTargetFinding3Constraints.png",
   plot = condition_barplot,
-  width = 10,
+  width = 14,
   height = 10,
   dpi = 300
 )
@@ -219,23 +219,23 @@ condition_barplot = ggplot(D.goals, aes(trialType, lookingTime, fill=trialType))
   scale_fill_manual(values = c("black", "azure3")) +
   labs(fill = "Test Trial") +
   theme(
-    axis.text.x = element_text(size = 30),
-    axis.text.y = element_text(size = 30),
-    legend.text = element_text(size = 30),
-    legend.title = element_text(size = 30),
-    axis.title = element_text(size = 30),
-    strip.text = element_text(size = 30),
+    axis.text.x = element_text(size = 50),
+    axis.text.y = element_text(size = 50),
+    legend.text = element_text(size = 50),
+    legend.title = element_text(size = 50),
+    axis.title = element_text(size = 50),
+    strip.text = element_text(size = 50),
     axis.title.x = element_blank()
   ) + 
   theme(legend.position = "none")
 
 
 
-setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
 ggsave(
   "idealizedDataTargetFinding3Goals.png",
   plot = condition_barplot,
-  width = 10,
+  width = 14,
   height = 10,
   dpi = 300
 )
@@ -316,21 +316,21 @@ condition_barplot = ggplot(D.exp1, aes(trialType, lookingTime, fill=trialType)) 
   scale_fill_manual(values = c("black", "azure3")) +
   labs(fill = "Test Trial") +
   theme(
-    axis.text.x = element_text(size = 30),
-    axis.text.y = element_text(size = 30),
-    legend.text = element_text(size = 30),
-    legend.title = element_text(size = 30),
-    axis.title = element_text(size = 30),
-    strip.text = element_text(size = 30),
+    axis.text.x = element_text(size = 50),
+    axis.text.y = element_text(size = 50),
+    legend.text = element_text(size = 50),
+    legend.title = element_text(size = 50),
+    axis.title = element_text(size = 50),
+    strip.text = element_text(size = 50),
     axis.title.x = element_blank()
   ) + 
   theme(legend.position = "none")
 
-setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
 ggsave(
   "idealizedDataTargetFinding4exp1.png",
   plot = condition_barplot,
-  width = 10,
+  width = 14,
   height = 10,
   dpi = 300
 )
@@ -345,21 +345,21 @@ condition_barplot = ggplot(D.exp2, aes(trialType, lookingTime, fill=trialType)) 
   scale_fill_manual(values = c("black", "azure3")) +
   labs(fill = "Test Trial") +
   theme(
-    axis.text.x = element_text(size = 30),
-    axis.text.y = element_text(size = 30),
-    legend.text = element_text(size = 30),
-    legend.title = element_text(size = 30),
-    axis.title = element_text(size = 30),
-    strip.text = element_text(size = 30),
+    axis.text.x = element_text(size = 50),
+    axis.text.y = element_text(size = 50),
+    legend.text = element_text(size = 50),
+    legend.title = element_text(size = 50),
+    axis.title = element_text(size = 50),
+    strip.text = element_text(size = 50),
     axis.title.x = element_blank()
   ) + 
   theme(legend.position = "none")
 
-setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
 ggsave(
   "idealizedDataTargetFinding4exp2.png",
   plot = condition_barplot,
-  width = 10,
+  width = 14,
   height = 10,
   dpi = 300
 )
@@ -375,21 +375,21 @@ condition_barplot = ggplot(D.exp3, aes(trialType, lookingTime, fill=trialType)) 
   scale_fill_manual(values = c("black", "azure3")) +
   labs(fill = "Test Trial") +
   theme(
-    axis.text.x = element_text(size = 30),
-    axis.text.y = element_text(size = 30),
-    legend.text = element_text(size = 30),
-    legend.title = element_text(size = 30),
-    axis.title = element_text(size = 30),
-    strip.text = element_text(size = 30),
+    axis.text.x = element_text(size = 50),
+    axis.text.y = element_text(size = 50),
+    legend.text = element_text(size = 50),
+    legend.title = element_text(size = 50),
+    axis.title = element_text(size = 50),
+    strip.text = element_text(size = 50),
     axis.title.x = element_blank()
   ) + 
   theme(legend.position = "none")
 
-setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
 ggsave(
   "idealizedDataTargetFinding4exp3.png",
   plot = condition_barplot,
-  width = 10,
+  width = 14,
   height = 10,
   dpi = 300
 )
@@ -471,21 +471,21 @@ condition_barplot = ggplot(D.exp1, aes(trialType, lookingTime, fill=trialType)) 
   scale_fill_manual(values = c("black", "azure3")) +
   labs(fill = "Test Trial") +
   theme(
-    axis.text.x = element_text(size = 30),
-    axis.text.y = element_text(size = 30),
-    legend.text = element_text(size = 30),
-    legend.title = element_text(size = 30),
-    axis.title = element_text(size = 30),
-    strip.text = element_text(size = 30),
+    axis.text.x = element_text(size = 50),
+    axis.text.y = element_text(size = 50),
+    legend.text = element_text(size = 50),
+    legend.title = element_text(size = 50),
+    axis.title = element_text(size = 50),
+    strip.text = element_text(size = 50),
     axis.title.x = element_blank()
   ) + 
   theme(legend.position = "none")
 
-setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
 ggsave(
   "idealizedDataTargetFinding5exp1.png",
   plot = condition_barplot,
-  width = 10,
+  width = 14,
   height = 10,
   dpi = 300
 )
@@ -500,21 +500,21 @@ condition_barplot = ggplot(D.exp2, aes(trialType, lookingTime, fill=trialType)) 
   scale_fill_manual(values = c("black", "azure3")) +
   labs(fill = "Test Trial") +
   theme(
-    axis.text.x = element_text(size = 30),
-    axis.text.y = element_text(size = 30),
-    legend.text = element_text(size = 30),
-    legend.title = element_text(size = 30),
-    axis.title = element_text(size = 30),
-    strip.text = element_text(size = 30),
+    axis.text.x = element_text(size = 50),
+    axis.text.y = element_text(size = 50),
+    legend.text = element_text(size = 50),
+    legend.title = element_text(size = 50),
+    axis.title = element_text(size = 50),
+    strip.text = element_text(size = 50),
     axis.title.x = element_blank()
   ) + 
   theme(legend.position = "none")
 
-setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
 ggsave(
   "idealizedDataTargetFinding5exp2.png",
   plot = condition_barplot,
-  width = 10,
+  width = 14,
   height = 10,
   dpi = 300
 )
@@ -530,21 +530,21 @@ condition_barplot = ggplot(D.exp3, aes(trialType, lookingTime, fill=trialType)) 
   scale_fill_manual(values = c("black", "azure3")) +
   labs(fill = "Test Trial") +
   theme(
-    axis.text.x = element_text(size = 30),
-    axis.text.y = element_text(size = 30),
-    legend.text = element_text(size = 30),
-    legend.title = element_text(size = 30),
-    axis.title = element_text(size = 30),
-    strip.text = element_text(size = 30),
+    axis.text.x = element_text(size = 50),
+    axis.text.y = element_text(size = 50),
+    legend.text = element_text(size = 50),
+    legend.title = element_text(size = 50),
+    axis.title = element_text(size = 50),
+    strip.text = element_text(size = 50),
     axis.title.x = element_blank()
   ) + 
   theme(legend.position = "none")
 
-setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
+setwd("C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/figures")
 ggsave(
   "idealizedDataTargetFinding5exp3.png",
   plot = condition_barplot,
-  width = 10,
+  width = 14,
   height = 10,
   dpi = 300
 )
