@@ -1,0 +1,6 @@
+take it from the 6/18 paper drafts
+
+
+In the relevant simulations, or example for Csibra write:
+
+"The simulation was designed to reproduce the first experiment of Csibra et al. (2003), in which."
