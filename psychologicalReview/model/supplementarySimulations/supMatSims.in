@@ -143,7 +143,7 @@ set salientWD [list 0.09875 0.0975 0.09625]
 # grid search loops
 	foreach lrSalient $learningRate sLR $salientLR sWD $salientWD {
 		set ::s_LR $sLR
-		set s_WD $sWD
+		set ::s_WD $sWD
 		
 		gsSim_sim1a net$lrSalient$sLR$sWD $lrSalient $sLR $sWD
 	}
@@ -296,7 +296,7 @@ set salientWD [list 0.09875 0.0975 0.09625]
 # grid search loops
 	foreach lrSalient $learningRate sLR $salientLR sWD $salientWD {
 		set ::s_LR $sLR
-		set s_WD $sWD
+		set ::s_WD $sWD
 		
 		gsSim_sim1b_100 net$lrSalient$sLR$sWD $lrSalient $sLR $sWD
 	}
@@ -445,7 +445,7 @@ set salientWD [list 0.09875 0.0975 0.09625]
 # grid search loops
 	foreach lrSalient $learningRate sLR $salientLR sWD $salientWD {
 		set ::s_LR $sLR
-		set s_WD $sWD
+		set ::s_WD $sWD
 		
 		gsSim_sim1b_90 net$lrSalient$sLR$sWD $lrSalient $sLR $sWD
 	}
@@ -586,7 +586,7 @@ proc wrapSim1b_80 {} {
 
 	foreach lrSalient $learningRate sLR $salientLR sWD $salientWD {
 		set ::s_LR $sLR
-		set s_WD $sWD
+		set ::s_WD $sWD
 		
 		gsSim_sim1b_80 net$lrSalient$sLR$sWD $lrSalient $sLR $sWD
 	}
@@ -720,7 +720,7 @@ proc wrapSim1b_70 {} {
 
 	foreach lrSalient $learningRate sLR $salientLR sWD $salientWD {
 		set ::s_LR $sLR
-		set s_WD $sWD
+		set ::s_WD $sWD
 		
 		gsSim_sim1b_70 net$lrSalient$sLR$sWD $lrSalient $sLR $sWD
 	}
@@ -853,7 +853,7 @@ proc wrapSim1b_60 {} {
 
 	foreach lrSalient $learningRate sLR $salientLR sWD $salientWD {
 		set ::s_LR $sLR
-		set s_WD $sWD
+		set ::s_WD $sWD
 		
 		gsSim_sim1b_60 net$lrSalient$sLR$sWD $lrSalient $sLR $sWD
 	}
@@ -986,7 +986,7 @@ proc wrapSim1b_50 {} {
 
 	foreach lrSalient $learningRate sLR $salientLR sWD $salientWD {
 		set ::s_LR $sLR
-		set s_WD $sWD
+		set ::s_WD $sWD
 		
 		gsSim_sim1b_50 net$lrSalient$sLR$sWD $lrSalient $sLR $sWD
 	}
@@ -1132,7 +1132,7 @@ proc wrapSim2a {} {
 	# grid search loops
 	foreach lrSalient $learningRate sLR $salientLR sWD $salientWD {
 		set ::s_LR $sLR
-		set s_WD $sWD
+		set ::s_WD $sWD
 		
 		gsSim_sim2a net$lrSalient$sLR$sWD $lrSalient $sLR $sWD
 	}
@@ -1273,7 +1273,7 @@ proc wrapSim3a {} {
 	# grid search loops
 	foreach lrSalient $learningRate sLR $salientLR sWD $salientWD {
 		set ::s_LR $sLR
-		set s_WD $sWD
+		set ::s_WD $sWD
 		
 		gsSim_sim3a net$lrSalient$sLR$sWD $lrSalient $sLR $sWD
 	}
@@ -1414,7 +1414,7 @@ proc wrapSim3d {} {
 	# grid search loops
 	foreach lrSalient $learningRate sLR $salientLR sWD $salientWD {
 		set ::s_LR $sLR
-		set s_WD $sWD
+		set ::s_WD $sWD
 		
 		gsSim_sim3d net$lrSalient$sLR$sWD $lrSalient $sLR $sWD
 	}
@@ -1558,7 +1558,7 @@ proc wrapSim4a {} {
 	# grid search loops
 	foreach lrSalient $learningRate sLR $salientLR sWD $salientWD {
 		set ::s_LR $sLR
-		set s_WD $sWD
+		set ::s_WD $sWD
 		
 		gsSim_sim4a net$lrSalient$sLR$sWD $lrSalient $sLR $sWD
 	}
@@ -1742,7 +1742,7 @@ proc wrapSim5a {} {
 	# grid search loops
 	foreach lrSalient $learningRate sLR $salientLR sWD $salientWD {
 		set ::s_LR $sLR
-		set s_WD $sWD
+		set ::s_WD $sWD
 		
 		gsSim_sim5a net$lrSalient$sLR$sWD $lrSalient $sLR $sWD
 	}
@@ -1917,7 +1917,7 @@ proc wrapSim5f {} {
 	# grid search loops
 	foreach lrSalient $learningRate sLR $salientLR sWD $salientWD {
 		set ::s_LR $sLR
-		set s_WD $sWD
+		set ::s_WD $sWD
 		
 		gsSim_sim5f net$lrSalient$sLR$sWD $lrSalient $sLR $sWD
 	}
@@ -2063,7 +2063,7 @@ proc wrapSim8 {} {
 	# grid search loops
 	foreach lrSalient $learningRate sLR $salientLR sWD $salientWD {
 		set ::s_LR $sLR
-		set s_WD $sWD
+		set ::s_WD $sWD
 		
 		gsSim_sim8 net$lrSalient$sLR$sWD $lrSalient $sLR $sWD
 	}
@@ -2210,7 +2210,7 @@ proc wrapSim9 {} {
 	# grid search loops
 	foreach lrSalient $learningRate sLR $salientLR sWD $salientWD {
 		set ::s_LR $sLR
-		set s_WD $sWD
+		set ::s_WD $sWD
 		
 		gsSim_sim9 net$lrSalient$sLR$sWD $lrSalient $sLR $sWD
 	}
