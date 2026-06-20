@@ -68,12 +68,12 @@ proc wrapSim1a {} {
 		deleteGroups bias
 
 		# training examples
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1a/pretrain.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1a/pretrain.ex" -e PERMUTED
 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1a/sim1aExpHab.ex" 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1a/sim1aCntrlHab.ex" 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1a/sim1aTest.ex"
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1a/sim1aCntrlTest.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1a/sim1aExpHab.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1a/sim1aCntrlHab.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1a/sim1aTest.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1a/sim1aCntrlTest.ex"
 
 		# set learning and display parameters
 		setObj learningRate $lr
@@ -126,7 +126,7 @@ proc wrapSim1a {} {
 		# define loop
 
 		foreach stud $study cond $condition hEvent $habEvent tEvent $testEvent {
-			set workingdirectory "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/sim1a"
+			set workingdirectory "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/data_supMat/ALIAS/sim1a"
 			cd $workingdirectory
 			foreach tEpochs $trainingEpochs {
 				foreach epochs $pretrainingEpochs {
@@ -214,16 +214,16 @@ proc wrapSim1b_100 {} {
 		deleteGroups bias
 
 		# training examples
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_100_0.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_90_10.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_80_20.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_70_30.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_60_40.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_50_50.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_100_0.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_90_10.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_80_20.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_70_30.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_60_40.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_50_50.ex" -e PERMUTED
 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/sim1bExpHab.ex" 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/sim1bCntrlHab.ex" 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/sim1bTest.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/sim1bExpHab.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/sim1bCntrlHab.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/sim1bTest.ex"
 
 		# set learning and display parameters
 		setObj learningRate $lr
@@ -276,7 +276,7 @@ proc wrapSim1b_100 {} {
 
 		# define loop
 		foreach cond $condition pEvent $pretrain {
-			set workingdirectory "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/sim1b/$cond"
+			set workingdirectory "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/data_supMat/ALIAS/sim1b/$cond"
 			cd $workingdirectory
 			foreach hEvent $habEvent tEvent $testEvent {
 				foreach epochs $pretrainingEpochs {
@@ -363,16 +363,16 @@ proc wrapSim1b_90 {} {
 	deleteGroups bias
 
 	# training examples
-	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_100_0.ex" -e PERMUTED
-	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_90_10.ex" -e PERMUTED
-	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_80_20.ex" -e PERMUTED
-	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_70_30.ex" -e PERMUTED
-	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_60_40.ex" -e PERMUTED
-	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_50_50.ex" -e PERMUTED
+	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_100_0.ex" -e PERMUTED
+	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_90_10.ex" -e PERMUTED
+	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_80_20.ex" -e PERMUTED
+	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_70_30.ex" -e PERMUTED
+	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_60_40.ex" -e PERMUTED
+	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_50_50.ex" -e PERMUTED
 
-	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/sim1bExpHab.ex" 
-	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/sim1bCntrlHab.ex" 
-	loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/sim1bTest.ex"
+	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/sim1bExpHab.ex" 
+	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/sim1bCntrlHab.ex" 
+	loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/sim1bTest.ex"
 
 	# set learning and display parameters
 	setObj learningRate $lr
@@ -425,7 +425,7 @@ proc wrapSim1b_90 {} {
 
 	# define loop
 	foreach cond $condition pEvent $pretrain {
-		set workingdirectory "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/sim1b/$cond"
+		set workingdirectory "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/data_supMat/ALIAS/sim1b/$cond"
 		cd $workingdirectory
 		foreach hEvent $habEvent tEvent $testEvent {
 			foreach epochs $pretrainingEpochs {
@@ -510,16 +510,16 @@ proc wrapSim1b_80 {} {
 		deleteGroups bias
 
 		# training examples
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_100_0.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_90_10.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_80_20.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_70_30.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_60_40.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_50_50.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_100_0.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_90_10.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_80_20.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_70_30.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_60_40.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_50_50.ex" -e PERMUTED
 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/sim1bExpHab.ex" 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/sim1bCntrlHab.ex" 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/sim1bTest.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/sim1bExpHab.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/sim1bCntrlHab.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/sim1bTest.ex"
 
 		# set learning and display parameters
 		setObj learningRate $lr
@@ -568,7 +568,7 @@ proc wrapSim1b_80 {} {
 
 		# define loop
 		foreach cond $condition pEvent $pretrain {
-			set workingdirectory "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/sim1b/$cond"
+			set workingdirectory "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/data_supMat/ALIAS/sim1b/$cond"
 			cd $workingdirectory
 			foreach hEvent $habEvent tEvent $testEvent {
 				foreach epochs $pretrainingEpochs {
@@ -647,16 +647,16 @@ proc wrapSim1b_70 {} {
 
 		deleteGroups bias
 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_100_0.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_90_10.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_80_20.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_70_30.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_60_40.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_50_50.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_100_0.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_90_10.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_80_20.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_70_30.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_60_40.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_50_50.ex" -e PERMUTED
 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/sim1bExpHab.ex" 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/sim1bCntrlHab.ex" 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/sim1bTest.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/sim1bExpHab.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/sim1bCntrlHab.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/sim1bTest.ex"
 
 		setObj learningRate $lr
 		setObj momentum	    0
@@ -702,7 +702,7 @@ proc wrapSim1b_70 {} {
 		set trainingEpochs [list 8 9 10 11 12]
 
 		foreach cond $condition pEvent $pretrain {
-			set workingdirectory "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/sim1b/$cond"
+			set workingdirectory "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/data_supMat/ALIAS/sim1b/$cond"
 			cd $workingdirectory
 			foreach hEvent $habEvent tEvent $testEvent {
 				foreach epochs $pretrainingEpochs {
@@ -780,16 +780,16 @@ proc wrapSim1b_60 {} {
 
 		deleteGroups bias
 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_100_0.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_90_10.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_80_20.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_70_30.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_60_40.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_50_50.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_100_0.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_90_10.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_80_20.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_70_30.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_60_40.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_50_50.ex" -e PERMUTED
 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/sim1bExpHab.ex" 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/sim1bCntrlHab.ex" 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/sim1bTest.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/sim1bExpHab.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/sim1bCntrlHab.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/sim1bTest.ex"
 
 		setObj learningRate $lr
 		setObj momentum	    0
@@ -835,7 +835,7 @@ proc wrapSim1b_60 {} {
 		set trainingEpochs [list 8 9 10 11 12]
 
 		foreach cond $condition pEvent $pretrain {
-			set workingdirectory "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/sim1b/$cond"
+			set workingdirectory "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/data_supMat/ALIAS/sim1b/$cond"
 			cd $workingdirectory
 			foreach hEvent $habEvent tEvent $testEvent {
 				foreach epochs $pretrainingEpochs {
@@ -913,16 +913,16 @@ proc wrapSim1b_50 {} {
 
 		deleteGroups bias
 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_100_0.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_90_10.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_80_20.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_70_30.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_60_40.ex" -e PERMUTED
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/pretrain_50_50.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_100_0.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_90_10.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_80_20.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_70_30.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_60_40.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/pretrain_50_50.ex" -e PERMUTED
 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/sim1bExpHab.ex" 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/sim1bCntrlHab.ex" 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1b/sim1bTest.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/sim1bExpHab.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/sim1bCntrlHab.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1b/sim1bTest.ex"
 
 		setObj learningRate $lr
 		setObj momentum	    0
@@ -968,7 +968,7 @@ proc wrapSim1b_50 {} {
 		set trainingEpochs [list 8 9 10 11 12]
 
 		foreach cond $condition pEvent $pretrain {
-			set workingdirectory "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/sim1b/$cond"
+			set workingdirectory "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/data_supMat/ALIAS/sim1b/$cond"
 			cd $workingdirectory
 			foreach hEvent $habEvent tEvent $testEvent {
 				foreach epochs $pretrainingEpochs {
@@ -1056,12 +1056,12 @@ proc wrapSim2a {} {
 		deleteGroups bias
 
 		# training examples
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation2a/pretrain.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation2a/pretrain.ex" -e PERMUTED
 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation2a/sim2aExpHab.ex" 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation2a/sim2aCntrlHab.ex" 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation2a/sim2aTest.ex"
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation2a/sim2aCntrlTest.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation2a/sim2aExpHab.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation2a/sim2aCntrlHab.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation2a/sim2aTest.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation2a/sim2aCntrlTest.ex"
 
 		# set learning and display parameters
 		setObj learningRate $lr
@@ -1114,7 +1114,7 @@ proc wrapSim2a {} {
 		# define loop
 
 		foreach stud $study cond $condition hEvent $habEvent tEvent $testEvent {
-			set workingdirectory "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/sim2a"
+			set workingdirectory "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/data_supMat/ALIAS/sim2a"
 			cd $workingdirectory
 			foreach tEpochs $trainingEpochs {
 				foreach epochs $pretrainingEpochs {
@@ -1200,10 +1200,10 @@ proc wrapSim3a {} {
 		deleteGroups bias
 
 		# training examples
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation3/sim3a/pretrain.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation3/sim3a/pretrain.ex" -e PERMUTED
 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation3/sim3a/sim3aExpHab.ex" 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation3/sim3a/sim3aTest.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation3/sim3a/sim3aExpHab.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation3/sim3a/sim3aTest.ex"
 
 		# set learning and display parameters
 		setObj learningRate $lr
@@ -1255,7 +1255,7 @@ proc wrapSim3a {} {
 		# define loop
 
 		foreach stud $study hEvent $habEvent tEvent $testEvent {
-			set workingdirectory "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/sim3a"
+			set workingdirectory "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/data_supMat/ALIAS/sim3a"
 			cd $workingdirectory
 			foreach tEpochs $trainingEpochs {
 				foreach epochs $pretrainingEpochs {
@@ -1341,10 +1341,10 @@ proc wrapSim3d {} {
 		deleteGroups bias
 
 		# training examples
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation3/sim3d/pretrain.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation3/sim3d/pretrain.ex" -e PERMUTED
 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation3/sim3d/sim3dExpHab.ex"  
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation3/sim3d/sim3dTest.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation3/sim3d/sim3dExpHab.ex"  
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation3/sim3d/sim3dTest.ex"
 
 		# set learning and display parameters
 		setObj learningRate $lr
@@ -1396,7 +1396,7 @@ proc wrapSim3d {} {
 		# define loop
 
 		foreach stud $study hEvent $habEvent tEvent $testEvent {
-			set workingdirectory "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data/ALIAS/sim3d"
+			set workingdirectory "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/data_supMat/ALIAS/sim3d"
 			cd $workingdirectory
 			foreach tEpochs $trainingEpochs {
 				foreach epochs $pretrainingEpochs {
@@ -1482,13 +1482,13 @@ proc wrapSim4a {} {
 		deleteGroups bias
 
 		# training examples
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation4a/pretrain.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation4a/pretrain.ex" -e PERMUTED
 
 		# Gergeley et al. (1995) simulations 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation4a/sim4aHab.ex" 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation4a/sim4aCntrlHab.ex" 
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation4a/sim4aTest.ex"
-		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation4a/sim4aCntrlTest.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation4a/sim4aHab.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation4a/sim4aCntrlHab.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation4a/sim4aTest.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation4a/sim4aCntrlTest.ex"
 
 		# set learning and display parameters
 		setObj learningRate $lr
@@ -1627,14 +1627,14 @@ proc wrapSim5a {} {
 		deleteGroups bias
 
 		# training examples
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation5a/pretrain.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5a/pretrain.ex" -e PERMUTED
 
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation5a/sim5aExpHab.ex" 
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation5a/sim5aActionPhase.ex"
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation5a/sim5aActionPhaseIneff.ex"
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation5a/sim5aCntrlHab.ex"	
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation5a/sim5aTest.ex"
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation5a/sim5aCntrlTest.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5a/sim5aExpHab.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5a/sim5aActionPhase.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5a/sim5aActionPhaseIneff.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5a/sim5aCntrlHab.ex"	
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5a/sim5aTest.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5a/sim5aCntrlTest.ex"
 
 		# set learning and display parameters
 		setObj learningRate $lr
@@ -1811,14 +1811,14 @@ proc wrapSim5f {} {
 		deleteGroups bias
 
 		# training examples
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation5a/pretrain.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5a/pretrain.ex" -e PERMUTED
 
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation5a/sim5aExpHab.ex" 
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation5a/sim5aActionPhase.ex"
-		loadExamples C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation5a/sim5aActionPhaseIneff.ex"
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation5a/sim5aCntrlHab.ex"	
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation5a/sim5aTest.ex"
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation5a/sim5aCntrlTest.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5a/sim5aExpHab.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5a/sim5aActionPhase.ex"
+		loadExamples C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5a/sim5aActionPhaseIneff.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5a/sim5aCntrlHab.ex"	
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5a/sim5aTest.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5a/sim5aCntrlTest.ex"
 
 		# set learning and display parameters
 		setObj learningRate $lr
@@ -1987,12 +1987,12 @@ proc wrapSim8 {} {
 		deleteGroups bias
 
 		# training examples
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation8/pretrain.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation8/pretrain.ex" -e PERMUTED
 
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation8/sim8ExpHab.ex" 
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation8/sim8CntrlHab.ex" 
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation8/sim8Test.ex"
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation8/sim8CntrlTest.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation8/sim8ExpHab.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation8/sim8CntrlHab.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation8/sim8Test.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation8/sim8CntrlTest.ex"
 
 		# set learning and display parameters
 		setObj learningRate $lr
@@ -2045,7 +2045,7 @@ proc wrapSim8 {} {
 		# define loop
 
 		foreach stud $study cond $condition hEvent $habEvent tEvent $testEvent {
-			set workingdirectory "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/data/ALIAS/prediction/sim8"
+			set workingdirectory "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/data_supMat/ALIAS/prediction/sim8"
 			cd $workingdirectory
 			foreach tEpochs $trainingEpochs {
 				foreach epochs $pretrainingEpochs {
@@ -2134,12 +2134,12 @@ proc wrapSim9 {} {
 		deleteGroups bias
 
 		# training examples
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation9/pretrain.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation9/pretrain.ex" -e PERMUTED
 
 		# Gergeley et al. (1995) simulations 
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation9/sim9Hab.ex" 
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation9/sim9EfficientTest.ex" 
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/simulation9/sim9InefficientTest.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation9/sim9Hab.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation9/sim9EfficientTest.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation9/sim9InefficientTest.ex"
 
 		# set learning and display parameters
 		setObj learningRate $lr
@@ -2191,7 +2191,7 @@ proc wrapSim9 {} {
 		# define loop
 
 		foreach stud $study hEvent $habEvent tEvent $testEvent fldr $folder {
-			set workingdirectory "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/data/ALIAS/prediction/sim9/$fldr"
+			set workingdirectory "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/data_supMat/ALIAS/prediction/sim9/$fldr"
 			cd $workingdirectory
 			foreach tEpochs $trainingEpochs {
 				foreach epochs $pretrainingEpochs {
@@ -2216,12 +2216,26 @@ proc wrapSim9 {} {
 	}
 }
 
-
 ####################################################################
 # UNCOMMENT THE CODE BELOW IF YOU WANT TO AUTOMATE THE SIMULATIONS #
 ####################################################################
 
-set modelList [list gsSim_sim8 gsSim_sim9] 
+set modelList set modelList [list \
+    gsSim_sim1a \
+    gsSim_sim1b_100 \
+    gsSim_sim1b_90 \
+    gsSim_sim1b_80 \
+    gsSim_sim1b_70 \
+    gsSim_sim1b_60 \
+    gsSim_sim1b_50 \
+    gsSim_sim2a \
+    gsSim_sim3a \
+    gsSim_sim3d \
+    gsSim_sim4a \
+    gsSim_sim5a \
+    gsSim_sim5f \
+    gsSim_sim8 \
+    gsSim_sim9]
 
 
 
