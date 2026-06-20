@@ -2221,25 +2221,23 @@ proc wrapSim9 {} {
 ####################################################################
 
 set modelList [list \
-    gsSim_sim1a \
-    gsSim_sim1b_100 \
-    gsSim_sim1b_90 \
-    gsSim_sim1b_80 \
-    gsSim_sim1b_70 \
-    gsSim_sim1b_60 \
-    gsSim_sim1b_50 \
-    gsSim_sim2a \
-    gsSim_sim3a \
-    gsSim_sim3d \
-    gsSim_sim4a \
-    gsSim_sim5a \
-    gsSim_sim5f \
-    gsSim_sim8 \
-    gsSim_sim9]
-
-
+    wrapSim1a \
+    wrapSim1b_100 \
+    wrapSim1b_90 \
+    wrapSim1b_80 \
+    wrapSim1b_70 \
+    wrapSim1b_60 \
+    wrapSim1b_50 \
+    wrapSim2a \
+    wrapSim3a \
+    wrapSim3d \
+    wrapSim4a \
+    wrapSim5a \
+    wrapSim5f \
+    wrapSim8 \
+    wrapSim9]
 
 foreach ml $modelList {
     puts "Running $ml..."
-    $ml          ;
+    $ml
 }
