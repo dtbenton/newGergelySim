@@ -2220,7 +2220,7 @@ proc wrapSim9 {} {
 # UNCOMMENT THE CODE BELOW IF YOU WANT TO AUTOMATE THE SIMULATIONS #
 ####################################################################
 
-set modelList set modelList [list \
+set modelList [list \
     gsSim_sim1a \
     gsSim_sim1b_100 \
     gsSim_sim1b_90 \
