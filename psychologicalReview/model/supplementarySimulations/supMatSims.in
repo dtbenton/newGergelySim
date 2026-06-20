@@ -145,7 +145,7 @@ set salientWD [list 0.09875 0.0975 0.09625]
 		set ::s_LR $sLR
 		set s_WD $sWD
 		
-		gsSim_sim1a net$lrSalient$sLR$sWD $lr $sLR $sWD
+		gsSim_sim1a net$lrSalient$sLR$sWD $lrSalient $sLR $sWD
 	}
 
 }
@@ -298,7 +298,7 @@ set salientWD [list 0.09875 0.0975 0.09625]
 		set ::s_LR $sLR
 		set s_WD $sWD
 		
-		gsSim_sim1b_100 net$lrSalient$sLR$sWD $lr $sLR $sWD
+		gsSim_sim1b_100 net$lrSalient$sLR$sWD $lrSalient $sLR $sWD
 	}
 
 }
@@ -447,7 +447,7 @@ set salientWD [list 0.09875 0.0975 0.09625]
 		set ::s_LR $sLR
 		set s_WD $sWD
 		
-		gsSim_sim1b_90 net$lrSalient$sLR$sWD $lr $sLR $sWD
+		gsSim_sim1b_90 net$lrSalient$sLR$sWD $lrSalient $sLR $sWD
 	}
 }
 
