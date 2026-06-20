@@ -1,0 +1,176 @@
+defI:-
+defT:-
+;
+name: habituation
+5	
+I:	
+(Object_Left_IN)                                                                                                                                                                    
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0
+(Object_Left_Animate_Status_IN)    
+ 1 0
+(Object_Right_IN)                                                                                                                                                                    
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+(Object_Right_Animate_Status_IN)    
+ 1 0
+(Motion_IN)            
+ 1 0 0 0 0 0
+(Motion_Type_IN)    
+ 0 1
+(Jump_Height_IN)          
+ 0 0 1 0 0
+(Goal_IN)  
+ 1
+T:	
+(Object_Left_OUT)                                                                                                                                                                    
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0
+(Object_Left_Animate_Status_OUT)    
+ 1 0
+(Object_Right_OUT)                                                                                                                                                                    
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+(Object_Right_Animate_Status_OUT)    
+ 1 0
+(Motion_OUT)            
+ 0 1 0 0 0 0
+(Motion_Type_OUT)    
+ 0 1
+(Jump_Height_OUT)          
+ 0 0 1 0 0
+(Goal_OUT)  
+ 1
+I:	
+(Object_Left_IN)                                                                                                                                                                    
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0
+(Object_Left_Animate_Status_IN)    
+ 1 0
+(Object_Right_IN)                                                                                                                                                                    
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+(Object_Right_Animate_Status_IN)    
+ 1 0
+(Motion_IN)            
+ 0 1 0 0 0 0
+(Motion_Type_IN)    
+ 0 1
+(Jump_Height_IN)          
+ 0 0 1 0 0
+(Goal_IN)  
+ 1
+T:	
+(Object_Left_OUT)                                                                                                                                                                    
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0
+(Object_Left_Animate_Status_OUT)    
+ 1 0
+(Object_Right_OUT)                                                                                                                                                                    
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+(Object_Right_Animate_Status_OUT)    
+ 1 0
+(Motion_OUT)            
+ 0 0 1 0 0 0
+(Motion_Type_OUT)    
+ 0 1
+(Jump_Height_OUT)          
+ 0 0 1 0 0
+(Goal_OUT)  
+ 1
+I:	
+(Object_Left_IN)                                                                                                                                                                    
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0
+(Object_Left_Animate_Status_IN)    
+ 1 0
+(Object_Right_IN)                                                                                                                                                                    
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+(Object_Right_Animate_Status_IN)    
+ 1 0
+(Motion_IN)            
+ 0 0 1 0 0 0
+(Motion_Type_IN)    
+ 0 1
+(Jump_Height_IN)          
+ 0 0 1 0 0
+(Goal_IN)  
+ 1
+T:	
+(Object_Left_OUT)                                                                                                                                                                    
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0
+(Object_Left_Animate_Status_OUT)    
+ 1 0
+(Object_Right_OUT)                                                                                                                                                                    
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+(Object_Right_Animate_Status_OUT)    
+ 1 0
+(Motion_OUT)            
+ 0 0 0 1 0 0
+(Motion_Type_OUT)    
+ 0 1
+(Jump_Height_OUT)          
+ 0 0 1 0 0
+(Goal_OUT)  
+ 1
+I:	
+(Object_Left_IN)                                                                                                                                                                    
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0
+(Object_Left_Animate_Status_IN)    
+ 1 0
+(Object_Right_IN)                                                                                                                                                                    
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+(Object_Right_Animate_Status_IN)    
+ 1 0
+(Motion_IN)            
+ 0 0 0 1 0 0
+(Motion_Type_IN)    
+ 0 1
+(Jump_Height_IN)          
+ 0 0 1 0 0
+(Goal_IN)  
+ 1
+T:	
+(Object_Left_OUT)                                                                                                                                                                    
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0
+(Object_Left_Animate_Status_OUT)    
+ 1 0
+(Object_Right_OUT)                                                                                                                                                                    
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+(Object_Right_Animate_Status_OUT)    
+ 1 0
+(Motion_OUT)            
+ 0 0 0 0 1 0
+(Motion_Type_OUT)    
+ 0 1
+(Jump_Height_OUT)          
+ 0 0 1 0 0
+(Goal_OUT)  
+ 1
+I:	
+(Object_Left_IN)                                                                                                                                                                    
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0
+(Object_Left_Animate_Status_IN)    
+ 1 0
+(Object_Right_IN)                                                                                                                                                                    
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+(Object_Right_Animate_Status_IN)    
+ 1 0
+(Motion_IN)            
+ 0 0 0 0 1 0
+(Motion_Type_IN)    
+ 0 1
+(Jump_Height_IN)          
+ 0 0 1 0 0
+(Goal_IN)  
+ 1
+T:	
+(Object_Left_OUT)                                                                                                                                                                    
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0
+(Object_Left_Animate_Status_OUT)    
+ 1 0
+(Object_Right_OUT)                                                                                                                                                                    
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+(Object_Right_Animate_Status_OUT)    
+ 1 0
+(Motion_OUT)            
+ 0 0 0 0 0 1
+(Motion_Type_OUT)    
+ 0 1
+(Jump_Height_OUT)          
+ 0 0 1 0 0
+(Goal_OUT)  
+ 1
+;
