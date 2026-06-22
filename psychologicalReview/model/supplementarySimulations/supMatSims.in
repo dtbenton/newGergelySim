@@ -2220,22 +2220,7 @@ proc wrapSim9 {} {
 # UNCOMMENT THE CODE BELOW IF YOU WANT TO AUTOMATE THE SIMULATIONS #
 ####################################################################
 
-set modelList [list \
-    wrapSim1a \
-    wrapSim1b_100 \
-    wrapSim1b_90 \
-    wrapSim1b_80 \
-    wrapSim1b_70 \
-    wrapSim1b_60 \
-    wrapSim1b_50 \
-    wrapSim2a \
-    wrapSim3a \
-    wrapSim3d \
-    wrapSim4a \
-    wrapSim5a \
-    wrapSim5f \
-    wrapSim8 \
-    wrapSim9]
+set modelList [list wrapSim1b_50 wrapSim2a wrapSim3a wrapSim3d wrapSim4a wrapSim5a wrapSim5f wrapSim8 wrapSim9]
 
 foreach ml $modelList {
     puts "Running $ml..."

@@ -50,7 +50,7 @@ addNet gsSim -i 8
 	loadExamples pretrain.ex -s pretrain 
 
 	loadExamples sim1aExpHab.ex 
-	loadExamples sim1aCntrlHab.ex 
+	loadExamples sim1aCntrlHabNonSim.ex 
 	loadExamples sim1aTest.ex
 
 
