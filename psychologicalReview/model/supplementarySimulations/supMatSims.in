@@ -589,7 +589,7 @@ proc wrapSim1b_80 {} {
 		set ::s_LR $sLR
 		set ::s_WD $sWD
 		
-		gsSim_sim1b80 net80b_${lrSalient}_sLR_${sLR}_sWD_${sWD} $lrSalient $sLR $sWD
+		gsSim_sim1b_80 net80b_${lrSalient}_sLR_${sLR}_sWD_${sWD} $lrSalient $sLR $sWD
 	}
 }
 
@@ -723,7 +723,7 @@ proc wrapSim1b_70 {} {
 		set ::s_LR $sLR
 		set ::s_WD $sWD
 		
-		gsSim_sim1b70 net70b_${lrSalient}_sLR_${sLR}_sWD_${sWD} $lrSalient $sLR $sWDD
+		gsSim_sim1b_70 net70b_${lrSalient}_sLR_${sLR}_sWD_${sWD} $lrSalient $sLR $sWDD
 	}
 }
 
@@ -856,7 +856,7 @@ proc wrapSim1b_60 {} {
 		set ::s_LR $sLR
 		set ::s_WD $sWD
 		
-		gsSim_sim1b60 net60b_${lrSalient}_sLR_${sLR}_sWD_${sWD} $lrSalient $sLR $sWD
+		gsSim_sim1b_60 net60b_${lrSalient}_sLR_${sLR}_sWD_${sWD} $lrSalient $sLR $sWD
 	}
 }
 
@@ -989,7 +989,7 @@ proc wrapSim1b_50 {} {
 		set ::s_LR $sLR
 		set ::s_WD $sWD
 		
-		gsSim_sim1b50 net50b_${lrSalient}_sLR_${sLR}_sWD_${sWD} $lrSalient $sLR $sWD
+		gsSim_sim1b_50 net50b_${lrSalient}_sLR_${sLR}_sWD_${sWD} $lrSalient $sLR $sWD
 	}
 }
 
@@ -2221,7 +2221,7 @@ proc wrapSim9 {} {
 # UNCOMMENT THE CODE BELOW IF YOU WANT TO AUTOMATE THE SIMULATIONS #
 ####################################################################
 
-set modelList [list wrapSim1b_100 wrapSim1b_90 wrapSim1b_80 wrapSim1b_70 wrapSim1b_60 wrapSim1b_50 wrapSim2a wrapSim3a wrapSim3d wrapSim4a wrapSim5a wrapSim5f wrapSim8 wrapSim9]
+set modelList [list wrapSim1a wrapSim1b_80 wrapSim1b_70 wrapSim1b_60 wrapSim1b_50 wrapSim2a wrapSim3a wrapSim3d wrapSim4a wrapSim5a wrapSim5f wrapSim8 wrapSim9]
 
 foreach ml $modelList {
     puts "Running $ml..."
