@@ -45,7 +45,7 @@ D$ID = rep(1:20, each = 2)
 
 
 # create trial type column
-D$trialType = rep(c("High, inefficient", "Inefficient"), each = 1, times = 20)
+D$trialType = rep(c("High, Inefficient", "Barrierless, Inefficient"), each = 1, times = 20)
 D$trialType = as.factor(D$trialType)
 
 # create a 'looking time' column

@@ -1,0 +1,2 @@
+0 inconsistent 52.0423
+1 consistent 62.50691

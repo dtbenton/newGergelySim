@@ -1,0 +1,2 @@
+0 inconsistent 179.3512
+1 consistent 61.74575
