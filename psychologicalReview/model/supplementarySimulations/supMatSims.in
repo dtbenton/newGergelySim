@@ -1663,7 +1663,7 @@ proc wrapSim5a {} {
 			}
 		}
 
-		proc testNetwork {n train trainNum train2 trainNum2 train3 trainNum3 test fname ifEvent} {
+		proc testNetwork {n train trainNum train2 trainNum2 train3 trainNum3 test fname ifEvent lr} {
 			if {$ifEvent == "effective"} {
 				for {set i 0} {$i < $n} {incr i} {
 					resetNet
@@ -1729,7 +1729,7 @@ proc wrapSim5a {} {
 			cd $workingdirectory
 				foreach apEpochs $actionPhaseEpochs tEpochs $trainingEpochs {
 					foreach epochs $pretrainingEpochs {
-						testNetwork 20 pretrain $epochs $aEvent $apEpochs $hEvent $tEpochs $tEvent Study_${stud}_pEpochs_${epochs}_${cond}_habEvent_${hEvent}_tEpochs_${tEpochs}_actionEpochs_${apEpochs}_lr_${lr}_sLR_${sLR}_sWD_${sWD}.txt $iEvent
+						testNetwork 20 pretrain $epochs $aEvent $apEpochs $hEvent $tEpochs $tEvent Study_${stud}_pEpochs_${epochs}_${cond}_habEvent_${hEvent}_tEpochs_${tEpochs}_actionEpochs_${apEpochs}_lr_${lr}_sLR_${sLR}_sWD_${sWD}.txt $iEvent $lr
 				} 
 			}
 		}
@@ -1812,14 +1812,14 @@ proc wrapSim5f {} {
 		deleteGroups bias
 
 		# training examples
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5a/pretrain.ex" -e PERMUTED
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5f/pretrain.ex" -e PERMUTED
 
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5a/sim5aExpHab.ex" 
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5a/sim5aActionPhase.ex"
-		loadExamples C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5a/sim5aActionPhaseIneff.ex"
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5a/sim5aCntrlHab.ex"	
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5a/sim5aTest.ex"
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5a/sim5aCntrlTest.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5f/sim5fExpHab.ex" 
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5f/sim5fActionPhase.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5f/sim5fActionPhaseIneff.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5f/sim5fCntrlHab.ex"	
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5f/sim5fTest.ex"
+		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation5f/sim5fCntrlTest.ex"
 
 		# set learning and display parameters
 		setObj learningRate $lr
@@ -1847,7 +1847,7 @@ proc wrapSim5f {} {
 			}
 		}
 
-		proc testNetwork {n train trainNum train3 trainNum3 test fname ifEvent} {
+		proc testNetwork {n train trainNum train3 trainNum3 test fname ifEvent lr} {
 			if {$ifEvent == "effective"} {
 				for {set i 0} {$i < $n} {incr i} {
 					resetNet
@@ -1885,12 +1885,12 @@ proc wrapSim5f {} {
 
 
 		# define lists for looping
-		set study [list sim5a sim5a]
+		set study [list sim5f sim5f]
 		set folder [list effective effective]
 		set condition [list hab control]
 		set ifEvent [list effective effectiveControl]
-		set habEvent [list sim5aExpHab sim5aCntrlHab]
-		set testEvent [list sim5aTest sim5aTest]
+		set habEvent [list sim5fExpHab sim5fCntrlHab]
+		set testEvent [list sim5fTest sim5fTest]
 		set actionPhaseEpochs [list 8 9 10 11 12]
 		set trainingEpochs [list 8 9 10 11 12]
 		set pretrainingEpochs [list 225]
@@ -1904,7 +1904,7 @@ proc wrapSim5f {} {
 			cd $workingdirectory
 				foreach tEpochs $trainingEpochs {
 					foreach epochs $pretrainingEpochs {
-						testNetwork 20 pretrain $epochs $hEvent $tEpochs $tEvent Study_${stud}_pEpochs_${epochs}_${cond}_habEvent_${hEvent}_tEpochs_${tEpochs}_lr_${lr}_sLR_${sLR}_sWD_${sWD}.txt $iEvent
+						testNetwork 20 pretrain $epochs $hEvent $tEpochs $tEvent Study_${stud}_pEpochs_${epochs}_${cond}_habEvent_${hEvent}_tEpochs_${tEpochs}_lr_${lr}_sLR_${sLR}_sWD_${sWD}.txt $iEvent $lr
 				} 
 			}
 		}
@@ -2221,7 +2221,7 @@ proc wrapSim9 {} {
 # UNCOMMENT THE CODE BELOW IF YOU WANT TO AUTOMATE THE SIMULATIONS #
 ####################################################################
 
-set modelList [list wrapSim1b_70 wrapSim1b_60 wrapSim1b_50 wrapSim2a wrapSim3a wrapSim3d wrapSim4a wrapSim5a wrapSim5f wrapSim8 wrapSim9]
+set modelList [list wrapSim5f wrapSim8 wrapSim9]
 
 foreach ml $modelList {
     puts "Running $ml..."
