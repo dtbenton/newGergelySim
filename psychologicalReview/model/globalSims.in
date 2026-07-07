@@ -113,6 +113,7 @@ proc gsSim_sim1a {} {
 	}
 
 
+
 	# define lists for looping
 	set study [list sim1a sim1a]
 	set condition [list hab control]
