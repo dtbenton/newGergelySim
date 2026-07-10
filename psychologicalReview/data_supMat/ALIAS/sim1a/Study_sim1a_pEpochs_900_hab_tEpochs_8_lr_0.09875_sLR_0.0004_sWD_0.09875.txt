@@ -26,3 +26,7 @@
 1 consistent 37.97286
 0 inconsistent 191.9329
 1 consistent 45.68329
+0 inconsistent 216.5401
+1 consistent 72.52081
+0 inconsistent 209.7057
+1 consistent 65.97244
