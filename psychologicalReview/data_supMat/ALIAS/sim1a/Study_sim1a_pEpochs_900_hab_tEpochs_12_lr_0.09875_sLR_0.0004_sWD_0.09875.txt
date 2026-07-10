@@ -1,2 +1,0 @@
-0 inconsistent 128.6411
-1 consistent 41.24046

@@ -68,12 +68,12 @@ proc wrapSim1a {} {
 		deleteGroups bias
 
 		# training examples
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1a/pretrain.ex" -e PERMUTED
+		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1a/pretrain.ex" -e PERMUTED
 
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1a/sim1aExpHab.ex" 
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1a/sim1aCntrlHab.ex" 
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1a/sim1aTest.ex"
-		loadExamples "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/model/supplementarySimulations/simulation1a/sim1aCntrlTest.ex"
+		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1a/sim1aExpHab.ex" 
+		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1a/sim1aCntrlHab.ex" 
+		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1a/sim1aTest.ex"
+		loadExamples "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/model/simulation1a/sim1aCntrlTest.ex"
 
 		# set learning and display parameters
 		setObj learningRate $lr
@@ -126,11 +126,11 @@ proc wrapSim1a {} {
 		# define loop
 
 		foreach stud $study cond $condition hEvent $habEvent tEvent $testEvent {
-			set workingdirectory "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/data_supMat/ALIAS/sim1a"
+			set workingdirectory "C:/Users/bentod2/Documents/projects/current/NEWgergliuSims/psychologicalReview/data_supMat/ALIAS/sim1a"
 			cd $workingdirectory
 			foreach tEpochs $trainingEpochs {
 				foreach epochs $pretrainingEpochs {
-					testNetwork 1 pretrain $epochs $hEvent $tEpochs $tEvent Study_${stud}_pEpochs_${epochs}_${cond}_tEpochs_${tEpochs}_lr_${lr}_sLR_${sLR}_sWD_${sWD}.txt
+					testNetwork 20 pretrain $epochs $hEvent $tEpochs $tEvent Study_${stud}_pEpochs_${epochs}_${cond}_tEpochs_${tEpochs}_lr_${lr}_sLR_${sLR}_sWD_${sWD}.txt
 				}
 			}
 		}
@@ -2221,7 +2221,7 @@ proc wrapSim9 {} {
 # UNCOMMENT THE CODE BELOW IF YOU WANT TO AUTOMATE THE SIMULATIONS #
 ####################################################################
 
-set modelList [list wrapSim5f wrapSim8 wrapSim9]
+set modelList [list wrapSim1a]
 
 foreach ml $modelList {
     puts "Running $ml..."
