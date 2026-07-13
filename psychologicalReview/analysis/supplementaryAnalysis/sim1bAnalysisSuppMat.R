@@ -30,7 +30,7 @@ library(Hmisc)
 
 # Set working directory
 setwd(
-  "C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/data_supMat/ALIAS/sim1b"
+  "C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/data_supMat/ALIAS/sim1b"
 )
 
 # Number pattern that accepts values such as:
@@ -314,13 +314,15 @@ p = ggplot(
     axis.title = element_text(size = 25),
     axis.title.x = element_blank(),
     axis.text = element_text(size = 25),
-    legend.position = "none",
+    legend.position = "bottom",
+    legend.text=element_text(size=25),
+    legend.title = element_text(size=25),
     strip.text = element_text(size = 13, face = "bold",
                               margin = margin(3, 3, 3, 3)),
     panel.spacing = unit(0.7, "lines")
   )
 
-setwd("C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/figures")
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
 ggsave(
   "suppMatFigs2_1b_0975_0003875_0975.png",
   plot = p,
@@ -372,13 +374,15 @@ p.2 = ggplot(
     axis.title = element_text(size = 25),
     axis.text = element_text(size = 25),
     axis.title.x = element_blank(),
-    legend.position = "none",
+    legend.position = "bottom",
+    legend.text=element_text(size=25),
+    legend.title = element_text(size=25),
     strip.text = element_text(size = 13, face = "bold",
                               margin = margin(3, 3, 3, 3)),
     panel.spacing = unit(0.7, "lines")
   )
 
-setwd("C:/Users/Deon T. Benton/Documents/projects/newGergelySim/psychologicalReview/figures")
+setwd("C:/Users/detbe/Documents/projects/newGergelySim/psychologicalReview/figures")
 ggsave(
   "suppMatFigs2_1b_09875_0004_09875.png",
   plot = p.2,
