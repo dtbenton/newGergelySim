@@ -1,0 +1,1246 @@
+##############################################################################################################
+##############################################################################################################
+###																										   ###
+### Manuscript title: An associative-learning account of infants’ looking in action-efficiency paradigms   ###
+###											Supplementary Materials 									   ###
+### 										Author: Deon T. Benton                                         ###
+###																										   ###	
+##############################################################################################################
+##############################################################################################################
+
+# ------------------------------------------------------------------
+# IMPORTANT NOTES:
+# (1) Before running this script, replace <PATH_TO_PROJECT> with the
+# location of the project folder on your computer.
+# 
+# (2) The functions below correpsond to the simulations reported in
+# the manuscript.
+# ------------------------------------------------------------------
+
+
+##################################################################################
+# Simulation 1a: Selective longer looking to inefficient actions (12-month-olds) #
+##################################################################################
+proc wrapSim1a {} {
+	proc gsSim_sim1a {netName lr sLR sWD} {
+		addNet $netName -i 8
+
+		# specify the input groups
+		addGroup Object_Left_IN 82 INPUT OUT_NOISE
+		addGroup Object_Right_IN 82 INPUT  OUT_NOISE
+		addGroup Object_Left_Animate_Status_IN 2 INPUT OUT_NOISE 
+		addGroup Object_Right_Animate_Status_IN 2 INPUT  OUT_NOISE
+		addGroup Grid_IN 5 INPUT  OUT_NOISE
+		addGroup Grid_Position_IN 3 INPUT OUT_NOISE 
+		addGroup Jump_Height_IN 5 INPUT OUT_NOISE 
+		addGroup Motion_IN 6 INPUT OUT_NOISE
+		addGroup Motion_Type_IN 2 INPUT OUT_NOISE
+		addGroup Goal_IN 1 INPUT OUT_NOISE
+		addGroup Clearance_IN 3 INPUT OUT_NOISE
+
+		# specify the hidden groups
+		# Note: there are necessarily fewer hidden units than there are input and output units
+		addGroup context 50 ELMAN
+		addGroup hidden 50 RELU
+		
+		# specify the amount of normalized noise to inject in each input group
+		noiseType Object_Left_IN -range 0.3
+		noiseType Object_Right_IN -range 0.3
+		noiseType Object_Left_Animate_Status_IN -range 0.3
+		noiseType Object_Right_Animate_Status_IN -range 0.3
+		noiseType Grid_IN -range 0.3
+		noiseType Grid_Position_IN -range 0.3
+		noiseType Jump_Height_IN -range 0.3
+		noiseType Motion_IN -range 0.3
+		noiseType Motion_Type_IN -range 0.3
+		noiseType Goal_IN -range 0.3
+		noiseType Clearance_IN -range 0.3
+			
+		# specify the output groups
+		addGroup Object_Left_OUT 82 OUTPUT 
+		addGroup Object_Right_OUT 82 OUTPUT 
+		addGroup Object_Left_Animate_Status_OUT 2 OUTPUT
+		addGroup Object_Right_Animate_Status_OUT 2 OUTPUT
+		addGroup Grid_OUT 5 OUTPUT 
+		addGroup Grid_Position_OUT 3 OUTPUT
+		addGroup Jump_Height_OUT 5 OUTPUT
+		addGroup Motion_OUT 6 OUTPUT
+		addGroup Motion_Type_OUT 2 OUTPUT
+		addGroup Goal_OUT 1 OUTPUT  
+		addGroup Clearance_OUT 3 OUTPUT
+
+		# specify how groups are connected as well as any special connection "types"
+		connectGroups {Object_Left_IN Object_Right_IN Object_Left_Animate_Status_IN Object_Right_Animate_Status_IN Motion_IN Goal_IN Clearance_IN Jump_Height_IN Motion_Type_IN context} hidden {Object_Left_OUT Object_Right_OUT Object_Left_Animate_Status_OUT Object_Right_Animate_Status_OUT Motion_OUT Goal_OUT Clearance_OUT Jump_Height_OUT Motion_Type_OUT}
+
+		connectGroups {Grid_IN Grid_Position_IN} hidden -type barrierSalience
+		connectGroups hidden {Grid_OUT Grid_Position_OUT} -type barrierSalience
+
+		elmanConnect hidden context
+
+		deleteGroups bias
+
+		# training examples
+		loadExamples "<PATH_TO_PROJECT>pretrain.ex" -e PERMUTED
+
+		loadExamples "<PATH_TO_PROJECT>simulation1a/sim1aExpHab.ex" 
+		loadExamples "<PATH_TO_PROJECT>simulation1a/sim1aCntrlHab.ex" 
+		loadExamples "<PATH_TO_PROJECT>simulation1a/sim1aTest.ex"
+		loadExamples "<PATH_TO_PROJECT>simulation1a/sim1aCntrlTest.ex"
+
+		# set learning and display parameters
+		setObj learningRate $lr
+		setObj momentum	    0
+		setObj batchSize    0
+		setObj numUpdates   10
+		setObj randRange 0.1
+		setObj reportInterval 0
+		setObj pseudoExampleFreq 1
+
+		# create a function that gets the error for each test example
+		proc saveActivations {fname} { 
+			set outfile [open $fname a] 
+			puts $outfile "[getObj currentExample.num] [getObj currentExample.name] " nonewline 
+			puts $outfile [getObj exampleError]
+			close $outfile 
+		}
+
+		proc testAllFinalActs {fname} { 
+			resetExampleSet [getObj testingSet.name] 
+			set nex [getObj testingSet.numExamples] 
+			for {set i 0} {$i < $nex} {incr i} {
+				doExample -set [getObj testingSet.name]
+				saveActivations $fname
+			}
+		}
+
+		proc testNetwork {n train trainNum train2 trainNum2 test fname} {
+			for {set i 0} {$i < $n} {incr i} {
+				resetNet
+				useTrainingSet $train
+				train $trainNum
+				useTrainingSet $train2
+				train $trainNum2
+				useTestingSet $test
+				testAllFinalActs $fname
+			}
+		}
+
+		# define lists for looping
+		set study [list sim1a sim1a]
+		set condition [list hab control]
+		set habEvent [list sim1aExpHab sim1aCntrlHab]
+		set testEvent [list sim1aTest sim1aTest]
+		set pretrainingEpochs [list 900]
+		set trainingEpochs [list 8 9 10 11 12]
+
+		# define loop
+
+		foreach stud $study cond $condition hEvent $habEvent tEvent $testEvent {
+			set workingdirectory "<PATH_TO_PROJECT>sim1a"
+			cd $workingdirectory
+			foreach tEpochs $trainingEpochs {
+				foreach epochs $pretrainingEpochs {
+					testNetwork 20 pretrain $epochs $hEvent $tEpochs $tEvent Study_${stud}_pEpochs_${epochs}_${cond}_tEpochs_${tEpochs}_lr_${lr}_sLR_${sLR}_sWD_${sWD}.txt
+				}
+			}
+		}
+	}
+# parameter lists (#differences 125
+set learningRate [list 0.09875 0.0975] 
+set salientLR [list 0.0004 .0003875]
+set salientWD [list 0.09875 0.0975]
+
+# grid search loops
+	foreach lrSalient $learningRate sLR $salientLR sWD $salientWD {
+		set ::s_LR $sLR
+		set ::s_WD $sWD
+		
+		gsSim_sim1a net_${lrSalient}_sLR_${sLR}_sWD_${sWD} $lrSalient $sLR $sWD
+	}
+
+}
+
+####################################################################################################
+# Simulation 1b: How prior experience with unconstrained action impacts processing (12-month-olds) #
+####################################################################################################
+proc wrapSim1b {} {
+	proc gsSim_sim1b {netName lr sLR sWD} {
+		addNet $netName -i 8
+
+		# input groups
+		addGroup Object_Left_IN 82 INPUT OUT_NOISE
+		addGroup Object_Right_IN 82 INPUT  OUT_NOISE
+		addGroup Object_Left_Animate_Status_IN 2 INPUT OUT_NOISE 
+		addGroup Object_Right_Animate_Status_IN 2 INPUT  OUT_NOISE
+		addGroup Grid_IN 5 INPUT  OUT_NOISE
+		addGroup Grid_Position_IN 3 INPUT OUT_NOISE 
+		addGroup Jump_Height_IN 5 INPUT OUT_NOISE 
+		addGroup Motion_IN 6 INPUT OUT_NOISE
+		addGroup Motion_Type_IN 2 INPUT OUT_NOISE
+		addGroup Goal_IN 1 INPUT OUT_NOISE
+		addGroup Clearance_IN 3 INPUT OUT_NOISE
+
+		# hidden group (# there are necessarily fewer hidden units than there are input and output units)
+		addGroup context 50 ELMAN
+		addGroup hidden 50 RELU
+		
+		# noise parameters
+		noiseType Object_Left_IN -range 0.3
+		noiseType Object_Right_IN -range 0.3
+		noiseType Object_Left_Animate_Status_IN -range 0.3
+		noiseType Object_Right_Animate_Status_IN -range 0.3
+		noiseType Grid_IN -range 0.3
+		noiseType Grid_Position_IN -range 0.3
+		noiseType Jump_Height_IN -range 0.3
+		noiseType Motion_IN -range 0.3
+		noiseType Motion_Type_IN -range 0.3
+		noiseType Goal_IN -range 0.3
+		noiseType Clearance_IN -range 0.3
+			
+		# output group
+		addGroup Object_Left_OUT 82 OUTPUT 
+		addGroup Object_Right_OUT 82 OUTPUT 
+		addGroup Object_Left_Animate_Status_OUT 2 OUTPUT
+		addGroup Object_Right_Animate_Status_OUT 2 OUTPUT
+		addGroup Grid_OUT 5 OUTPUT 
+		addGroup Grid_Position_OUT 3 OUTPUT
+		addGroup Jump_Height_OUT 5 OUTPUT
+		addGroup Motion_OUT 6 OUTPUT
+		addGroup Motion_Type_OUT 2 OUTPUT
+		addGroup Goal_OUT 1 OUTPUT  
+		addGroup Clearance_OUT 3 OUTPUT
+
+		# connect groups (input -> hidden -> output)
+		connectGroups {Object_Left_IN Object_Right_IN Object_Left_Animate_Status_IN Object_Right_Animate_Status_IN Motion_IN Goal_IN Clearance_IN Jump_Height_IN Motion_Type_IN context} hidden {Object_Left_OUT Object_Right_OUT Object_Left_Animate_Status_OUT Object_Right_Animate_Status_OUT Motion_OUT Goal_OUT Clearance_OUT Jump_Height_OUT Motion_Type_OUT}
+
+		connectGroups {Grid_IN Grid_Position_IN} hidden -type barrierSalience
+		connectGroups hidden {Grid_OUT Grid_Position_OUT} -type barrierSalience
+
+		elmanConnect hidden context
+
+		deleteGroups bias
+
+		# training examples
+		loadExamples "<PATH_TO_PROJECT>simulation1b/pretrain_100_0.ex" -e PERMUTED
+		loadExamples "<PATH_TO_PROJECT>simulation1b/pretrain_90_10.ex" -e PERMUTED
+		loadExamples "<PATH_TO_PROJECT>simulation1b/pretrain_80_20.ex" -e PERMUTED
+		loadExamples "<PATH_TO_PROJECT>simulation1b/pretrain_70_30.ex" -e PERMUTED
+		loadExamples "<PATH_TO_PROJECT>simulation1b/pretrain_60_40.ex" -e PERMUTED
+		loadExamples "<PATH_TO_PROJECT>simulation1b/pretrain_50_50.ex" -e PERMUTED
+
+		loadExamples "<PATH_TO_PROJECT>simulation1b/sim1bExpHab.ex" 
+		loadExamples "<PATH_TO_PROJECT>simulation1b/sim1bCntrlHab.ex" 
+		loadExamples "<PATH_TO_PROJECT>simulation1b/sim1bTest.ex"
+
+		# set learning and display parameters
+		setObj learningRate $lr
+		setObj momentum	    0
+		setObj batchSize    0
+		setObj numUpdates   10
+		setObj randRange 0.1
+		setObj reportInterval 0
+		setObj pseudoExampleFreq 1
+
+		# create a function that gets the error for each test example
+		proc saveActivations {fname} { 
+			set outfile [open $fname a] 
+			puts $outfile "[getObj currentExample.num] [getObj currentExample.name] " nonewline 
+			puts $outfile [getObj exampleError]
+			close $outfile 
+		}
+
+		proc testAllFinalActs {fname} { 
+			resetExampleSet [getObj testingSet.name] 
+			set nex [getObj testingSet.numExamples] 
+			for {set i 0} {$i < $nex} {incr i} {
+				doExample -set [getObj testingSet.name]
+				saveActivations $fname
+			}
+		}
+
+		proc testNetwork {n train trainNum train2 trainNum2 test fname} {
+			for {set i 0} {$i < $n} {incr i} {
+				resetNet
+				useTrainingSet $train
+				train $trainNum
+				useTrainingSet $train2
+				train $trainNum2
+				useTestingSet $test
+				testAllFinalActs $fname
+			}
+		}
+
+		# define lists for looping
+		set condition [list pretrain1000 pretrain9010 pretrain8020 pretrain7030 pretrain6040 pretrain5050]
+		set pretrain [list pretrain_100_0 pretrain_90_10 pretrain_80_20 pretrain_70_30 pretrain_60_40 pretrain_50_50]
+		set habEvent [list sim1bExpHab sim1bCntrlHab] 
+		set testEvent [list sim1bTest sim1bTest]
+		set pretrainingEpochs [list 900]
+		set trainingEpochs [list 8 9 10 11 12]
+
+		# define loop
+		foreach cond $condition pEvent $pretrain {
+			set workingdirectory "<PATH_TO_PROJECT>$cond"
+			cd $workingdirectory
+			foreach hEvent $habEvent tEvent $testEvent {
+				foreach epochs $pretrainingEpochs {
+					foreach tEpochs $trainingEpochs {
+					testNetwork 20 $pEvent $epochs $hEvent $tEpochs $tEvent pEpochs_${epochs}_tEpochs_${tEpochs}_condition_${cond}_testEvent_${tEvent}_habEvent_${hEvent}_lr_${lr}_sLR_${sLR}_sWD_${sWD}.txt
+					}
+				}
+			}
+		}
+}
+
+# parameter lists
+set learningRate [list 0.09875 0.0975] 
+set salientLR [list 0.0004 .0003875]
+set salientWD [list 0.09875 0.0975]
+
+# grid search loops
+	foreach lrSalient $learningRate sLR $salientLR sWD $salientWD {
+		set ::s_LR $sLR
+		set ::s_WD $sWD
+		
+		gsSim_sim1b net${lrSalient}_sLR_${sLR}_sWD_${sWD} $lrSalient $sLR $sWD
+	}
+}
+
+###########################################################
+# Simulation 2a: Independence from animacy (9-month-olds) #
+###########################################################
+proc wrapSim2a {} {
+	proc gsSim_sim2a {netName lr sLR sWD} {
+		addNet $netName -i 8
+
+		# input groups
+		addGroup Object_Left_IN 82 INPUT OUT_NOISE 
+		addGroup Object_Right_IN 82 INPUT  OUT_NOISE
+		addGroup Object_Left_Animate_Status_IN 2 INPUT OUT_NOISE 
+		addGroup Object_Right_Animate_Status_IN 2 INPUT  OUT_NOISE
+		addGroup Grid_IN 5 INPUT  OUT_NOISE
+		addGroup Grid_Position_IN 3 INPUT OUT_NOISE 
+		addGroup Jump_Height_IN 5 INPUT OUT_NOISE 
+		addGroup Motion_IN 6 INPUT OUT_NOISE
+		addGroup Motion_Type_IN 2 INPUT OUT_NOISE
+		addGroup Goal_IN 1 INPUT OUT_NOISE
+		addGroup Clearance_IN 3 INPUT OUT_NOISE 
+
+		# hidden group (# there are necessarily fewer hidden units than there are input and output units)
+		addGroup context 40 ELMAN
+		addGroup hidden 40 RELU
+		
+		# noise parameters
+		noiseType Object_Left_IN -range 0.3
+		noiseType Object_Right_IN -range 0.3
+		noiseType Object_Left_Animate_Status_IN -range 0.3
+		noiseType Object_Right_Animate_Status_IN -range 0.3
+		noiseType Grid_IN -range 0.3
+		noiseType Grid_Position_IN -range 0.3
+		noiseType Jump_Height_IN -range 0.3
+		noiseType Motion_IN -range 0.3
+		noiseType Motion_Type_IN -range 0.3
+		noiseType Goal_IN -range 0.3
+		noiseType Clearance_IN -range 0.3
+			
+		# output group
+		addGroup Object_Left_OUT 82 OUTPUT 
+		addGroup Object_Right_OUT 82 OUTPUT 
+		addGroup Object_Left_Animate_Status_OUT 2 OUTPUT
+		addGroup Object_Right_Animate_Status_OUT 2 OUTPUT
+		addGroup Grid_OUT 5 OUTPUT 
+		addGroup Grid_Position_OUT 3 OUTPUT
+		addGroup Jump_Height_OUT 5 OUTPUT
+		addGroup Motion_OUT 6 OUTPUT
+		addGroup Motion_Type_OUT 2 OUTPUT
+		addGroup Goal_OUT 1 OUTPUT  
+		addGroup Clearance_OUT 3 OUTPUT
+
+		# connect groups (input -> hidden -> output)
+		connectGroups {Object_Left_IN Object_Right_IN Object_Left_Animate_Status_IN Object_Right_Animate_Status_IN Motion_IN Goal_IN Clearance_IN  Jump_Height_IN Motion_Type_IN context} hidden {Object_Left_OUT Object_Right_OUT Object_Left_Animate_Status_OUT Object_Right_Animate_Status_OUT Motion_OUT Goal_OUT Clearance_OUT Jump_Height_OUT Motion_Type_OUT}
+
+		connectGroups {Grid_IN Grid_Position_IN} hidden -type barrierSalience
+		connectGroups hidden {Grid_OUT Grid_Position_OUT} -type barrierSalience
+
+		elmanConnect hidden context
+
+		deleteGroups bias
+
+		# training examples
+		loadExamples "<PATH_TO_PROJECT>pretrain.ex" -e PERMUTED
+
+		loadExamples "<PATH_TO_PROJECT>simulation2a/sim2aExpHab.ex" 
+		loadExamples "<PATH_TO_PROJECT>simulation2a/sim2aCntrlHab.ex" 
+		loadExamples "<PATH_TO_PROJECT>simulation2a/sim2aTest.ex"
+		loadExamples "<PATH_TO_PROJECT>simulation2a/sim2aCntrlTest.ex"
+
+		# set learning and display parameters
+		setObj learningRate $lr
+		setObj momentum	    0
+		setObj batchSize    0
+		setObj numUpdates   10
+		setObj randRange 0.1
+		setObj reportInterval 0
+		setObj pseudoExampleFreq 1
+
+		# create a function that gets the error for each test example
+		proc saveActivations {fname} { 
+			set outfile [open $fname a] 
+			puts $outfile "[getObj currentExample.num] [getObj currentExample.name] " nonewline 
+			puts $outfile [getObj exampleError]
+			close $outfile 
+		}
+
+		proc testAllFinalActs {fname} { 
+			resetExampleSet [getObj testingSet.name] 
+			set nex [getObj testingSet.numExamples] 
+			for {set i 0} {$i < $nex} {incr i} {
+				doExample -set [getObj testingSet.name]
+				saveActivations $fname
+			}
+		}
+
+		proc testNetwork {n train trainNum train2 trainNum2 test fname} {
+			for {set i 0} {$i < $n} {incr i} {
+				resetNet
+				useTrainingSet $train
+				train $trainNum
+				useTrainingSet $train2
+				train $trainNum2
+				useTestingSet $test
+				testAllFinalActs $fname
+			}
+		}
+
+		# define lists for looping
+		set study [list sim2a sim2a]
+		set condition [list hab control]
+		set habEvent [list sim2aExpHab sim2aCntrlHab]
+		set testEvent [list sim2aTest sim2aCntrlTest]
+		set pretrainingEpochs [list 675]
+		set trainingEpochs [list 8 9 10 11 12]
+
+		# define loop
+
+		foreach stud $study cond $condition hEvent $habEvent tEvent $testEvent {
+			set workingdirectory "<PATH_TO_PROJECT>sim2a"
+			cd $workingdirectory
+			foreach tEpochs $trainingEpochs {
+				foreach epochs $pretrainingEpochs {
+					testNetwork 20 pretrain $epochs $hEvent $tEpochs $tEvent Study_${stud}_pEpochs_${epochs}_${cond}_tEpochs_${tEpochs}_lr_${lr}_sLR_${sLR}_sWD_${sWD}.txt
+				}
+			}
+		}
+	}
+
+	# parameter lists
+	set learningRate [list 0.08625 0.0875] 
+	set salientLR [list 0.0004 .0003875]
+	set salientWD [list 0.09875 0.0975]
+
+	# grid search loops
+	foreach lrSalient $learningRate sLR $salientLR sWD $salientWD {
+		set ::s_LR $sLR
+		set ::s_WD $sWD
+		
+		gsSim_sim2a net2a_${lrSalient}_sLR_${sLR}_sWD_${sWD} $lrSalient $sLR $sWD
+	}
+}
+
+
+#################################################################################################
+# Simulation 3a: Bidirectional inferences about actions, goals, and constraints (12-month-olds) #
+# 										No Constraints											#
+#################################################################################################
+proc wrapSim3a {} {
+	proc gsSim_sim3a {netName lr sLR sWD} {
+		addNet $netName -i 8
+
+		# input groups
+		addGroup Object_Left_IN 82 INPUT OUT_NOISE 
+		addGroup Object_Right_IN 82 INPUT  OUT_NOISE
+		addGroup Object_Left_Animate_Status_IN 2 INPUT OUT_NOISE 
+		addGroup Object_Right_Animate_Status_IN 2 INPUT  OUT_NOISE
+		addGroup Grid_IN 5 INPUT  OUT_NOISE
+		addGroup Grid_Position_IN 3 INPUT OUT_NOISE 
+		addGroup Jump_Height_IN 5 INPUT OUT_NOISE 
+		addGroup Motion_IN 6 INPUT OUT_NOISE
+		addGroup Motion_Type_IN 2 INPUT OUT_NOISE
+		addGroup Goal_IN 1 INPUT OUT_NOISE
+		addGroup Clearance_IN 3 INPUT OUT_NOISE 
+
+		# hidden group (# there are necessarily fewer hidden units than there are input and output units)
+		addGroup context 50 ELMAN
+		addGroup hidden 50 RELU
+			
+		# noise parameters
+		noiseType Object_Left_IN -range 0.3
+		noiseType Object_Right_IN -range 0.3
+		noiseType Object_Left_Animate_Status_IN -range 0.3
+		noiseType Object_Right_Animate_Status_IN -range 0.3
+		noiseType Grid_IN -range 0.3
+		noiseType Grid_Position_IN -range 0.3
+		noiseType Jump_Height_IN -range 0.3
+		noiseType Motion_IN -range 0.3
+		noiseType Motion_Type_IN -range 0.3
+		noiseType Goal_IN -range 0.3
+		noiseType Clearance_IN -range 0.3
+
+		# output group
+		addGroup Object_Left_OUT 82 OUTPUT 
+		addGroup Object_Right_OUT 82 OUTPUT 
+		addGroup Object_Left_Animate_Status_OUT 2 OUTPUT
+		addGroup Object_Right_Animate_Status_OUT 2 OUTPUT
+		addGroup Grid_OUT 5 OUTPUT 
+		addGroup Grid_Position_OUT 3 OUTPUT
+		addGroup Jump_Height_OUT 5 OUTPUT
+		addGroup Motion_OUT 6 OUTPUT
+		addGroup Motion_Type_OUT 2 OUTPUT
+		addGroup Goal_OUT 1 OUTPUT  
+		addGroup Clearance_OUT 3 OUTPUT
+
+		# connect groups (input -> hidden -> output)
+		connectGroups {Object_Left_IN Object_Right_IN Object_Left_Animate_Status_IN Object_Right_Animate_Status_IN Motion_IN Goal_IN Clearance_IN  Jump_Height_IN Motion_Type_IN context} hidden {Object_Left_OUT Object_Right_OUT Object_Left_Animate_Status_OUT Object_Right_Animate_Status_OUT Motion_OUT Goal_OUT Clearance_OUT Jump_Height_OUT Motion_Type_OUT}
+
+		connectGroups {Grid_IN Grid_Position_IN} hidden -type barrierSalience
+		connectGroups hidden {Grid_OUT Grid_Position_OUT} -type barrierSalience
+
+		elmanConnect hidden context
+
+		deleteGroups bias
+
+		# training examples
+		loadExamples "<PATH_TO_PROJECT>pretrain.ex" -e PERMUTED
+
+		loadExamples "<PATH_TO_PROJECT>simulation3a/sim3aExpHab.ex" 
+		loadExamples "<PATH_TO_PROJECT>simulation3a/sim3aTest.ex"
+
+		# set learning and display parameters
+		setObj learningRate $lr
+		setObj momentum	    0
+		setObj batchSize    0
+		setObj numUpdates   10
+		setObj randRange 0.1
+		setObj reportInterval 0
+		setObj pseudoExampleFreq 1
+
+		# create a function that gets the error for each test example
+		proc saveActivations {fname} { 
+			set outfile [open $fname a] 
+			puts $outfile "[getObj currentExample.num] [getObj currentExample.name] " nonewline 
+			puts $outfile [getObj exampleError]
+			close $outfile 
+		}
+
+		proc testAllFinalActs {fname} { 
+			resetExampleSet [getObj testingSet.name] 
+			set nex [getObj testingSet.numExamples] 
+			for {set i 0} {$i < $nex} {incr i} {
+				doExample -set [getObj testingSet.name]
+				saveActivations $fname
+			}
+		}
+
+		proc testNetwork {n train trainNum train2 trainNum2 test fname} {
+			for {set i 0} {$i < $n} {incr i} {
+				resetNet
+				useTrainingSet $train
+				train $trainNum
+				useTrainingSet $train2
+				train $trainNum2
+				useTestingSet $test
+				testAllFinalActs $fname
+			}
+		}
+
+		# define lists for looping
+		set study [list sim3a]
+		set habEvent [list sim3aExpHab]
+		set testEvent [list sim3aTest]
+		set pretrainingEpochs [list 675]
+		set trainingEpochs [list 8 9 10 11 12]
+
+		# define loop
+
+		foreach stud $study hEvent $habEvent tEvent $testEvent {
+			set workingdirectory "<PATH_TO_PROJECT>sim3a"
+			cd $workingdirectory
+			foreach tEpochs $trainingEpochs {
+				foreach epochs $pretrainingEpochs {
+					testNetwork 20 pretrain $epochs $hEvent $tEpochs $tEvent Study_${stud}_pEpochs_${epochs}_tEpochs_${tEpochs}_lr_${lr}_sLR_${sLR}_sWD_${sWD}.txt
+				}
+			}
+		}
+	}
+
+	# parameter lists
+	set learningRate [list 0.09875 0.0975] 
+	set salientLR [list 0.0004 .0003875]
+	set salientWD [list 0.09875 0.0975]
+
+	# grid search loops
+	foreach lrSalient $learningRate sLR $salientLR sWD $salientWD {
+		set ::s_LR $sLR
+		set ::s_WD $sWD
+		
+		gsSim_sim3a net3a_${lrSalient}_sLR_${sLR}_sWD_${sWD} $lrSalient $sLR $sWD
+	}
+}
+
+
+#################################################################################################
+# Simulation 3b: Bidirectional inferences about actions, goals, and constraints (12-month-olds) #
+# 						          No Goals              									    #
+#################################################################################################
+proc wrapSim3b {} {
+	proc gsSim_sim3b {netName lr sLR sWD} {
+		addNet $netName -i 8
+
+		# input groups
+		addGroup Object_Left_IN 82 INPUT OUT_NOISE 
+		addGroup Object_Right_IN 82 INPUT  OUT_NOISE
+		addGroup Object_Left_Animate_Status_IN 2 INPUT OUT_NOISE 
+		addGroup Object_Right_Animate_Status_IN 2 INPUT  OUT_NOISE
+		addGroup Grid_IN 5 INPUT  OUT_NOISE
+		addGroup Grid_Position_IN 3 INPUT OUT_NOISE 
+		addGroup Jump_Height_IN 5 INPUT OUT_NOISE 
+		addGroup Motion_IN 6 INPUT OUT_NOISE
+		addGroup Motion_Type_IN 2 INPUT OUT_NOISE
+		addGroup Goal_IN 1 INPUT OUT_NOISE
+		addGroup Clearance_IN 3 INPUT OUT_NOISE 
+
+		# hidden group (# there are necessarily fewer hidden units than there are input and output units)
+		addGroup context 50 ELMAN
+		addGroup hidden 50 RELU
+		
+		# noise parameters
+		noiseType Object_Left_IN -range 0.3
+		noiseType Object_Right_IN -range 0.3
+		noiseType Object_Left_Animate_Status_IN -range 0.3
+		noiseType Object_Right_Animate_Status_IN -range 0.3
+		noiseType Grid_IN -range 0.3
+		noiseType Grid_Position_IN -range 0.3
+		noiseType Jump_Height_IN -range 0.3
+		noiseType Motion_IN -range 0.3
+		noiseType Motion_Type_IN -range 0.3
+		noiseType Goal_IN -range 0.3
+		noiseType Clearance_IN -range 0.3
+
+		# output group
+		addGroup Object_Left_OUT 82 OUTPUT 
+		addGroup Object_Right_OUT 82 OUTPUT 
+		addGroup Object_Left_Animate_Status_OUT 2 OUTPUT
+		addGroup Object_Right_Animate_Status_OUT 2 OUTPUT
+		addGroup Grid_OUT 5 OUTPUT 
+		addGroup Grid_Position_OUT 3 OUTPUT
+		addGroup Jump_Height_OUT 5 OUTPUT
+		addGroup Motion_OUT 6 OUTPUT
+		addGroup Motion_Type_OUT 2 OUTPUT
+		addGroup Goal_OUT 1 OUTPUT  
+		addGroup Clearance_OUT 3 OUTPUT
+
+		# connect groups (input -> hidden -> output)
+		connectGroups {Object_Left_IN Object_Right_IN Object_Left_Animate_Status_IN Object_Right_Animate_Status_IN Motion_IN Goal_IN Clearance_IN  Jump_Height_IN Motion_Type_IN context} hidden {Object_Left_OUT Object_Right_OUT Object_Left_Animate_Status_OUT Object_Right_Animate_Status_OUT Motion_OUT Goal_OUT Clearance_OUT Jump_Height_OUT Motion_Type_OUT}
+
+		connectGroups {Grid_IN Grid_Position_IN} hidden -type barrierSalience
+		connectGroups hidden {Grid_OUT Grid_Position_OUT} -type barrierSalience
+
+		elmanConnect hidden context
+
+		deleteGroups bias
+
+		# training examples
+		loadExamples "<PATH_TO_PROJECT>pretrain.ex" -e PERMUTED
+
+		loadExamples "<PATH_TO_PROJECT>simulation3b/sim3bExpHab.ex"  
+		loadExamples "<PATH_TO_PROJECT>simulation3b/sim3bTest.ex"
+
+		# set learning and display parameters
+		setObj learningRate $lr
+		setObj momentum	    0
+		setObj batchSize    0
+		setObj numUpdates   10
+		setObj randRange 0.1
+		setObj reportInterval 0
+		setObj pseudoExampleFreq 1
+
+		# create a function that gets the error for each test example
+		proc saveActivations {fname} { 
+			set outfile [open $fname a] 
+			puts $outfile "[getObj currentExample.num] [getObj currentExample.name] " nonewline 
+			puts $outfile [getObj exampleError]
+			close $outfile 
+		}
+
+		proc testAllFinalActs {fname} { 
+			resetExampleSet [getObj testingSet.name] 
+			set nex [getObj testingSet.numExamples] 
+			for {set i 0} {$i < $nex} {incr i} {
+				doExample -set [getObj testingSet.name]
+				saveActivations $fname
+			}
+		}
+
+		proc testNetwork {n train trainNum train2 trainNum2 test fname} {
+			for {set i 0} {$i < $n} {incr i} {
+				resetNet
+				useTrainingSet $train
+				train $trainNum
+				useTrainingSet $train2
+				train $trainNum2
+				useTestingSet $test
+				testAllFinalActs $fname
+			}
+		}
+
+
+		# define lists for looping
+		set study [list sim3b]
+		set habEvent [list sim3bExpHab]
+		set testEvent [list sim3bTest]
+		set pretrainingEpochs [list 900]
+		set trainingEpochs [list 8 9 10 11 12]
+
+		# define loop
+
+		foreach stud $study hEvent $habEvent tEvent $testEvent {
+			set workingdirectory "<PATH_TO_PROJECT>sim3b"
+			cd $workingdirectory
+			foreach tEpochs $trainingEpochs {
+				foreach epochs $pretrainingEpochs {
+					testNetwork 20 pretrain $epochs $hEvent $tEpochs $tEvent Study_${stud}_pEpochs_${epochs}_tEpochs_${tEpochs}_lr_${lr}_sLR_${sLR}_sWD_${sWD}.txt
+				}
+			}
+		}
+	}
+
+	# parameter lists
+	set learningRate [list 0.09875 0.0975] 
+	set salientLR [list 0.0004 .0003875]
+	set salientWD [list 0.09875 0.0975]
+
+	# grid search loops
+	foreach lrSalient $learningRate sLR $salientLR sWD $salientWD {
+		set ::s_LR $sLR
+		set ::s_WD $sWD
+		
+		gsSim_sim3b net3b_${lrSalient}_sLR_${sLR}_sWD_${sWD}D $lrSalient $sLR $sWD
+	}
+}
+
+
+###################################################################### 
+# Simulation 4a: Graded representations of efficiency (6-month-olds) #
+######################################################################
+proc wrapSim4a {} {
+	proc gsSim_sim4a {netName lr sLR sWD} {
+		addNet $netName -i 8
+
+		# input groups
+		addGroup Object_Left_IN 82 INPUT OUT_NOISE 
+		addGroup Object_Right_IN 82 INPUT  OUT_NOISE
+		addGroup Object_Left_Animate_Status_IN 2 INPUT OUT_NOISE 
+		addGroup Object_Right_Animate_Status_IN 2 INPUT  OUT_NOISE
+		addGroup Grid_IN 5 INPUT  OUT_NOISE
+		addGroup Grid_Position_IN 3 INPUT OUT_NOISE 
+		addGroup Jump_Height_IN 5 INPUT OUT_NOISE 
+		addGroup Motion_IN 6 INPUT OUT_NOISE
+		addGroup Motion_Type_IN 2 INPUT OUT_NOISE
+		addGroup Goal_IN 1 INPUT OUT_NOISE
+		addGroup Clearance_IN 3 INPUT OUT_NOISE 
+
+		# hidden group (# there are necessarily fewer hidden units than there are input and output units)
+		addGroup context 30 ELMAN
+		addGroup hidden 30 RELU
+			
+		# noise parameters
+		noiseType Object_Left_IN -range 0.3
+		noiseType Object_Right_IN -range 0.3
+		noiseType Object_Left_Animate_Status_IN -range 0.3
+		noiseType Object_Right_Animate_Status_IN -range 0.3
+		noiseType Grid_IN -range 0.3
+		noiseType Grid_Position_IN -range 0.3
+		noiseType Jump_Height_IN -range 0.3
+		noiseType Motion_IN -range 0.3
+		noiseType Motion_Type_IN -range 0.3
+		noiseType Goal_IN -range 0.3
+		noiseType Clearance_IN -range 0.3
+
+		# output group
+		addGroup Object_Left_OUT 82 OUTPUT 
+		addGroup Object_Right_OUT 82 OUTPUT 
+		addGroup Object_Left_Animate_Status_OUT 2 OUTPUT
+		addGroup Object_Right_Animate_Status_OUT 2 OUTPUT
+		addGroup Grid_OUT 5 OUTPUT 
+		addGroup Grid_Position_OUT 3 OUTPUT
+		addGroup Jump_Height_OUT 5 OUTPUT
+		addGroup Motion_OUT 6 OUTPUT
+		addGroup Motion_Type_OUT 2 OUTPUT
+		addGroup Goal_OUT 1 OUTPUT  
+		addGroup Clearance_OUT 3 OUTPUT
+
+		# connect groups (input -> hidden -> output)
+		connectGroups {Object_Left_IN Object_Right_IN Object_Left_Animate_Status_IN Object_Right_Animate_Status_IN Motion_IN Goal_IN Clearance_IN  Jump_Height_IN Motion_Type_IN context} hidden {Object_Left_OUT Object_Right_OUT Object_Left_Animate_Status_OUT Object_Right_Animate_Status_OUT Motion_OUT Goal_OUT Clearance_OUT Jump_Height_OUT Motion_Type_OUT}
+
+		connectGroups {Grid_IN Grid_Position_IN} hidden -type barrierSalience
+		connectGroups hidden {Grid_OUT Grid_Position_OUT} -type barrierSalience
+
+		elmanConnect hidden context
+
+		deleteGroups bias
+
+		# training examples
+		loadExamples "<PATH_TO_PROJECT>pretrain.ex" -e PERMUTED
+
+		# Gergeley et al. (1995) simulations 
+		loadExamples "<PATH_TO_PROJECT>simulation4a/sim4aHab.ex" 
+		loadExamples "<PATH_TO_PROJECT>simulation4a/sim4aCntrlHab.ex" 
+		loadExamples "<PATH_TO_PROJECT>simulation4a/sim4aTest.ex"
+		loadExamples "<PATH_TO_PROJECT>simulation4a/sim4aCntrlTest.ex"
+
+		# set learning and display parameters
+		setObj learningRate $lr
+		setObj momentum	    0
+		setObj batchSize    0
+		setObj numUpdates   10
+		setObj randRange 0.1
+		setObj reportInterval 0
+		setObj pseudoExampleFreq 1
+
+		# create a function that gets the error for each test example
+		proc saveActivations {fname} { 
+			set outfile [open $fname a] 
+			puts $outfile "[getObj currentExample.num] [getObj currentExample.name] " nonewline 
+			puts $outfile [getObj exampleError]
+			close $outfile 
+		}
+
+		proc testAllFinalActs {fname} { 
+			resetExampleSet [getObj testingSet.name] 
+			set nex [getObj testingSet.numExamples] 
+			for {set i 0} {$i < $nex} {incr i} {
+				doExample -set [getObj testingSet.name]
+				saveActivations $fname
+			}
+		}
+
+		proc testNetwork {n train trainNum train2 trainNum2 test fname} {
+			for {set i 0} {$i < $n} {incr i} {
+				resetNet
+				useTrainingSet $train
+				train $trainNum
+				useTrainingSet $train2
+				train $trainNum2
+				useTestingSet $test
+				testAllFinalActs $fname
+			}
+		}
+		
+		# define lists for looping
+		set study [list sim4a sim4a]
+		set habEvent [list sim4aHab sim4aCntrlHab sim4aCntrlHab]
+		set testEvent [list sim4aTest sim4aTest sim4aCntrlTest]
+		set pretrainingEpochs [list 450]
+		set trainingEpochs [list 8 9 10 11 12]
+
+		# define loop
+
+		foreach stud $study hEvent $habEvent tEvent $testEvent {
+			set workingdirectory "<PATH_TO_PROJECT>sim4a"
+			cd $workingdirectory
+			foreach tEpochs $trainingEpochs {
+				foreach epochs $pretrainingEpochs {
+					testNetwork 20 pretrain $epochs $hEvent $tEpochs $tEvent Study_${stud}_Condition_${hEvent}_pEpochs_${epochs}_tEpochs_${tEpochs}_testEvent_${tEvent}_lr_${lr}_sLR_${sLR}_sWD_${sWD}.txt
+				}
+			}
+		}
+
+	}
+
+	# parameter lists
+	set learningRate [list 0.08625 0.0875] 
+	set salientLR [list 0.0004 .0003875]
+	set salientWD [list 0.09875 0.0975]
+
+	# grid search loops
+	foreach lrSalient $learningRate sLR $salientLR sWD $salientWD {
+		set ::s_LR $sLR
+		set ::s_WD $sWD
+		
+		gsSim_sim4a net4a_${lrSalient}_sLR_${sLR}_sWD_${sWD} $lrSalient $sLR $sWD
+	}
+}
+
+
+#########################################################################################
+# Simulation 5a: Action efficiency understanding in pre-reaching infants (3-month-olds) #
+#########################################################################################
+proc wrapSim5a {} {
+	proc gsSim_sim5a {netName lr sLR sWD} {
+		addNet $netName -i 8
+
+		# input groups
+		addGroup Object_Left_IN 82 INPUT OUT_NOISE 
+		addGroup Object_Right_IN 82 INPUT  OUT_NOISE
+		addGroup Object_Left_Animate_Status_IN 2 INPUT OUT_NOISE 
+		addGroup Object_Right_Animate_Status_IN 2 INPUT  OUT_NOISE
+		addGroup Grid_IN 5 INPUT  OUT_NOISE
+		addGroup Grid_Position_IN 3 INPUT OUT_NOISE 
+		addGroup Jump_Height_IN 5 INPUT OUT_NOISE 
+		addGroup Motion_IN 6 INPUT OUT_NOISE
+		addGroup Motion_Type_IN 2 INPUT OUT_NOISE
+		addGroup Goal_IN 1 INPUT OUT_NOISE
+		addGroup Clearance_IN 3 INPUT OUT_NOISE
+		
+		# hidden group (# there are necessarily fewer hidden units than there are input and output units)
+		addGroup context 10 ELMAN
+		addGroup hidden 10 RELU
+		
+		# noise parameters
+		noiseType Object_Left_IN -range 0.3
+		noiseType Object_Right_IN -range 0.3
+		noiseType Object_Left_Animate_Status_IN -range 0.3
+		noiseType Object_Right_Animate_Status_IN -range 0.3
+		noiseType Grid_IN -range 0.3
+		noiseType Grid_Position_IN -range 0.3
+		noiseType Jump_Height_IN -range 0.3
+		noiseType Motion_IN -range 0.3
+		noiseType Motion_Type_IN -range 0.3
+		noiseType Goal_IN -range 0.3
+		noiseType Clearance_IN -range 0.3
+			
+		# output group
+		addGroup Object_Left_OUT 82 OUTPUT 
+		addGroup Object_Right_OUT 82 OUTPUT 
+		addGroup Object_Left_Animate_Status_OUT 2 OUTPUT 
+		addGroup Object_Right_Animate_Status_OUT 2 OUTPUT 
+		addGroup Grid_OUT 5 OUTPUT 
+		addGroup Grid_Position_OUT 3 OUTPUT 
+		addGroup Jump_Height_OUT 5 OUTPUT 
+		addGroup Motion_OUT 6 OUTPUT 
+		addGroup Motion_Type_OUT 2 OUTPUT 
+		addGroup Goal_OUT 1 OUTPUT 
+		addGroup Clearance_OUT 3 OUTPUT
+
+		# connect groups (input -> hidden -> output)
+		connectGroups {Object_Left_IN Object_Right_IN Object_Left_Animate_Status_IN Object_Right_Animate_Status_IN Motion_IN Goal_IN Clearance_IN  Jump_Height_IN Motion_Type_IN context} hidden {Object_Left_OUT Object_Right_OUT Object_Left_Animate_Status_OUT Object_Right_Animate_Status_OUT Motion_OUT Goal_OUT Clearance_OUT Jump_Height_OUT Motion_Type_OUT}
+
+		connectGroups {Grid_IN Grid_Position_IN} hidden -type barrierSalience
+		connectGroups hidden {Grid_OUT Grid_Position_OUT} -type barrierSalience
+
+		elmanConnect hidden context
+
+		deleteGroups bias
+
+		# training examples
+		loadExamples "<PATH_TO_PROJECT>pretrain.ex" -e PERMUTED
+
+		loadExamples "<PATH_TO_PROJECT>simulation5a/sim5aExpHab.ex" 
+		loadExamples "<PATH_TO_PROJECT>simulation5a/sim5aActionPhase.ex"
+		loadExamples "<PATH_TO_PROJECT>simulation5a/sim5aActionPhaseIneff.ex"
+		loadExamples "<PATH_TO_PROJECT>simulation5a/sim5aCntrlHab.ex"	
+		loadExamples "<PATH_TO_PROJECT>simulation5a/sim5aTest.ex"
+		loadExamples "<PATH_TO_PROJECT>simulation5a/sim5aCntrlTest.ex"
+
+		# set learning and display parameters
+		setObj learningRate $lr
+		setObj momentum	    0
+		setObj batchSize    0
+		setObj numUpdates   10
+		setObj randRange 0.1
+		setObj reportInterval 0
+		setObj pseudoExampleFreq 1
+
+		# create a function that gets the error for each test example
+		proc saveActivations {fname} { 
+			set outfile [open $fname a] 
+			puts $outfile "[getObj currentExample.num] [getObj currentExample.name] " nonewline 
+			puts $outfile [getObj exampleError]
+			close $outfile 
+		}
+
+		proc testAllFinalActs {fname} { 
+			resetExampleSet [getObj testingSet.name] 
+			set nex [getObj testingSet.numExamples] 
+			for {set i 0} {$i < $nex} {incr i} {
+				doExample -set [getObj testingSet.name]
+				saveActivations $fname
+			}
+		}
+
+		proc testNetwork {n train trainNum train2 trainNum2 train3 trainNum3 test fname ifEvent lr} {
+			if {$ifEvent == "effective"} {
+				for {set i 0} {$i < $n} {incr i} {
+					resetNet
+					
+					setObj learningRate $lr
+					useTrainingSet $train
+					train $trainNum
+					
+					# learning rate below puts infants in an attentional state that is akin to oldest models in the reported simulations 
+					setObj learningRate 0.175
+					useTrainingSet $train2
+					train $trainNum2
+					setObj learningRate $lr
+					useTrainingSet $train3
+					train $trainNum3
+					useTestingSet $test
+					testAllFinalActs $fname
+				}
+			} else {
+				for {set i 0} {$i < $n} {incr i} {
+					resetNet
+					
+					setObj learningRate $lr
+					useTrainingSet $train
+					train $trainNum
+
+					setObj learningRate $lr
+					useTrainingSet $train2
+					train $trainNum2
+					setObj learningRate $lr
+					useTrainingSet $train3
+					train $trainNum3
+					useTestingSet $test
+					testAllFinalActs $fname
+				}
+			}
+		}
+
+		# define lists for looping
+		set study [list sim5a sim5a sim5a]
+		set folder [list effective effective ineffective]
+		set condition [list hab control hab]
+		set actionPhaseEvent [list sim5aActionPhase sim5aActionPhase sim5aActionPhaseIneff]
+		set ifEvent [list effective effectiveControl ineffective]
+		set habEvent [list sim5aExpHab sim5aCntrlHab sim5aExpHab]
+		set testEvent [list sim5aTest sim5aTest sim5aTest]
+		set actionPhaseEpochs [list 8 9 10 11 12]
+		set trainingEpochs [list 8 9 10 11 12]
+		set pretrainingEpochs [list 225]
+		
+		# define loop
+
+		foreach stud $study cond $condition hEvent $habEvent tEvent $testEvent aEvent $actionPhaseEvent iEvent $ifEvent fldr $folder {
+			set workingdirectory "<PATH_TO_PROJECT>$fldr"
+			cd $workingdirectory
+				foreach apEpochs $actionPhaseEpochs tEpochs $trainingEpochs {
+					foreach epochs $pretrainingEpochs {
+						testNetwork 20 pretrain $epochs $aEvent $apEpochs $hEvent $tEpochs $tEvent Study_${stud}_pEpochs_${epochs}_${cond}_habEvent_${hEvent}_tEpochs_${tEpochs}_actionEpochs_${apEpochs}_lr_${lr}_sLR_${sLR}_sWD_${sWD}.txt $iEvent $lr
+				} 
+			}
+		}
+	}
+
+	# parameter lists
+	set learningRate [list 0.00875 0.01] 
+	set salientLR [list 0.0004 .0003875]
+	set salientWD [list 0.09875 0.0975]
+
+	# grid search loops
+	foreach lrSalient $learningRate sLR $salientLR sWD $salientWD {
+		set ::s_LR $sLR
+		set ::s_WD $sWD
+		
+		gsSim_sim5a net5a_${lrSalient}_sLR_${sLR}_sWD_${sWD} $lrSalient $sLR $sWD
+	}
+}
+
+
+#########################################################################################
+# Simulation 5b: Action efficiency understanding in pre-reaching infants (3-month-olds) #
+#									 No training		                                #
+#########################################################################################
+proc wrapSim5b {} {
+	proc gsSim_sim5b {netName lr sLR sWD} {
+		addNet $netName -i 8
+
+		# input groups
+		addGroup Object_Left_IN 82 INPUT OUT_NOISE 
+		addGroup Object_Right_IN 82 INPUT  OUT_NOISE
+		addGroup Object_Left_Animate_Status_IN 2 INPUT OUT_NOISE 
+		addGroup Object_Right_Animate_Status_IN 2 INPUT  OUT_NOISE
+		addGroup Grid_IN 5 INPUT  OUT_NOISE
+		addGroup Grid_Position_IN 3 INPUT OUT_NOISE 
+		addGroup Jump_Height_IN 5 INPUT OUT_NOISE 
+		addGroup Motion_IN 6 INPUT OUT_NOISE
+		addGroup Motion_Type_IN 2 INPUT OUT_NOISE
+		addGroup Goal_IN 1 INPUT OUT_NOISE
+		addGroup Clearance_IN 3 INPUT OUT_NOISE
+		
+		
+		# hidden group (# there are necessarily fewer hidden units than there are input and output units)
+		addGroup context 10 ELMAN
+		addGroup hidden 10 RELU
+		
+		# noise parameters
+		noiseType Object_Left_IN -range 0.3
+		noiseType Object_Right_IN -range 0.3
+		noiseType Object_Left_Animate_Status_IN -range 0.3
+		noiseType Object_Right_Animate_Status_IN -range 0.3
+		noiseType Grid_IN -range 0.3
+		noiseType Grid_Position_IN -range 0.3
+		noiseType Jump_Height_IN -range 0.3
+		noiseType Motion_IN -range 0.3
+		noiseType Motion_Type_IN -range 0.3
+		noiseType Goal_IN -range 0.3
+		noiseType Clearance_IN -range 0.3
+			
+		# output group
+		addGroup Object_Left_OUT 82 OUTPUT 
+		addGroup Object_Right_OUT 82 OUTPUT 
+		addGroup Object_Left_Animate_Status_OUT 2 OUTPUT 
+		addGroup Object_Right_Animate_Status_OUT 2 OUTPUT 
+		addGroup Grid_OUT 5 OUTPUT 
+		addGroup Grid_Position_OUT 3 OUTPUT 
+		addGroup Jump_Height_OUT 5 OUTPUT 
+		addGroup Motion_OUT 6 OUTPUT 
+		addGroup Motion_Type_OUT 2 OUTPUT 
+		addGroup Goal_OUT 1 OUTPUT 
+		addGroup Clearance_OUT 3 OUTPUT
+
+
+		# connect groups (input -> hidden -> output)
+		connectGroups {Object_Left_IN Object_Right_IN Object_Left_Animate_Status_IN Object_Right_Animate_Status_IN Motion_IN Goal_IN Clearance_IN  Jump_Height_IN Motion_Type_IN context} hidden {Object_Left_OUT Object_Right_OUT Object_Left_Animate_Status_OUT Object_Right_Animate_Status_OUT Motion_OUT Goal_OUT Clearance_OUT Jump_Height_OUT Motion_Type_OUT}
+
+		connectGroups {Grid_IN Grid_Position_IN} hidden -type barrierSalience
+		connectGroups hidden {Grid_OUT Grid_Position_OUT} -type barrierSalience
+
+		elmanConnect hidden context
+
+		deleteGroups bias
+
+		# training examples
+		loadExamples "<PATH_TO_PROJECT>pretrain.ex" -e PERMUTED
+
+		loadExamples "<PATH_TO_PROJECT>simulation5b/sim5bExpHab.ex" 
+		loadExamples "<PATH_TO_PROJECT>simulation5b/sim5bActionPhase.ex"
+		loadExamples "C<PATH_TO_PROJECT>simulation5b/sim5bActionPhaseIneff.ex"
+		loadExamples "<PATH_TO_PROJECT>simulation5b/sim5bCntrlHab.ex"	
+		loadExamples "<PATH_TO_PROJECT>simulation5b/sim5bTest.ex"
+		loadExamples "<PATH_TO_PROJECT>simulation5b/sim5bCntrlTest.ex"
+
+		# set learning and display parameters
+		setObj learningRate $lr
+		setObj momentum	    0
+		setObj batchSize    0
+		setObj numUpdates   10
+		setObj randRange 0.1
+		setObj reportInterval 0
+		setObj pseudoExampleFreq 1
+
+		# create a function that gets the error for each test example
+		proc saveActivations {fname} { 
+			set outfile [open $fname a] 
+			puts $outfile "[getObj currentExample.num] [getObj currentExample.name] " nonewline 
+			puts $outfile [getObj exampleError]
+			close $outfile 
+		}
+
+		proc testAllFinalActs {fname} { 
+			resetExampleSet [getObj testingSet.name] 
+			set nex [getObj testingSet.numExamples] 
+			for {set i 0} {$i < $nex} {incr i} {
+				doExample -set [getObj testingSet.name]
+				saveActivations $fname
+			}
+		}
+
+		proc testNetwork {n train trainNum train3 trainNum3 test fname ifEvent lr} {
+			if {$ifEvent == "effective"} {
+				for {set i 0} {$i < $n} {incr i} {
+					resetNet
+					
+					
+					setObj learningRate $lr
+					useTrainingSet $train
+					train $trainNum
+					
+					setObj learningRate $lr
+					useTrainingSet $train3
+					train $trainNum3
+					useTestingSet $test
+					testAllFinalActs $fname
+				}
+			} else {
+				for {set i 0} {$i < $n} {incr i} {
+					resetNet
+					
+					
+					setObj learningRate $lr
+					useTrainingSet $train
+					train $trainNum
+					
+					setObj learningRate $lr
+					useTrainingSet $train3
+					train $trainNum3
+					useTestingSet $test
+					testAllFinalActs $fname
+				}
+			}
+		}
+
+		# define lists for looping
+		set study [list sim5b sim5b]
+		set folder [list effective effective]
+		set condition [list hab control]
+		set ifEvent [list effective effectiveControl]
+		set habEvent [list sim5bExpHab sim5bCntrlHab]
+		set testEvent [list sim5bTest sim5bTest]
+		set actionPhaseEpochs [list 8 9 10 11 12]
+		set trainingEpochs [list 8 9 10 11 12]
+		set pretrainingEpochs [list 225]
+
+		# define loop
+
+		foreach stud $study cond $condition hEvent $habEvent tEvent $testEvent iEvent $ifEvent  {
+			set workingdirectory "<PATH_TO_PROJECT>sim5b"
+			cd $workingdirectory
+				foreach tEpochs $trainingEpochs {
+					foreach epochs $pretrainingEpochs {
+						testNetwork 20 pretrain $epochs $hEvent $tEpochs $tEvent Study_${stud}_pEpochs_${epochs}_${cond}_habEvent_${hEvent}_tEpochs_${tEpochs}_lr_${lr}_sLR_${sLR}_sWD_${sWD}.txt $iEvent $lr
+				} 
+			}
+		}
+	}
+
+	# parameter lists
+	set learningRate [list 0.00875 0.01] 
+	set salientLR [list 0.0004 .0003875]
+	set salientWD [list 0.09875 0.0975]
+
+	# grid search loops
+	foreach lrSalient $learningRate sLR $salientLR sWD $salientWD {
+		set ::s_LR $sLR
+		set ::s_WD $sWD
+		
+		gsSim_sim5b net5b_${lrSalient}_sLR_${sLR}_sWD_${sWD} $lrSalient $sLR $sWD
+	}
+}
+
+####################################################################
+# UNCOMMENT THE CODE BELOW IF YOU WANT TO AUTOMATE THE SIMULATIONS #
+####################################################################
+
+# ------------------------------------------------------------------
+# IMPORTANT:
+# Uncomment the code and for-loop below if you want to 
+# automate the simulations.
+# If you desire to run a subset of the simulations, remove the 
+#  functions/procedures that aren't needed. 
+# ------------------------------------------------------------------
+
+# set modelList [list gsSim_sim1a \
+# gsSim1b \
+# gsSim2a \
+# gsSim3a \
+# gsSim3b \
+# gsSim4a \
+# gsSim_5a \
+# gsSim_5b \
+] 
+
+# foreach ml $modelList {
+#    puts "Running $ml..."
+#    $ml          ;
+#}
